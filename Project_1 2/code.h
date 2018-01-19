@@ -16,7 +16,7 @@ class code //stores code (guess or secret) as a vector
         int checkCorrect(code guess) const; //passed a guess and returns number of correct digits in the correct location
         int checkIncorrect(code guess) const; //passed a guess and returns number of correct digits in the correct location
         void setValue(int n);
-        int getValue(int n);
+        int getValue(int n) const;
     private: //does this need to be private?
         vector<int> value;
 };
