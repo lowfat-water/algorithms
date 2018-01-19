@@ -18,6 +18,7 @@ class code //stores code (guess or secret) as a vector
     private: //does this need to be private?
         vector<int> value;
         
+        
 };
 
 #endif
