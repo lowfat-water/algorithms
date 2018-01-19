@@ -22,9 +22,9 @@ void mastermind::playGame()
     newSecret.initRandom();
     secret = newSecret;
 
-    humanGuess();
+    code guess=humanGuess();
 
-    getResponse(newSecret, humanGuess());
+    getResponse(newSecret, guess);
 }
 
 code mastermind::humanGuess()
@@ -59,7 +59,8 @@ code mastermind::humanGuess()
 
 int mastermind::getResponse(code newSecret, code newGuess)
 {
-    newSecret.checkCorrect(newGuess);
+    int n=newSecret.checkCorrect(newGuess);
+    return n;
 }
 
 
