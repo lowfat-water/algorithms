@@ -15,10 +15,10 @@ class code //stores code (guess or secret) as a vector
         void initRandom(); //initializes a random code
         int checkCorrect(code guess) const; //passed a guess and returns number of correct digits in the correct location
         int checkIncorrect(code guess) const; //passed a guess and returns number of correct digits in the correct location
+        void setValue(int n);
+        int getValue(int n);
     private: //does this need to be private?
         vector<int> value;
-        
-        
 };
 
 #endif

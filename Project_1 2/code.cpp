@@ -32,6 +32,15 @@ void code::initRandom()
     cout << endl;
 }
 
+void code::setValue(int n)
+{
+    value.push_back(n);
+}
+
+int code::getValue(int n)
+{
+    return value.at(n);
+}
 /*
 int checkCorrect(code guess)
 {
