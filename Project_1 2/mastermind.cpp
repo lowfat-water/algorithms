@@ -22,10 +22,9 @@ void mastermind::playGame()
     newSecret.initRandom();
     secret = newSecret;
 
-
     humanGuess();
-//    getResponse(secret, guess);
 
+    getResponse(newSecret, humanGuess());
 }
 
 code mastermind::humanGuess()
@@ -39,8 +38,9 @@ code mastermind::humanGuess()
         cin >> digit;
         if( digit < 0 || digit > 5)
         {
-            throw baseException("Error: Must be on the interval[0, 5]");
-            //cout << baseException.what();
+            //Throws an error if user inputs an out-of-range integer
+                //need to figure out how to print what we want
+            throw baseException("Error: Must be on the interval[0, 5]"); 
         }
         else
             newGuess.setValue(digit);
@@ -57,11 +57,9 @@ code mastermind::humanGuess()
     return newGuess;
 }
 
-/*
 int mastermind::getResponse(code newSecret, code newGuess)
 {
     newSecret.checkCorrect(newGuess);
-    
 }
-*/
+
 

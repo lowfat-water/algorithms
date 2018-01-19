@@ -16,10 +16,6 @@ code::code()
 void code::initRandom()
 {
     long item;
-    //int seed;
-   
-    //cout << "Enter seed " << endl; // prompt for a seed
-    //cin >> seed;
     randomNumber r(0); // seed the generator
     cout << "Random code: " << endl;
     for (int i=0 ; i < 4 ; i++ ) 
@@ -41,16 +37,18 @@ int code::getValue(int n) const
 {
     return value.at(n);
 }
-/*
+
 int checkCorrect(code guess)
 {
-    int numberCorrect=0;
+    int numberCorrect=0; //initializing value
 
     for(int i=0; i<4; i++)
     {
-        if(guess.value[i]==value[i])
-        numberCorrect++;
+        if((guess.getValue(i)) == (getValue(i))
+        {
+            numberCorrect++;
+        }
     }
     cout << "The number of correct digits in the right place is " << numberCorrect << endl;
 } 
-*/
+
