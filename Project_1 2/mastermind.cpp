@@ -38,10 +38,8 @@ code mastermind::humanGuess()
         cin >> digit;
         newGuess.setValue(digit);
     }
-        
-
-    //Prints guess code
     
+    //Prints guess code
     cout << "Your guess code is ";
     for (int i = 0; i<4; i++)
         cout << newGuess.getValue(i);
