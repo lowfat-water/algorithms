@@ -37,7 +37,7 @@ void code::setValue(int n)
     value.push_back(n);
 }
 
-int code::getValue(int n)
+int code::getValue(int n) const
 {
     return value.at(n);
 }

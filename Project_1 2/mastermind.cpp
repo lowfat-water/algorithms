@@ -3,6 +3,7 @@
 #include <iostream>
 #include "mastermind.h"
 #include "code.h"
+#include "d_except.h"
 
 
 using namespace std;
@@ -36,7 +37,13 @@ code mastermind::humanGuess()
     {
         int digit;
         cin >> digit;
-        newGuess.setValue(digit);
+        if( digit < 0 || digit > 5)
+        {
+            throw baseException("Error: Must be on the interval[0, 5]");
+            //cout << baseException.what();
+        }
+        else
+            newGuess.setValue(digit);
     }
     
     //Prints guess code
