@@ -36,7 +36,7 @@ code mastermind::humanGuess()
     {
         int digit;
         cin >> digit;
-        newGuess.value.push_back(digit);
+        newGuess.setValue(digit);
     }
         
 
@@ -44,7 +44,7 @@ code mastermind::humanGuess()
     
     cout << "Your guess code is ";
     for (int i = 0; i<4; i++)
-        cout << newGuess.value.at(i);
+        cout << newGuess.getValue(i);
 
     guess = newGuess;
     

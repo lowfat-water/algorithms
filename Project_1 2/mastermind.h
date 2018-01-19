@@ -22,4 +22,5 @@ private:
     code guess; //stores guess code as private data member (maybe not necessary?)
 };
 
+
 #endif
