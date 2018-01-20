@@ -8,8 +8,8 @@ class response
 {
 public: 
     response();
-    void setCorrect();
-    void setIncorrect();
+    void setCorrect(int numCorrect);
+    void setIncorrect(int numIncorrect);
     int getCorrect();
     int getIncorrect();
     bool compare(); // compares responses and returns true if they are equal

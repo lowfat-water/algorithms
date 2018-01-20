@@ -12,7 +12,7 @@ public:
     mastermind();
     //void printSecret(code secretCode); // prints the secret code
     code humanGuess(); // reads a guess from the keyboard, returns code object that represents the guess
-    int getResponse(code newSecret, code newGuess); // passed two codes, returns a response
+    void getResponse(code newSecret, code newGuess, int &numCorrect, int &numIncorrect); // passed two codes, returns a response
     //void isSolved(); // passed a response, returns true if board has been solved
 
     void playGame(); // initializes a random code, prints it to the screen, and iteratively gets a guess until either player has won

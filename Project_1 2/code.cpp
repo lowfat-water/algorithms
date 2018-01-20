@@ -33,28 +33,43 @@ void code::setValue(int n)
     value.push_back(n);
 }
 
-int code::getValue(int n) 
+int code::getValue(int n) const
 {
     return value.at(n);
 }
 
-int code::checkCorrect(code guess) 
+int code::checkCorrect(code guess) const
 {
     int numberCorrect=0; //initializing value
 
     for(int i=0; i<4; i++)
     {
-        //cout << guess.getValue(i);
-        
-        
         if(guess.getValue(i) == value.at(i))
         {
             numberCorrect++;
         }
-        
-        
     }
-    cout << "The number of correct digits in the right place is " << numberCorrect << endl;
+    
+    //cout << "The number of correct digits in the right place is " << numberCorrect << endl;
     return numberCorrect;
 } 
 
+int code::checkIncorrect(code guess) const
+{
+    int numberIncorrect=0;
+
+    for(int i = 0; i < 6; i++)
+    {
+        if ((getValue(0) == i ||
+                getValue(1) == i ||
+                getValue(2) == i ||
+                getValue(3) == i) &&
+            (guess.getValue(0) == i ||
+                getValue(1) == i ||
+                getValue(2) == i ||
+                getValue(3) == i ))
+                numberIncorrect++;
+    };
+
+    return numberIncorrect;
+}

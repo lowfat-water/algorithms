@@ -4,8 +4,7 @@
 #include "mastermind.h"
 #include "code.h"
 #include "d_except.h"
-
-
+#include "response.h"
 using namespace std;
 
 mastermind::mastermind()
@@ -17,20 +16,32 @@ void mastermind::playGame()
     // Calls initRandom() to initialize a secret code
    
     cout << "To play mastermind, we first initialize the secret 4-digit code, with each digit being on the interval [0,5]" << endl;
-    code newSecret;
 
-    newSecret.initRandom();
-    secret = newSecret;
+    secret.initRandom();
 
-    code guess=humanGuess();
+    guess=humanGuess();
 
-    getResponse(newSecret, guess);
+    int numberCorrect, numberIncorrect;
+    
+    getResponse(secret, guess, numberCorrect, numberIncorrect);
+
+    /*
+    cout << "number correct: " << numberCorrect << endl;
+
+
+    cout << "number incorrect: " << numberIncorrect << endl;
+    */
+    response newResponse;
+        newResponse.setCorrect(numberCorrect);
+        newResponse.setIncorrect(numberIncorrect);
+        newResponse.print(); 
+
+
 }
 
 code mastermind::humanGuess()
 {
     cout << "Now input a 4-digit guess code, with each digit being on the interval [0,5]" << endl;
-    code newGuess;
 
     for (int i = 0; i<4; i++)
     {
@@ -43,24 +54,23 @@ code mastermind::humanGuess()
             throw baseException("Error: Must be on the interval[0, 5]"); 
         }
         else
-            newGuess.setValue(digit);
+            guess.setValue(digit);
     }
     
     //Prints guess code
     cout << "Your guess code is ";
     for (int i = 0; i<4; i++)
-        cout << newGuess.getValue(i);
-
-    guess = newGuess;
+        cout << guess.getValue(i);
     
     cout << endl;
-    return newGuess;
+    return guess;
 }
 
-int mastermind::getResponse(code newSecret, code newGuess)
+void mastermind::getResponse(code newSecret, code newGuess, int &numCorrect, int &numIncorrect)
 {
-    int n=newSecret.checkCorrect(newGuess);
-    return n;
+    numCorrect = newSecret.checkCorrect(newGuess);
+    numIncorrect = newSecret.checkIncorrect(newGuess); 
+    numIncorrect = numIncorrect - numCorrect;
 }
 
 
