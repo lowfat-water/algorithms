@@ -27,8 +27,6 @@ void mastermind::printSecret(code secretCode)
 // iteratively reads in guess from keyboard
 code mastermind::humanGuess()
 {
-    cout << "Now input a 4-digit guess code, with each digit being on the interval [0,5]" << endl;    
-    
     for (int i = 0; i<4; i++)
     {
         int digit;
@@ -43,7 +41,6 @@ code mastermind::humanGuess()
         else
             guess.setValue(digit); // calls code member function setValue() to store user-input code in private data member
     }
-  
     return guess;
 }
 
@@ -51,8 +48,8 @@ code mastermind::humanGuess()
 void mastermind::getResponse(code newSecret, code newGuess, int &numCorrect, int &numIncorrect)
 {
     numCorrect = newSecret.checkCorrect(newGuess); // number of correct digits in the correct location
-    numIncorrect = newSecret.checkIncorrect(newGuess); // intermediate variable to store total number of shared digits
-    numIncorrect = numIncorrect - numCorrect; // the number of correct digits in the incorrect location is the difference of the total number of shared digits and numCorrect
+    int totalCorrect = newSecret.checkIncorrect(newGuess); // intermediate variable to store total number of shared digits
+    numIncorrect = totalCorrect - numCorrect; // the number of correct digits in the incorrect location is the difference of the total number of shared digits and numCorrect
     if (numIncorrect < 0)
         numIncorrect = 0; // numIncorrect must be > 0
 }
@@ -91,7 +88,6 @@ void mastermind::playGame()
         cout << "Your guess code is ";
         for (int i = 0; i<4; i++)
             cout << guess.getValue(i); // calls code member function getValue() to retrieve private data and print guess code
-    
         cout << endl;
 
         int numberCorrect, numberIncorrect;
@@ -106,6 +102,12 @@ void mastermind::playGame()
 
         if(numTries < 3 && !isSolved(newResponse))
             cout << "Try again:" << endl;
+        
+        for(int j = 0; j < 4; j++)
+        {
+            guess.clearValue();
+        }
+           
     }
 
     if (numTries >=3)

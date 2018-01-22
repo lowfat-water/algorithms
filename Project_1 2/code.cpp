@@ -17,7 +17,7 @@ void code::initRandom()
 {
     long item;
     randomNumber r(0); // seed the generator
-
+    
     for (int i=0 ; i < 4 ; i++ ) 
     {
         item = r.random(6); // generates 4 rn in [0,5]
@@ -35,6 +35,11 @@ void code::setValue(int n)
 int code::getValue(int n) const
 {
     return value.at(n);
+}
+
+void code::clearValue()
+{
+    value.pop_back();
 }
 
 int code::checkCorrect(code guess) const
