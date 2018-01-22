@@ -18,6 +18,16 @@ void response::setIncorrect(int numIncorrect)
 {
     incorrect = numIncorrect;
 }
+
+int response::getCorrect()
+{
+    return correct;
+}
+
+int response::getIncorrect()
+{
+    return incorrect;
+}
 /*
 bool response::compare()
 {

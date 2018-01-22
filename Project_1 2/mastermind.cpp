@@ -10,39 +10,20 @@ using namespace std;
 mastermind::mastermind()
 {}
 
-void mastermind::playGame()
+void mastermind::printSecret(code secretCode)
 {
+    cout << "The secret code is: ";
+
+    for (int i=0 ; i < 4 ; i++ ) 
+    {
+        cout << secretCode.getValue(i);
+    }
     
-    // Calls initRandom() to initialize a secret code
-   
-    cout << "To play mastermind, we first initialize the secret 4-digit code, with each digit being on the interval [0,5]" << endl;
-
-    secret.initRandom();
-
-    guess=humanGuess();
-
-    int numberCorrect, numberIncorrect;
-    
-    getResponse(secret, guess, numberCorrect, numberIncorrect);
-
-    /*
-    cout << "number correct: " << numberCorrect << endl;
-
-
-    cout << "number incorrect: " << numberIncorrect << endl;
-    */
-    response newResponse;
-        newResponse.setCorrect(numberCorrect);
-        newResponse.setIncorrect(numberIncorrect);
-        newResponse.print(); 
-
-
+    cout << endl << endl;
 }
 
 code mastermind::humanGuess()
 {
-    cout << "Now input a 4-digit guess code, with each digit being on the interval [0,5]" << endl;
-
     for (int i = 0; i<4; i++)
     {
         int digit;
@@ -51,6 +32,7 @@ code mastermind::humanGuess()
         {
             //Throws an error if user inputs an out-of-range integer
                 //need to figure out how to print what we want
+                //need to figure out how to not make it quit the whole program
             throw baseException("Error: Must be on the interval[0, 5]"); 
         }
         else
@@ -71,6 +53,67 @@ void mastermind::getResponse(code newSecret, code newGuess, int &numCorrect, int
     numCorrect = newSecret.checkCorrect(newGuess);
     numIncorrect = newSecret.checkIncorrect(newGuess); 
     numIncorrect = numIncorrect - numCorrect;
+    if (numIncorrect < 0)
+        numIncorrect = 0;
 }
+
+bool mastermind::isSolved(response newResponse)
+{
+    if (newResponse.getCorrect() == 4)
+        return true;
+    else
+        return false;
+}
+
+void mastermind::playGame()
+{
+    int numTries = 0;
+    int numberCorrect = 0;
+    // Calls initRandom() to initialize a secret code
+   
+    cout << "To play mastermind, we first initialize the secret 4-digit code, with each digit being on the interval [0,5]" << endl;
+
+    secret.initRandom();
+
+    printSecret(secret);
+
+    cout << "Now input a 4-digit guess code, with each digit being on the interval [0,5]" << endl;    
+
+    response newResponse;
+    
+    while(numTries < 3 && !isSolved(newResponse))
+    {   
+        guess=humanGuess();
+
+        int numberCorrect, numberIncorrect;
+        
+        getResponse(secret, guess, numberCorrect, numberIncorrect);
+
+        //response newResponse;
+        newResponse.setCorrect(numberCorrect);
+        newResponse.setIncorrect(numberIncorrect);
+        newResponse.print();
+        
+        numTries++;
+
+        if(numTries < 3 && !isSolved(newResponse))
+            cout << "Try again:" << endl;
+        
+        
+    }
+
+    if (numTries >=3)
+        cout << "You lose! Out of tries" << endl;
+    if (isSolved(newResponse))
+        cout << "You win!" << endl;
+}
+    
+
+
+
+
+
+
+
 
 

@@ -17,12 +17,11 @@ void code::initRandom()
 {
     long item;
     randomNumber r(0); // seed the generator
-    cout << "Random code: " << endl;
+
     for (int i=0 ; i < 4 ; i++ ) 
     {
         item = r.random(6); // generates 4 rn in [0,5]
         value.push_back(item);
-        cout << value.at(i);
     }
 
     cout << endl;
