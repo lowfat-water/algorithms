@@ -12,7 +12,7 @@ public:
     void setIncorrect(int numIncorrect);
     int getCorrect();
     int getIncorrect();
-    bool compare(); // compares responses and returns true if they are equal
+    bool compare(response response1); // compares responses and returns true if they are equal
     void print(); // prints a response
 private:
     int correct;

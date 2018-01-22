@@ -81,7 +81,7 @@ void mastermind::playGame()
 
     response newResponse;
     
-    while(numTries < 3 && !isSolved(newResponse))
+    while(numTries < 10 && !isSolved(newResponse))
     {   
         guess = humanGuess();
 
@@ -103,13 +103,11 @@ void mastermind::playGame()
         if(numTries < 3 && !isSolved(newResponse))
             cout << "Try again:" << endl;
         
-        for(int j = 0; j < 4; j++)
+        for(int j = 0; j < 4; j++) // clears the vector so that it can be re-initiated
         {
             guess.clearValue();
-        }
-           
+        }           
     }
-
     if (numTries >=3)
         cout << "You lose! Out of tries" << endl;
     if (isSolved(newResponse))
