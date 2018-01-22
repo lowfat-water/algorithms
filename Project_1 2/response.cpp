@@ -4,10 +4,6 @@
 #include "response.h"
 using namespace std;
 
-response::response()
-{
-}
-
 void response::setCorrect(int numCorrect)
 {
     correct = numCorrect;

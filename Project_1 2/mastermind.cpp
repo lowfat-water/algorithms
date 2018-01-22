@@ -7,9 +7,6 @@
 #include "response.h"
 using namespace std;
 
-mastermind::mastermind()
-{}
-
 // member function to print secret code
 void mastermind::printSecret(code secretCode)
 {
@@ -93,11 +90,12 @@ void mastermind::playGame()
         int numberCorrect, numberIncorrect;
         
         getResponse(secret, guess, numberCorrect, numberIncorrect);
-
+        
         newResponse.setCorrect(numberCorrect);
         newResponse.setIncorrect(numberIncorrect);
         newResponse.print();
         
+
         numTries++;
 
         if(numTries < 3 && !isSolved(newResponse))
@@ -108,7 +106,7 @@ void mastermind::playGame()
             guess.clearValue();
         }           
     }
-    if (numTries >=3)
+    if (numTries >=10)
         cout << "You lose! Out of tries" << endl;
     if (isSolved(newResponse))
         cout << "You win!" << endl;

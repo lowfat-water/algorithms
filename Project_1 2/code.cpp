@@ -8,11 +8,6 @@
 
 using namespace std;
 
-code::code()
-{
-}
-
-
 void code::initRandom()
 {
     long item;
@@ -42,7 +37,7 @@ void code::clearValue()
     value.pop_back();
 }
 
-int code::checkCorrect(code guess) const
+int code::checkCorrect(code guess)
 {
     int numberCorrect=0; //initializing value
 
@@ -58,7 +53,7 @@ int code::checkCorrect(code guess) const
     return numberCorrect;
 } 
 
-int code::checkIncorrect(code guess) const
+int code::checkIncorrect(code guess)
 {
     int numberIncorrect=0;
 
@@ -69,11 +64,10 @@ int code::checkIncorrect(code guess) const
                 getValue(2) == i ||
                 getValue(3) == i) &&
             (guess.getValue(0) == i ||
-                getValue(1) == i ||
-                getValue(2) == i ||
-                getValue(3) == i ))
+                guess.getValue(1) == i ||
+                guess.getValue(2) == i ||
+                guess.getValue(3) == i ))
                 numberIncorrect++;
     };
-
     return numberIncorrect;
 }

@@ -7,7 +7,7 @@
 class response
 {
 public: 
-    response();
+    response() {};
     void setCorrect(int numCorrect);
     void setIncorrect(int numIncorrect);
     int getCorrect();

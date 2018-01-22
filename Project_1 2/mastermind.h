@@ -10,7 +10,7 @@
 class mastermind
 {
 public:
-    mastermind();
+    mastermind() {};
     void printSecret(code secretCode); // prints the secret code
     code humanGuess(); // reads a guess from the keyboard, returns code object that represents the guess
     void getResponse(code newSecret, code newGuess, int &numCorrect, int &numIncorrect); // passed two codes, returns a response
