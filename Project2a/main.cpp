@@ -1,3 +1,10 @@
+/*
+Project 2a
+Alina Rossi-Conaway and Dan Bartels
+Octavia Camps
+EECE2560
+*/
+
 #include <iostream>
 #include <string>
 #include "card.h"
