@@ -1,4 +1,7 @@
-#ifndef CARD_H
+//card.h file
+//definition of card class
+
+#ifndef CARD_H //compiler directives
 #define CARD_H
 
 #include <string>
@@ -8,19 +11,18 @@ using namespace std;
 class card
 {
     public:
-        card();
-        card(int newValue, string newSuit);
-        void get(int &returnValue, string &returnSuit) const;
-        int getValue() const;
-        string getSuit() const;
-        void set(int &newValue, string &newSuit);
-        void setValue(int &newValue);
-        void setSuit(string &newSuit);
-
-        friend ostream& operator << (ostream& ostr, const card &cards);
+        card(); //default constructor
+        card(int newValue, string newSuit); //constructor with inputs
+        void get(int &returnValue, string &returnSuit) const; //stores value and suit in variables returnValue and returnSuit
+        int getValue() const; //returns value of card
+        string getSuit() const; //returns suit of card
+        void set(int &newValue, string &newSuit); //assigns values to private data members
+        void setValue(int &newValue); //assign value individually
+        void setSuit(string &newSuit); //assign suit individually
+        friend ostream& operator << (ostream& ostr, const card &cards); //declaration of overloaded print operator
     private:
         int value;
         string suit;
 };
 
-#endif
+#endif //compiler directive
