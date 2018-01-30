@@ -1,4 +1,7 @@
-#ifndef DECK_H
+//deck.h file
+//deck class definition
+
+#ifndef DECK_H //compiler directives
 #define DECK_H
 
 #include "card.h"
@@ -7,14 +10,13 @@
 class deck
 {
     public:
-        deck();
-        void addNode(card &newCard);
-        void printDeck();
-        //friend ostream& operator << (ostream& ostr, const deck &newDeck);
+        deck(); //default constructor
+        void addNode(card &newCard); //function to insert a node into the list with the card newCard
+        void printDeck(); //print function that invokes overloaded print operator to print cards
     private:
-        node <card> * head;
+        node <card> * head; //pointers to nodes with card data
         node <card> * curr;
         node <card> * temp;
 };
 
-#endif
+#endif //compiler directive
