@@ -1,55 +1,60 @@
+//card.cpp file
+//class card implementation
+
 #include <iostream>
 #include <string>
 #include "card.h"
 
 using namespace std;
 
-card::card()
+card::card() //default constructor with no arguments
 {
     value = 0;
     suit = "not initialized"; 
 }
 
-card::card(int newValue, string newSuit)
+card::card(int newValue, string newSuit) //constructor which assigns arguments to private data members
 {
     value = newValue;
     suit = newSuit;
 }
 
-void card::get(int &returnValue, string &returnSuit) const
+void card::get(int &returnValue, string &returnSuit) const //stores values in private data members in variables returnValue and returnSuit
 {
     returnValue = value;
     returnSuit = suit;
 }
 
-int card::getValue() const
+int card::getValue() const //returns value
 {
     return value;
 }
 
-string card::getSuit() const
+string card::getSuit() const //returns suit
 {
     return suit;
 }
 
-void card::set(int &newValue, string &newSuit)
+void card::set(int &newValue, string &newSuit) //assign values to private data members
 {
     value = newValue;
     suit = newSuit;
 }
 
-void card::setValue(int &newValue)
+void card::setValue(int &newValue) //assign value
 {
     value = newValue;
 }
 
-void card::setSuit(string &newSuit)
+void card::setSuit(string &newSuit) //assign suit
 {
     suit = newSuit;
 }
 
-ostream& operator << (ostream& ostr, const card &cards)
+ostream& operator << (ostream& ostr, const card &cards) //overloaded print operator
 {
+    //for numeric cards, prints the value of the card and the suit
+    //for face cards, prints a string that represents the card
     if(cards.getValue() == 11)
     {
         ostr << "Jack" << " of " << cards.getSuit();
@@ -79,6 +84,4 @@ ostream& operator << (ostream& ostr, const card &cards)
         ostr << cards.getValue() << " of " << cards.getSuit();
         return ostr;
     }
-
-    
 }
