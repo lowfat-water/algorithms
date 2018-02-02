@@ -6,6 +6,7 @@
 #include "card.h"
 #include "node.h"
 #include "deck.h"
+#include "d_except.h"
 
 using namespace std;
 
@@ -40,9 +41,30 @@ deck::deck()
     }
 }
 
+deck::deck(const deck &sampleDeck)
+{
+    //head = sampleDeck.head;
+    curr = sampleDeck.head;
+
+    while (curr->next != NULL)
+    {
+        addNode(curr->cardInfo);
+        curr = curr->next;
+    }
+
+    cout << "deck copy constructor invoked " << endl;
+    //cout << "the head of the new deck is " << head->cardInfo << endl;
+}
+
 void deck::addNode(card &newCard)
 {
     node<card> *n = new node <card>; //dynamically allocates memory for a node n (with data type card) and creates a pointer to it
+    
+    if(n == NULL) //throws error if the heap is out of memory
+    {
+        throw memoryAllocationError("Memory allocation error for card class");
+    }
+    
     n->next = NULL; //sets this node as the end of the list, with its "next" pointer pointing to NULL
     n->cardInfo = newCard; //stores the information from the argument (newCard) in the node's cardInfo
 
@@ -53,7 +75,7 @@ void deck::addNode(card &newCard)
         {
             curr = curr->next; //advance through the list
         }
-        curr->next = n; //assigns the next pointer of the curr node to our new node n, effectively 
+        curr->next = n; //assigns the next pointer of the curr node to our new node n, effectively inserting the card into the list
     }
     else //if the list is empty
     {
@@ -69,4 +91,9 @@ void deck::printDeck()
         cout << curr->cardInfo << endl; //invokes overloaded print operator to print card information
         curr = curr->next; //advance through list
     }
+}
+
+node <card> deck::getCurr(const deck &sampleDeck)
+{
+    return *curr;
 }

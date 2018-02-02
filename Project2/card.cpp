@@ -20,6 +20,13 @@ card::card(int newValue, string newSuit) //constructor which assigns arguments t
     suit = newSuit;
 }
 
+card::card(const card & sampleCard)
+{
+    value = sampleCard.value;
+    suit = sampleCard.suit; 
+//    cout << "copy constructor" << endl;
+} 
+
 void card::get(int &returnValue, string &returnSuit) const //stores values in private data members in variables returnValue and returnSuit
 {
     returnValue = value;
@@ -86,3 +93,11 @@ ostream& operator << (ostream& ostr, const card &cards) //overloaded print opera
         return ostr;
     }
 }
+card card::operator = (const card & sampleCard)
+{
+    value = sampleCard.value;
+    suit = sampleCard.suit;
+//    cout << "overloaded assignment operator" << endl;
+    return *this; //returns a reference to the object itself
+}
+

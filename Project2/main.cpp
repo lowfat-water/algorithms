@@ -17,4 +17,17 @@ int main()
 {
     deck newDeck;
     newDeck.printDeck();
+
+    deck deck1 = newDeck;
+    //cout << "the curr pointer is pointing at " << newDeck.getCurr(newDeck).cardInfo << endl;
+
+    /*
+    card card1(14, "spades"), card2;
+    cout << "card1 is " << card1 << endl;
+    cout << "card2 is " << card2 << endl;
+
+    card2 = card1;
+    cout << "card1 is " << card1 << endl;
+    cout << "card2 is " << card2 << endl;
+    */
 } 
