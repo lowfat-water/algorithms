@@ -43,13 +43,12 @@ deck::deck()
 
 deck::deck(const deck &sampleDeck)
 {
-    //head = sampleDeck.head;
-    curr = sampleDeck.head;
+    temp = sampleDeck.head;
 
-    while (curr->next != NULL)
+    while (temp != NULL)
     {
-        addNode(curr->cardInfo);
-        curr = curr->next;
+        addNode(temp->cardInfo);
+        temp = temp->next;
     }
 
     cout << "deck copy constructor invoked " << endl;
@@ -60,10 +59,12 @@ void deck::addNode(card &newCard)
 {
     node<card> *n = new node <card>; //dynamically allocates memory for a node n (with data type card) and creates a pointer to it
     
+    
     if(n == NULL) //throws error if the heap is out of memory
     {
         throw memoryAllocationError("Memory allocation error for card class");
     }
+    
     
     n->next = NULL; //sets this node as the end of the list, with its "next" pointer pointing to NULL
     n->cardInfo = newCard; //stores the information from the argument (newCard) in the node's cardInfo
@@ -85,6 +86,10 @@ void deck::addNode(card &newCard)
 
 void deck::printDeck()
 {
+    if (head == NULL) //won't print unless list has contents
+    {
+        cout << "list is empty" << endl;
+    }
     curr = head; //starts at the beginning of the list
     while(curr != NULL) //while we're not at the end of the list
     {
@@ -93,7 +98,32 @@ void deck::printDeck()
     }
 }
 
-node <card> deck::getCurr(const deck &sampleDeck)
+card deck::deal()
+{
+    curr = head;
+    if (head != NULL)
+    {    head = head->next;
+        return curr->cardInfo;
+        delete curr;
+    }
+    else
+    {
+        card card1(5, "diamonds");
+        return card1;
+    }
+}
+/*node <card> deck::getCurr(const deck &sampleDeck)
 {
     return *curr;
+}*/
+
+deck::~deck()
+{
+    while (head != NULL)
+    {
+        curr = head;
+        head = head->next;
+        delete curr;
+    }
+    cout << "destructor invoked" << endl;
 }

@@ -16,9 +16,14 @@ using namespace std;
 int main()
 {
     deck newDeck;
-    newDeck.printDeck();
+    //newDeck.printDeck();
 
-    deck deck1 = newDeck;
+    //deck deck1 = newDeck;
+    card card1 = newDeck.deal();
+    cout << " card1 is " << card1 << endl;
+    card card2 = newDeck.deal();
+    cout << " card2 is " << card2 << endl;
+    
     //cout << "the curr pointer is pointing at " << newDeck.getCurr(newDeck).cardInfo << endl;
 
     /*
