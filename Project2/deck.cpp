@@ -101,16 +101,9 @@ void deck::printDeck()
 card deck::deal()
 {
     curr = head;
-    if (head != NULL)
-    {    head = head->next;
-        return curr->cardInfo;
-        delete curr;
-    }
-    else
-    {
-        card card1(5, "diamonds");
-        return card1;
-    }
+    head = head->next;
+    return curr->cardInfo;
+    delete curr;
 }
 /*node <card> deck::getCurr(const deck &sampleDeck)
 {
