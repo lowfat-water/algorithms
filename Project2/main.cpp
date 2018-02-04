@@ -28,6 +28,7 @@ int main()
     //card card2 = newDeck.deal();
     //cout << " card2 is " << card2 << endl;
     
+    //newDeck.printDeck();
     deck1.printDeck();
 
     //cout << "the curr pointer is pointing at " << newDeck.getCurr(newDeck).cardInfo << endl;

@@ -17,7 +17,7 @@ class deck
         //node <card> getCurr(const deck &sampleDeck);
         card deal();
         void replace(card &sampleCard);
-        deck operator = (const deck & sampleDeck);
+        deck & operator = (const deck & sampleDeck);
         ~deck();
     private:
         node <card> * head; //pointers to nodes with card data

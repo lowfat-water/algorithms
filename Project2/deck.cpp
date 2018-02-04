@@ -119,7 +119,7 @@ void deck::replace(card &sampleCard)
     addNode(sampleCard);
 }
 
-deck deck::operator = (const deck & sampleDeck)
+deck & deck::operator = (const deck & sampleDeck)
 {
  
     /*if(sampleDeck.head == NULL) //throws error if the heap is out of memory
@@ -127,6 +127,11 @@ deck deck::operator = (const deck & sampleDeck)
         throw rangeError("original deck is empty");
     }
 */
+    head = NULL; //initializes list pointers to NULL
+    curr = NULL;
+    temp = NULL;
+
+
     temp = sampleDeck.head;
     
         while (temp != NULL)
