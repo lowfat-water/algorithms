@@ -16,6 +16,8 @@ class deck
         void printDeck(); //print function that invokes overloaded print operator to print cards
         //node <card> getCurr(const deck &sampleDeck);
         card deal();
+        void replace(card &sampleCard);
+        deck operator = (const deck & sampleDeck);
         ~deck();
     private:
         node <card> * head; //pointers to nodes with card data

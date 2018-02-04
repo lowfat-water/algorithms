@@ -97,7 +97,6 @@ card card::operator = (const card & sampleCard)
 {
     value = sampleCard.value;
     suit = sampleCard.suit;
-//    cout << "overloaded assignment operator" << endl;
     return *this; //returns a reference to the object itself
 }
 

@@ -21,7 +21,7 @@ class node
       node(const T& item, node<T> *nextNode = NULL) : 
 			  cardInfo(item), next(nextNode)
       {}
-    
+      
 };
 
 #endif   // NODE_CLASS

@@ -100,15 +100,44 @@ void deck::printDeck()
 
 card deck::deal()
 {
-    curr = head;
-    head = head->next;
-    return curr->cardInfo;
-    delete curr;
+    
+        curr = head;
+        head = head->next;
+        return curr->cardInfo;
+    //cout << " the head is " << head->cardInfo << endl;
+    
+    //return curr->cardInfo;
+    //delete curr;
 }
 /*node <card> deck::getCurr(const deck &sampleDeck)
 {
     return *curr;
 }*/
+
+void deck::replace(card &sampleCard)
+{
+    addNode(sampleCard);
+}
+
+deck deck::operator = (const deck & sampleDeck)
+{
+ 
+    /*if(sampleDeck.head == NULL) //throws error if the heap is out of memory
+    {
+        throw rangeError("original deck is empty");
+    }
+*/
+    temp = sampleDeck.head;
+    
+        while (temp != NULL)
+        {
+            addNode(temp->cardInfo);
+            temp = temp->next;
+        }
+    
+        cout << "deck overloaded assignmwnt operator invoked " << endl;
+    return *this;
+}
 
 deck::~deck()
 {
