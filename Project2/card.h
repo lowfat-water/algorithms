@@ -6,6 +6,7 @@
 
 #include <string>
 #include <iostream>
+#include "d_random.h"
 using namespace std;
 
 class card
@@ -22,6 +23,7 @@ class card
         void setSuit(string &newSuit); //assign suit individually
         friend ostream& operator << (ostream& ostr, const card &cards); //declaration of overloaded print operator
         card operator = (const card & sampleCard); // overloaded assignment operator
+
     private:
         int value;
         string suit;

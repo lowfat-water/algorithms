@@ -6,6 +6,7 @@
 
 #include "card.h"
 #include "node.h"
+#include "d_random.h"
 
 class deck
 {
@@ -18,6 +19,8 @@ class deck
         card deal();
         void replace(card &sampleCard);
         deck & operator = (const deck & sampleDeck);
+        deck shuffle(deck & sampleDeck);
+        card searchCard (const card & sampleCard);
         ~deck();
     private:
         node <card> * head; //pointers to nodes with card data

@@ -27,7 +27,7 @@ int main()
     newDeck.printDeck(); */
     //card card2 = newDeck.deal();
     //cout << " card2 is " << card2 << endl;
-    
+
     //newDeck.printDeck();
     deck1.printDeck();
 
@@ -42,4 +42,6 @@ int main()
     cout << "card1 is " << card1 << endl;
     cout << "card2 is " << card2 << endl;
     */
-} 
+//    cout << "Deck1 contains" << deck1;
+//    cout << "Deck2 contains" << deck2;
+}

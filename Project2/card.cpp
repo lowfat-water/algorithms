@@ -11,7 +11,7 @@ using namespace std;
 card::card() //default constructor with no arguments
 {
     value = 0;
-    suit = "not initialized"; 
+    suit = "not initialized";
 }
 
 card::card(int newValue, string newSuit) //constructor which assigns arguments to private data members
@@ -23,9 +23,9 @@ card::card(int newValue, string newSuit) //constructor which assigns arguments t
 card::card(const card & sampleCard)
 {
     value = sampleCard.value;
-    suit = sampleCard.suit; 
+    suit = sampleCard.suit;
 //    cout << "copy constructor" << endl;
-} 
+}
 
 void card::get(int &returnValue, string &returnSuit) const //stores values in private data members in variables returnValue and returnSuit
 {
@@ -99,4 +99,3 @@ card card::operator = (const card & sampleCard)
     suit = sampleCard.suit;
     return *this; //returns a reference to the object itself
 }
-
