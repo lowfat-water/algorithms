@@ -19,7 +19,8 @@ class deck
         card deal();
         void replace(card &sampleCard);
         deck & operator = (const deck & sampleDeck);
-        deck shuffle(deck & sampleDeck);
+        //deck shuffle(deck & sampleDeck);
+        void shuffle();
         card searchCard (const card & sampleCard);
         ~deck();
     private:

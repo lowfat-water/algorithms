@@ -155,7 +155,11 @@ deck::~deck()
     }
     cout << "destructor invoked" << endl;
 }
-
+void shuffle()
+{
+    
+}
+/*
 card searchCard (const card & searchCard)
 {
   long value;
@@ -207,7 +211,7 @@ deck deck::shuffle(deck & sampleDeck)
       curr = front;
     }
   }
-}
+}*/
 
 /*Sorting implementation:
  use rand to get a random number 0-3. If the card is 0, its clubs. 1 is diamonds.
