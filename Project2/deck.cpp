@@ -160,6 +160,7 @@ deck::~deck()
 
 void deck::shuffle()
 {
+    cout << "Shuffling. . . " << endl;
     randomNumber r(0); //seeds the generator
     for (int j = 0; j <= 1000; j++) //iterates the swap 1000 times
     {   
