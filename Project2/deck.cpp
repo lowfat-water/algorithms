@@ -7,6 +7,8 @@
 #include "node.h"
 #include "deck.h"
 #include "d_except.h"
+#include "d_random.h"
+#include <time.h>
 
 using namespace std;
 
@@ -155,66 +157,29 @@ deck::~deck()
     }
     cout << "destructor invoked" << endl;
 }
-void shuffle()
+
+void deck::shuffle()
 {
-    
-}
-/*
-card searchCard (const card & searchCard)
-{
-  long value;
-  long suit;
-  randomNumber r(0); //seed the generator
+    randomNumber r(0); //seeds the generator
+    for (int j = 0; j <= 1000; j++) //iterates the swap 1000 times
+    {   
+        
+        int index1 = r.random(52), index2 = r.random(52); //two random indices on interval [0,52)
+        node <card> *p1 = head, *p2 = head; //two pointers to nodes with data type card, both initialized to the head of the list
 
-  value = r.random(2:14); //generates random number (0-3)
-  suit = r.random(4);
-  if (suit == 0)
-  {
-    card newCard (value, "Clubs");
-    searchCard = newCard;
-  }
+        for (int i = 0; i < index1; i++) //locates and stores the location of the node with index index1
+        {
+            p1 = p1->next;
+        }
 
-  if (suit == 1)
-  {
-    card newCard (value, "Diamonds");
-    searchCard = newCard;
-  }
+        for (int i = 0; i < index2; i++)
+        {
+            p2 = p2->next;
+        }
 
-  if (suit == 2)
-  {
-    card newCard (value, "Hearts");
-    searchCard = newCard;
-  }
-
-  if (suit == 3)
-  {
-    card newCard (value, "Spades");
-    searchCard = newCard;
-  }
-  return searchCard;
-}
-
-deck deck::shuffle(deck & sampleDeck)
-{
-  for (i=0, i<52, i++)
-  {
-    card key = searchCard;
-    x = sampleDeck.head;
-    while (x != NULL)
-    {
-      if (curr->nodeValue != key)
-      {
-        prev = curr;
-        curr = next;
-      }
-      prev->next = curr->next;
-      curr = front;
+    card value1 = p1->cardInfo, value2 = p2->cardInfo; //locates and stores the location of the node with index index2
+        p1->cardInfo = value2; //swaps their card values
+        p2->cardInfo = value1;
     }
-  }
-}*/
+}
 
-/*Sorting implementation:
- use rand to get a random number 0-3. If the card is 0, its clubs. 1 is diamonds.
- 2 is hearts. 3 is spades. then randomly choose a number 2-14. Use these to create
- a card to look through the linked list for. Move that card to the front when it
- is found. Iterate 52 times. */

@@ -1,9 +1,8 @@
 #ifndef NODE_H
 #define NODE_H
 
-#ifndef NULL
-#include <cstddef>
-#endif  // NULL
+using namespace std;
+
 
 // linked list node
 template <typename T>

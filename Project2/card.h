@@ -6,7 +6,6 @@
 
 #include <string>
 #include <iostream>
-#include "d_random.h"
 using namespace std;
 
 class card
