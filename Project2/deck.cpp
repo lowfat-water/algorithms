@@ -121,13 +121,9 @@ void deck::replace(card &sampleCard)
 
 deck & deck::operator = (const deck & sampleDeck)
 {
-<<<<<<< HEAD
  
-    if(sampleDeck.head == NULL) //throws error if the heap is out of memory
-=======
 
-    /*if(sampleDeck.head == NULL) //throws error if the heap is out of memory
->>>>>>> ec20634984cba1c1ef91e5eb6894abb69b55483a
+    if(sampleDeck.head == NULL) //throws error if the heap is out of memory
     {
         throw rangeError("original deck is empty");
     }
