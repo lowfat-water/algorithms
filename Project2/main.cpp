@@ -21,7 +21,7 @@ int main()
     playFlip();
 }
 
-void playFlip()
+void playFlip() //initializes game
 {
     cout << "Let's play flip!" << endl;
     deck newDeck;
@@ -31,13 +31,13 @@ void playFlip()
     for (int i = 0; i<=2; i++)
         newDeck.shuffle();
 
-    
-    while (response == 'Y' || response == 'y')
+
+    while (response == 'Y' || response == 'y') //game rules
     {
         cout << "Would you like to flip a card? [Y/N]" << endl;
-    
+
         cin >> response;
-    
+
         card card1 = newDeck.deal();
 
         cout << "Your card is " << card1 << endl;
@@ -83,7 +83,7 @@ void playFlip()
             numPoints += 1;
             cout << "Your new score is " << numPoints << endl;
         }
-        
+
         newDeck.replace(card1);
     }
     if (response == 'N' || response == 'n')

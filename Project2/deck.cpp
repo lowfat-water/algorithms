@@ -43,7 +43,7 @@ deck::deck()
     }
 }
 
-deck::deck(const deck &sampleDeck)
+deck::deck(const deck &sampleDeck) //deck copy constructor
 {
     temp = sampleDeck.head;
 
@@ -54,10 +54,9 @@ deck::deck(const deck &sampleDeck)
     }
 
     cout << "deck copy constructor invoked " << endl;
-    //cout << "the head of the new deck is " << head->cardInfo << endl;
 }
 
-void deck::addNode(card &newCard)
+void deck::addNode(card &newCard) //add new card node
 {
     node<card> *n = new node <card>; //dynamically allocates memory for a node n (with data type card) and creates a pointer to it
 
@@ -86,7 +85,7 @@ void deck::addNode(card &newCard)
     }
 }
 
-void deck::printDeck()
+void deck::printDeck() //prints out the deck
 {
     if (head == NULL) //won't print unless list has contents
     {
@@ -116,14 +115,14 @@ card deck::deal()
     return *curr;
 }*/
 
-void deck::replace(card &sampleCard)
+void deck::replace(card &sampleCard) //places card back at bottom of the deck
 {
     addNode(sampleCard);
 }
 
-deck & deck::operator = (const deck & sampleDeck)
+deck & deck::operator = (const deck & sampleDeck) //overloaded operator =
 {
- 
+
 
     if(sampleDeck.head == NULL) //throws error if the heap is out of memory
     {
@@ -158,13 +157,13 @@ deck::~deck()
     cout << "destructor invoked" << endl;
 }
 
-void deck::shuffle()
+void deck::shuffle() //shuffles the deck 
 {
     cout << "Shuffling. . . " << endl;
     randomNumber r(0); //seeds the generator
     for (int j = 0; j <= 1000; j++) //iterates the swap 1000 times
-    {   
-        
+    {
+
         int index1 = r.random(52), index2 = r.random(52); //two random indices on interval [0,52)
         node <card> *p1 = head, *p2 = head; //two pointers to nodes with data type card, both initialized to the head of the list
 
@@ -183,4 +182,3 @@ void deck::shuffle()
         p2->cardInfo = value1;
     }
 }
-

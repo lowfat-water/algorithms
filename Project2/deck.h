@@ -13,14 +13,11 @@ class deck
         deck(); //default constructor
         deck(const deck &sampleDeck); //copy constructor
         void addNode(card &newCard); //function to insert a node into the list with the card newCard
-        void printDeck(); //print function that invokes overloaded print operator to print cards
-        //node <card> getCurr(const deck &sampleDeck);
+        void printDeck(); //print function that invokes overloaded print operator to print card 
         card deal();
         void replace(card &sampleCard);
         deck & operator = (const deck & sampleDeck);
-        //deck shuffle(deck & sampleDeck);
         void shuffle();
-        //card searchCard (const card & sampleCard);
         ~deck();
     private:
         node <card> * head; //pointers to nodes with card data
