@@ -43,18 +43,17 @@ deck::deck()
     }
 }
 
-deck::deck(const deck &sampleDeck)
+deck::deck(const deck &sampleDeck) //copy constructor
 {
     temp = sampleDeck.head;
 
-    while (temp != NULL)
+    while (temp != NULL) //traverses through original list to create new list with contents of original list
     {
         addNode(temp->cardInfo);
         temp = temp->next;
     }
 
     cout << "deck copy constructor invoked " << endl;
-    //cout << "the head of the new deck is " << head->cardInfo << endl;
 }
 
 void deck::addNode(card &newCard)
@@ -66,7 +65,6 @@ void deck::addNode(card &newCard)
     {
         throw memoryAllocationError("Memory allocation error for card class");
     }
-
 
     n->next = NULL; //sets this node as the end of the list, with its "next" pointer pointing to NULL
     n->cardInfo = newCard; //stores the information from the argument (newCard) in the node's cardInfo
@@ -100,31 +98,21 @@ void deck::printDeck()
     }
 }
 
-card deck::deal()
+card deck::deal() //deal function
 {
-
-        curr = head;
+        curr = head; 
         head = head->next;
-        return curr->cardInfo;
-    //cout << " the head is " << head->cardInfo << endl;
-
-    //return curr->cardInfo;
-    //delete curr;
+        return curr->cardInfo; //returns card info for card at top of deck, removes it from list
 }
-/*node <card> deck::getCurr(const deck &sampleDeck)
-{
-    return *curr;
-}*/
 
-void deck::replace(card &sampleCard)
+void deck::replace(card &sampleCard) //adds node at end of list with sampleCard value
 {
     addNode(sampleCard);
 }
 
-deck & deck::operator = (const deck & sampleDeck)
+deck & deck::operator = (const deck & sampleDeck) //overloaded assignment operator
 {
  
-
     if(sampleDeck.head == NULL) //throws error if the heap is out of memory
     {
         throw rangeError("original deck is empty");
@@ -135,25 +123,25 @@ deck & deck::operator = (const deck & sampleDeck)
     temp = NULL;
 
 
-    temp = sampleDeck.head;
+    temp = sampleDeck.head; //starts at beginning of list
 
-        while (temp != NULL)
+        while (temp != NULL) //while we're not at the end of the list
         {
-            addNode(temp->cardInfo);
-            temp = temp->next;
+            addNode(temp->cardInfo); //creates node in new list with info from the node in the original list
+            temp = temp->next; //advances through list
         }
 
         cout << "deck overloaded assignmwnt operator invoked " << endl;
-    return *this;
+    return *this; //returns a reference to object itself
 }
 
-deck::~deck()
+deck::~deck() //destructor
 {
-    while (head != NULL)
+    while (head != NULL) //while we're not at the end of this list
     {
-        curr = head;
-        head = head->next;
-        delete curr;
+        curr = head; //starts at beginning of list 
+        head = head->next; //reassigns head to next node
+        delete curr; //frees dynamically allocated memory for current node
     }
     cout << "destructor invoked" << endl;
 }

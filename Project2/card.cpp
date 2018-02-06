@@ -20,11 +20,10 @@ card::card(int newValue, string newSuit) //constructor which assigns arguments t
     suit = newSuit;
 }
 
-card::card(const card & sampleCard)
+card::card(const card & sampleCard) //copy constructor
 {
-    value = sampleCard.value;
+    value = sampleCard.value; //copies the card attributes into new card
     suit = sampleCard.suit;
-//    cout << "copy constructor" << endl;
 }
 
 void card::get(int &returnValue, string &returnSuit) const //stores values in private data members in variables returnValue and returnSuit
