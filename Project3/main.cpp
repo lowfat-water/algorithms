@@ -7,5 +7,6 @@ int main()
 {
     wordList practice;
     practice.readIn();
-    practice.printList();
+    //practice.printList();
+    cout << practice;
 }

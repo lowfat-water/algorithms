@@ -9,8 +9,7 @@ class wordList
 {
     public:
         void readIn();
-        //friend ostream& operator << (ostream & out, const wordList &)
-        void printList();
+        friend ostream& operator << (ostream &out, const wordList &list);
     private:
         vector <string> dictionary;
 };

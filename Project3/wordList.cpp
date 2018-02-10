@@ -25,10 +25,11 @@ void wordList::readIn()
     fin.close();
 }
 
-void wordList::printList()
-{ 
-    for (int i = 0; i != dictionary.size(); i++)
+ostream& operator << (ostream &out, const wordList &list)
+{
+    for (int i = 0; i != list.dictionary.size(); i++)
     {
-        cout << dictionary.at(i) << endl;
+        out << list.dictionary.at(i) << endl;
     }
+    return out;
 }
