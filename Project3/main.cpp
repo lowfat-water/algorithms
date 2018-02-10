@@ -8,5 +8,8 @@ int main()
     wordList practice;
     practice.readIn();
     //practice.printList();
+    float seconds;
+    practice.insertionSort(seconds);
     cout << practice;
+    cout << "insertion sort took " << seconds << " seconds" << endl; 
 }
