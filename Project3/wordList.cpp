@@ -17,16 +17,16 @@ using namespace std;
 void wordList::setVector()
 {
     cout << "assigning vector . . ." << endl;
-    B = dictionary;
+    ptr = &dictionary;
 
     cout << "vector assigned" << endl;
 }
 
 void wordList::printVector()
 {
-    for(int i = 0; i < B.size(); i++)
+    for(int i = 0; i < ptr->size(); i++)
     {
-        cout << B.at(i) << endl;
+        cout << ptr->at(i) << endl;
     }
 }
 

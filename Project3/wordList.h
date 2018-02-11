@@ -15,7 +15,7 @@ class wordList
         void insertionSort(float &seconds);
         void mergeSort(vector <string> &B, int p, int r);
         void merge(vector <string> &B, int p, int q, int r);
-        vector <string> * B;
+        vector <string> * ptr;
         void setVector();
         void printVector();
         
