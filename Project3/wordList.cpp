@@ -75,7 +75,6 @@ void wordList::mergeSort(vector <string> &B, int p, int r)
         mergeSort(B, q+1, r);
         merge(B, p, q, r);
     }
-    dictionary = B;
 }
 
 void wordList::merge(vector <string> &B, int p, int q, int r)
