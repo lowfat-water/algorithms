@@ -8,18 +8,9 @@
 
 using namespace std;
 
-/*wordList::wordList()
+void wordList::setVector() //assigns reference member ptr to the private member dictionary for use later
 {
-    vector <string> temp = {"one","two"};
-    B = temp;
-}
-*/
-void wordList::setVector()
-{
-    cout << "assigning vector . . ." << endl;
     ptr = &dictionary;
-
-    cout << "vector assigned" << endl;
 }
 
 void wordList::printVector()
@@ -30,48 +21,48 @@ void wordList::printVector()
     }
 }
 
-int wordList::getSize()
+int wordList::getSize() //returns size of dictionary for use in initializing r
 {
     return dictionary.size();
 }
 
-void wordList::readIn()
+void wordList::readIn() //reads in from textfile "wordlist.txt"
 {
-    ifstream fin;
-    string word, fileName = "test.txt";
-    fin.open(fileName.c_str());
-    if(!fin)
+    int i = 1;
+    ifstream fin; //creates ifstream objects
+    string word, fileName = "wordlist.txt"; 
+    fin.open(fileName.c_str()); //opens file
+    if(!fin) //error handling
     {
         cerr << "file does not exist" << endl;
     }
-    while(fin >> word)
+    while(fin >> word) //stores word from file in a string
     {
-        dictionary.push_back(word);
+        dictionary.resize(i+1);
+        dictionary.at(i)=word; //adds word to dictionary vector
+        i+=1;
     }
-    fin.close();
+    fin.close(); //closes file
 }
 
-void wordList::insertionSort(float &seconds)
+void wordList::insertionSort(float &seconds) //takes in a reference to seconds as an argument to be printed in main
 {
-    clock_t startTime = clock(), endTime;
-    for(int j = 1; j < dictionary.size(); j++)
+    clock_t startTime = clock(); //records start time
+    for(int j = 1; j < dictionary.size(); j++) //outer loop iterates over vector
     {
-        string key = dictionary.at(j);
-        int i = j - 1;
-        while (i >= 0 && dictionary.at(i) > key)
+        string key = dictionary.at(j); //stores key as element to be checked
+        int i = j - 1; 
+        while (i >= 0 && dictionary.at(i) > key) //when items are larger than the key
         {
-            dictionary.at(i+1) = dictionary.at(i);
-            i = i-1;
+            dictionary.at(i+1) = dictionary.at(i); //shift them to the right of key
+            i = i-1; //moves backwards
         }
-        dictionary.at(i+1) = key;
+        dictionary.at(i+1) = key; //if the value at i is smaller than the key, inserts key to the right of it
     }
 
-    cout << "the starting time was: " << startTime << endl;
-    cout << "the clock now is: " << clock() << endl;
-    int diff = clock() - startTime;
-    //cout << diff << endl;
-    seconds = diff/CLOCKS_PER_SEC;
-    cout << seconds << endl;
+    
+    int diff = clock() - startTime; //number of cycles that have passed since beginning of sort
+    seconds = diff/CLOCKS_PER_SEC; //converts cycles to seconds
 }
 
 void wordList::mergeSort(vector <string> &B, int p, int r)

@@ -8,7 +8,8 @@ using namespace std;
 class wordList
 {
     public:
-        //wordList(vector <string> &temp):B(temp){};
+        void setVector();
+        void printVector();
         int getSize();
         void readIn();
         friend ostream& operator << (ostream &out, const wordList &list);
@@ -16,10 +17,8 @@ class wordList
         void mergeSort(vector <string> &B, int p, int r);
         void merge(vector <string> &B, int p, int q, int r);
         vector <string> * ptr;
-        void setVector();
-        void printVector();
-        
-    private:
+    
+    //private:
         vector <string> dictionary;
 };
 
