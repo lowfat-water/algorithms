@@ -16,8 +16,13 @@ class wordList
         void insertionSort(float &seconds);
         void mergeSort(vector <string> &B, int p, int r);
         void merge(vector <string> &B, int p, int q, int r);
+        void quickSort(vector <string> &A, int p, int r);
+        int partition(vector <string> &A, int p, int r);
+        void exchange(vector <string> &A, int n, int m);
+        void print(vector <string> &A);
+
         vector <string> * ptr;
-    
+
     //private:
         vector <string> dictionary;
 };

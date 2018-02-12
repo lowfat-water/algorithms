@@ -30,7 +30,7 @@ void wordList::readIn() //reads in from textfile "wordlist.txt"
 {
     int i = 1;
     ifstream fin; //creates ifstream objects
-    string word, fileName = "wordlist.txt"; 
+    string word, fileName = "wordlist.txt";
     fin.open(fileName.c_str()); //opens file
     if(!fin) //error handling
     {
@@ -51,7 +51,7 @@ void wordList::insertionSort(float &seconds) //takes in a reference to seconds a
     for(int j = 1; j < dictionary.size(); j++) //outer loop iterates over vector
     {
         string key = dictionary.at(j); //stores key as element to be checked
-        int i = j - 1; 
+        int i = j - 1;
         while (i >= 0 && dictionary.at(i) > key) //when items are larger than the key
         {
             dictionary.at(i+1) = dictionary.at(i); //shift them to the right of key
@@ -60,13 +60,13 @@ void wordList::insertionSort(float &seconds) //takes in a reference to seconds a
         dictionary.at(i+1) = key; //if the value at i is smaller than the key, inserts key to the right of it
     }
 
-    
+
     int diff = clock() - startTime; //number of cycles that have passed since beginning of sort
     seconds = diff/CLOCKS_PER_SEC; //converts cycles to seconds
 }
 
 void wordList::mergeSort(vector <string> &B, int p, int r)
-{ 
+{
     if (p < r)
     {
         int q = floor((p+r)/2);
@@ -122,4 +122,53 @@ ostream& operator << (ostream &out, const wordList &list)
         out << list.dictionary.at(i) << endl;
     }
     return out;
+}
+
+void quickSort(vector <string> &A, int p, int r)
+{
+    if (p < r)
+    {
+        int q = partition(A, p, r);
+        quickSort(A, p, q-1);
+        quickSort(A, q+1, r);
+
+    }
+}
+
+int partition(vector <string> &A, int p, int r)
+{
+
+    string x = A.at(r);
+
+    int i = p-1;
+
+    for(int j = p; j < r; j++)
+    {
+        //cout << "j is " << j << endl;
+
+        if (A.at(j) <= x)
+        {
+//            cout << "i is " << i << endl;
+            i = i + 1;
+            //cout << "i now is " << i << endl;
+            exchange(A, i, j);
+        }
+    }
+    exchange(A, i+1, r);
+    return i+1; //pivot location
+}
+
+void exchange(vector <string> &A, int n, int m)
+{
+        string temp = A.at(n);
+        A.at(n) = A.at(m);
+        A.at(m) = temp;
+}
+
+
+void print(vector <string> &A)
+{
+    for(int j = 0; j < A.size(); j++)
+        cout << A.at(j) << " ";
+    cout << endl;
 }

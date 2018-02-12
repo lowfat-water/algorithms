@@ -1,28 +1,29 @@
 #include <iostream>
 #include <cmath>
 #include <vector>
+#include <string>
 using namespace std;
 
-void quickSort(vector <int> &A, int p, int r);
-int partition(vector <int> &A, int p, int r);
-void exchange(vector <int> &A, int n, int m);
-void print(vector <int> &A);
+void quickSort(vector <string> &A, int p, int r);
+int partition(vector <string> &A, int p, int r);
+void exchange(vector <string> &A, int n, int m);
+void print(vector <string> &A);
 
 int main()
 {
-    int B[]= {23, 15, 9, 76, 32, 8, 2, 19};
-    vector <int> A(B, B+8);
-    
+    string B[]= {"st", "sb", "dd", "ff", "lg", "ah", "ej", "k"};
+    vector <string> A(B, B+8);
+
     print(A);
 
-    int p=0, r = A.size()-1;   
+    int p=0, r = A.size()-1;
 
     quickSort(A, p, r);
 
     print(A);
 }
 
-void quickSort(vector <int> &A, int p, int r)
+void quickSort(vector <string> &A, int p, int r)
 {
     if (p < r)
     {
@@ -33,17 +34,17 @@ void quickSort(vector <int> &A, int p, int r)
     }
 }
 
-int partition(vector <int> &A, int p, int r)
+int partition(vector <string> &A, int p, int r)
 {
 
-    int x = A.at(r);
+    string x = A.at(r);
 
     int i = p-1;
-    
+
     for(int j = p; j < r; j++)
-    {   
+    {
         //cout << "j is " << j << endl;
-        
+
         if (A.at(j) <= x)
         {
 //            cout << "i is " << i << endl;
@@ -56,15 +57,15 @@ int partition(vector <int> &A, int p, int r)
     return i+1; //pivot location
 }
 
-void exchange(vector <int> &A, int n, int m)
+void exchange(vector <string> &A, int n, int m)
 {
-        int temp = A.at(n);
+        string temp = A.at(n);
         A.at(n) = A.at(m);
         A.at(m) = temp;
 }
 
-    
-void print(vector <int> &A)
+
+void print(vector <string> &A)
 {
     for(int j = 0; j < A.size(); j++)
         cout << A.at(j) << " ";
