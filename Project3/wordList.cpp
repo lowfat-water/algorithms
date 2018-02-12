@@ -7,22 +7,6 @@
 #include "wordList.h"
 
 using namespace std;
-/*
-void wordList::setVector() //assigns reference member ptr to the private member dictionary for use later
-{
-    ptr = &dictionary;
-}
-*/
-
-/*
-void wordList::printVector()
-{
-    for(int i = 0; i < ptr->size(); i++)
-    {
-        cout << ptr->at(i) << endl;
-    }
-}
-*/
 
 int wordList::getSize() //returns size of dictionary for use in initializing r
 {
@@ -48,7 +32,7 @@ void wordList::readIn() //reads in from textfile "wordlist.txt"
     fin.close(); //closes file
 }
 
-void wordList::insertionSort(float &seconds) //takes in a reference to seconds as an argument to be printed in main
+void wordList::insertionSort() //takes in a reference to seconds as an argument to be printed in main
 {
     clock_t startTime = clock(); //records start time
     for(int j = 1; j < dictionary.size(); j++) //outer loop iterates over vector
@@ -68,10 +52,18 @@ void wordList::insertionSort(float &seconds) //takes in a reference to seconds a
     seconds = diff/CLOCKS_PER_SEC; //converts cycles to seconds
 }
 
-void wordList::sort(int p, int r)
+void wordList::sort(int n, int p, int r)
 {
+    if(n == 1) //calls insertion sort
+    {
+        clock_t startTime = clock();
+        insertionSort();
+    }   
+    int startTime = clock();
     mergeSort(dictionary, p, r);
-    cout << "sorting. . ." << endl << endl;
+    float diff = clock()-startTime;
+    float seconds = diff/CLOCKS_PER_SEC;
+    cout << "Sorting via mergeSort took " << seconds << " seconds." << endl;
 }
 
 void wordList::mergeSort(vector <string> &B, int p, int r)

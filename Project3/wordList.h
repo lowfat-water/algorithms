@@ -13,8 +13,8 @@ class wordList
         int getSize();
         void readIn();
         friend ostream& operator << (ostream &out, const wordList &list);
-        void insertionSort(float &seconds);
-        void sort(int p, int r);
+        void insertionSort();
+        void sort(int n, int p, int r);
         void sort1(int p, int r);
         void exchange(vector <string> &A, int n, int m);
         void search(string key);
