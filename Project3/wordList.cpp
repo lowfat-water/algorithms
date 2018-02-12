@@ -7,12 +7,14 @@
 #include "wordList.h"
 
 using namespace std;
-
+/*
 void wordList::setVector() //assigns reference member ptr to the private member dictionary for use later
 {
     ptr = &dictionary;
 }
+*/
 
+/*
 void wordList::printVector()
 {
     for(int i = 0; i < ptr->size(); i++)
@@ -20,6 +22,7 @@ void wordList::printVector()
         cout << ptr->at(i) << endl;
     }
 }
+*/
 
 int wordList::getSize() //returns size of dictionary for use in initializing r
 {
@@ -28,7 +31,7 @@ int wordList::getSize() //returns size of dictionary for use in initializing r
 
 void wordList::readIn() //reads in from textfile "wordlist.txt"
 {
-    int i = 1;
+    int i = 0;
     ifstream fin; //creates ifstream objects
     string word, fileName = "wordlist.txt";
     fin.open(fileName.c_str()); //opens file
@@ -65,6 +68,12 @@ void wordList::insertionSort(float &seconds) //takes in a reference to seconds a
     seconds = diff/CLOCKS_PER_SEC; //converts cycles to seconds
 }
 
+void wordList::sort(int p, int r)
+{
+    mergeSort(dictionary, p, r);
+    cout << "sorting. . ." << endl << endl;
+}
+
 void wordList::mergeSort(vector <string> &B, int p, int r)
 {
     if (p < r)
@@ -79,6 +88,9 @@ void wordList::mergeSort(vector <string> &B, int p, int r)
 
 void wordList::merge(vector <string> &B, int p, int q, int r)
 {
+    //cout << "sorting . . ." << endl;
+    //cout << "p is " << p << endl;
+    //cout << "q is " << q << endl;
     int n1 = q - p + 1;
     int n2 = r - q;
 
@@ -124,18 +136,25 @@ ostream& operator << (ostream &out, const wordList &list)
     return out;
 }
 
-void wordlist::quickSort(vector <string> &A, int p, int r)
+void wordList::sort1(int p, int r)
 {
+    quickSort(dictionary, p, r);
+}
+
+void wordList::quickSort(vector <string> &A, int p, int r)
+{
+    cout << "sorting . . ." << endl << endl;
+    cout << "p is " << p << endl;
     if (p < r)
     {
         int q = partition(A, p, r);
+        cout << "q is " << q << endl;
         quickSort(A, p, q-1);
         quickSort(A, q+1, r);
-
     }
 }
 
-int wordlist::partition(vector <string> &A, int p, int r)
+int wordList::partition(vector <string> &A, int p, int r)
 {
 
     string x = A.at(r);
@@ -158,7 +177,7 @@ int wordlist::partition(vector <string> &A, int p, int r)
     return i+1; //pivot location
 }
 
-void wordlist::exchange(vector <string> &A, int n, int m)
+void wordList::exchange(vector <string> &A, int n, int m)
 {
         string temp = A.at(n);
         A.at(n) = A.at(m);
