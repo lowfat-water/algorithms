@@ -17,8 +17,7 @@ class wordList
         void sort(int p, int r);
         void sort1(int p, int r);
         void exchange(vector <string> &A, int n, int m);
-        void binarySearch (vector <string> &A, string key);
-        void binarySearchAux (vector <string> &A, string key, int right, int left);
+        void search(string key);
 
     private:
         vector <string> dictionary;
@@ -26,6 +25,8 @@ class wordList
         void merge(vector <string> &B, int p, int q, int r);
         void quickSort(vector <string> &A, int p, int r);
         int partition(vector <string> &A, int p, int r);
+        int binarySearch (vector <string> &A, string key);
+        int binarySearchAux (vector <string> &A, string key, int right, int left);
 };
 
 #endif

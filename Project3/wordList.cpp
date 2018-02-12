@@ -129,7 +129,7 @@ void wordList::merge(vector <string> &B, int p, int q, int r)
 ostream& operator << (ostream &out, const wordList &list)
 {
     cout << "printing . . ." << endl;
-    for (int i = 0; i != list.dictionary.size(); i++)
+    for (int i = 0; i != 3; i++)
     {
         out << list.dictionary.at(i) << endl;
     }
@@ -167,16 +167,36 @@ int wordList::partition(vector <string> &A, int p, int r)
 
         if (A.at(j) <= x)
         {
-//            cout << "i is " << i << endl;
             i = i + 1;
-            //cout << "i now is " << i << endl;
             exchange(A, i, j);
         }
     }
     exchange(A, i+1, r);
     return i+1; //pivot location
 }
-
+void wordList::search(string key)
+{
+    int location = binarySearch(dictionary, key);
+    cout << "word " << key << " located at " << location;
+}
+int wordList::binarySearch(vector <string> &A, string key)
+{
+    return binarySearchAux(A, key, 0, A.size()-1);
+}
+int wordList::binarySearchAux(vector <string> &A, string key, int left, int right)
+{
+   // cout << "left is " << left << endl;
+   // cout << "right is " << right << endl;
+    if(right < left)
+        return -1;
+    int mid = (left+right)/2;
+    if (key == A.at(mid))
+        return mid;
+    else if (key < A.at(mid))
+        return binarySearchAux(A, key, left, mid-1);
+    else
+        return binarySearchAux(A, key, mid+1, right);
+}
 void wordList::exchange(vector <string> &A, int n, int m)
 {
         string temp = A.at(n);

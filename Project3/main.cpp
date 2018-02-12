@@ -16,16 +16,19 @@ int main()
 
     clock_t startTime = clock(); //records start time before mergeSort
     cout << "start time: " << startTime << endl;
-    //practice.sort(p,r);
-    practice.sort1(p,r);
+    practice.sort(p,r);
+    //practice.sort1(p,r);
     //cout << practice;
     //float seconds;
     //practice.insertionSort(seconds);
     float diff = clock() - startTime; //number of cycles that have passed since beginning of sort
     cout << "end time: " << clock() << endl;
     float seconds = diff/CLOCKS_PER_SEC; //converts cycles to seconds
-    //cout << practice;
+    cout << practice;
     cout << "Sorting via quickSort took " << seconds << " seconds." << endl;
+
+    string key = "aardvark";
+    practice.search(key);
     
 
 //  cout << practice << endl;
