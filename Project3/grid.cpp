@@ -3,39 +3,14 @@
 #include <string>
 #include <fstream>
 #include "grid.h"
+#include "d_matrix.h"
 
 using namespace std;
-
-grid::grid(int numRows, int numCols, char element)
-{
-    nRows = numRows;
-    nCols = numCols;
-    //mat(numRows, numCols, element);
-}
-
-vector<char>& grid::operator[](int i)
-{
-    if (i < 0 || i >= nRows)
-    {
-        cerr << "invalid row index" << endl;
-    }
-    return mat[i];
-}
-
-const vector<char>& grid::operator[] (int i) const
-{
-    if (i < 0 || i >= nRows)
-    {
-        cerr << "invalid row index" << endl;
-    }
-    return mat[i];
-}
 
 void grid::readIn() //reads in from textfile "wordlist.txt"
 {
     ifstream fin; //creates ifstream objects
-    int i=0, num; 
-    string line;
+    int numRows, numCols;
     vector <char> row;
     string fileName = "input15.txt";
     char letter;
@@ -45,27 +20,13 @@ void grid::readIn() //reads in from textfile "wordlist.txt"
         cerr << "file does not exist" << endl;
     }
 
-    fin >> nRows >> nCols;
-    for(i = 0, i < nRows; i++)
+    fin >> numRows >> numCols;
+    charMatrix.resize(numRows, numCols);
+    for(int i = 0; i < numRows; i++)
     {
-        for (j = 0, j < nCols, j++)
+        for (int j = 0; j < numCols; j++)
         {
             fin >> charMatrix[i][j];
-        }
-    }
-    while(fin) //stores word from file in a string
-    {
-        if(fin >> num)
-        {
-            nRows = num;
-            nCols = num;
-        }
-        else
-        {
-            getline(fin, line);
-            vector <char> row(line.begin(),line.end());
-            mat[i] = row;
-            i++;
         }
     } 
     fin.close(); //closes file
@@ -73,13 +34,15 @@ void grid::readIn() //reads in from textfile "wordlist.txt"
 
 int grid::getRows() const
 {
-    return nRows;
+    return charMatrix.rows();
 }
+
 int grid::getCols() const
 {
-    return nCols;
+    return charMatrix.rows();
 }
+
 char grid::getChar(int i, int j)
 {
-    return mat[i][j];
+    return charMatrix[i][j];
 }
