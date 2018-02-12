@@ -27,7 +27,7 @@ void findMatches(wordList &newList, grid &newGrid)
     int nRows = newGrid.getRows();
     cout << "nRows is " << nRows << endl;
     int nCols = newGrid.getCols();
-    int m = 9, n = 0;
+    int m = 0, n = 0;
     vector <char> arr(0);
     //for (int m = 0; m < nRows; m++) //choosing starting point
     {
@@ -103,6 +103,8 @@ void findMatches(wordList &newList, grid &newGrid)
                     j = nCols + j;
                 }
             }
+
+            while(arr.size() < nRows) //go southeast
         }
     }
 }
