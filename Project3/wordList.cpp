@@ -124,7 +124,7 @@ ostream& operator << (ostream &out, const wordList &list)
     return out;
 }
 
-void quickSort(vector <string> &A, int p, int r)
+void wordlist::quickSort(vector <string> &A, int p, int r)
 {
     if (p < r)
     {
@@ -135,7 +135,7 @@ void quickSort(vector <string> &A, int p, int r)
     }
 }
 
-int partition(vector <string> &A, int p, int r)
+int wordlist::partition(vector <string> &A, int p, int r)
 {
 
     string x = A.at(r);
@@ -158,17 +158,9 @@ int partition(vector <string> &A, int p, int r)
     return i+1; //pivot location
 }
 
-void exchange(vector <string> &A, int n, int m)
+void wordlist::exchange(vector <string> &A, int n, int m)
 {
         string temp = A.at(n);
         A.at(n) = A.at(m);
         A.at(m) = temp;
-}
-
-
-void print(vector <string> &A)
-{
-    for(int j = 0; j < A.size(); j++)
-        cout << A.at(j) << " ";
-    cout << endl;
 }

@@ -19,7 +19,6 @@ class wordList
         void quickSort(vector <string> &A, int p, int r);
         int partition(vector <string> &A, int p, int r);
         void exchange(vector <string> &A, int n, int m);
-        void print(vector <string> &A);
 
         vector <string> * ptr;
 
