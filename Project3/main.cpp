@@ -87,7 +87,22 @@ void findMatches(wordList &newList, grid &newGrid)
             }
 
             arr.resize(0);
+
+            while(arr.size() < nCols) // go west
+            {
+                char letter = newGrid.getChar(m, j);
+                arr.resize(arr.size()+1);
+                arr.at(arr.size()-1) = letter;
+                cout << "array size is " << arr.size() << endl;
+                string word(arr.begin(), arr.end());
+                cout << "word is " << word << endl;
+                newList.search(word);
+                j--;
+                if(j < 0)
+                {
+                    j = nCols + j;
+                }
+            }
         }
     }
- 
 }
