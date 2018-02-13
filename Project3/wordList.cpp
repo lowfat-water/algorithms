@@ -88,38 +88,38 @@ void wordList::quickSort(vector <string> &A, int p, int r)
     if (p < r)
     {
         int q = partition(A, p, r); //calls partition
-        quickSort(A, p, q-1); //quickSort recursively
-        quickSort(A, q+1, r);
+        quickSort(A, p, q-1); //calls itself for first half of list
+        quickSort(A, q+1, r); //calls itself for 2nd half of list
     }
 }
 
 int wordList::partition(vector <string> &A, int p, int r) //partition and split the list
 {
 
-    string x = A.at(r);
+    string x = A.at(r); //pivot
 
     int i = p-1;
 
     for(int j = p; j < r; j++)
     {
-        if (A.at(j) <= x)
+        if (A.at(j) <= x) //if less than pivot
         {
-            i = i + 1;
-            exchange(A, i, j); //exchange based on relation to the pivot
+            i = i + 1; //increase size of left list
+            exchange(A, i, j); //put it on the left 
         }
     }
-    exchange(A, i+1, r);
+    exchange(A, i+1, r); //put pivot in middle
     return i+1; //pivot location
 }
 
-void wordList::mergeSort(vector <string> &B, int p, int r) //call mergeSort
+void wordList::mergeSort(vector <string> &B, int p, int r) 
 {
     if (p < r)
     {
         int q = floor((p+r)/2);
-        mergeSort(B, p, q); //recursively call mergeSort
-        mergeSort(B, q+1, r);
-        merge(B, p, q, r);
+        mergeSort(B, p, q); //call itself for first half of list
+        mergeSort(B, q+1, r); //for second half
+        merge(B, p, q, r); //merge two halves
     }
 }
 
@@ -128,26 +128,27 @@ void wordList::merge(vector <string> &B, int p, int q, int r) //merge the lists 
     int n1 = q - p + 1;
     int n2 = r - q;
 
-    vector <string> L(n1+1);
+    vector <string> L(n1+1); //new vectors for left and right lists
     vector <string> R(n2+1);
 
-    for(int i = 0; i <= n1-1; i++)
+    for(int i = 0; i <= n1-1; i++) //copies left half into L
     {
         L.at(i) = B.at(p+i);
     }
 
-    for(int j = 0; j <= n2-1; j++)
+    for(int j = 0; j <= n2-1; j++) //copies right half into R
     {
         R.at(j) = B.at(q+j+1);
     }
-    L.at(n1) = "zzzzzzzzzzzz";
+    
+    L.at(n1) = "zzzzzzzzzzzz"; //puts "large word" for comparison at the end
     R.at(n2) = "zzzzzzzzzzzz";
 
     int i = 0, j = 0;
 
-    for(int k = p; k <= r; k++)
+    for(int k = p; k <= r; k++) //combines L and R into B, sorted
     {
-        if (L.at(i) <= R.at(j))
+        if (L.at(i) <= R.at(j)) 
         {
             B.at(k) = L.at(i);
             i = i + 1;
@@ -160,17 +161,18 @@ void wordList::merge(vector <string> &B, int p, int q, int r) //merge the lists 
     }
 }
 
-void wordList::search(string key) //search through the dictionary for the word
+void wordList::search(string key) //public function to call binarySearch
 {
-    int location = binarySearch(dictionary, key); //binary search through the dictionary for they key
+    int location = binarySearch(dictionary, key); //call to private binary search to search dictionary for key
     if(location != (-1))
         cout << "word " << key << " located at location " << location << " in list." << endl;
 }
-int wordList::binarySearch(vector <string> &A, string key)
+
+int wordList::binarySearch(vector <string> &A, string key) //recursively binary search moving through the list
 {
-    return binarySearchAux(A, key, 0, A.size()-1); //recursively binary search moving through the list
+    return binarySearchAux(A, key, 0, A.size()-1); 
 }
-int wordList::binarySearchAux(vector <string> &A, string key, int left, int right)
+int wordList::binarySearchAux(vector <string> &A, string key, int left, int right) //searches sorted list by calling itself for smaller lists
 {
     if(right < left)
         return -1;
@@ -183,10 +185,10 @@ int wordList::binarySearchAux(vector <string> &A, string key, int left, int righ
         return binarySearchAux(A, key, mid+1, right);
 }
 
-ostream& operator << (ostream &out, const wordList &list) //overloaded << operator
+ostream& operator << (ostream &out, wordList &list) //overloaded << operator
 {
     cout << "printing . . ." << endl;
-    for (int i = 0; i != 3; i++)
+    for (int i = 0; i != list.getSize(); i++)
     {
         out << list.dictionary.at(i) << endl;
     }

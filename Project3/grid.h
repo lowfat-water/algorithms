@@ -14,7 +14,6 @@ class grid
         int getRows() const;
         int getCols() const;
         char getChar(int i, int j);
-        //friend ostream& operator << (ostream &out, const wordList &list);
     private:
         matrix <char> charMatrix;
 

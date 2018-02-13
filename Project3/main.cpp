@@ -17,19 +17,19 @@ string search(int sortMethod, wordList &newList, grid &newGrid, int r, int p); /
 
 int main()
 {
-    wordList list;
+    wordList list; //declare object of type worldList
     list.readIn();
-    grid input; //"input" is a grid
-    int p = 0, r = list.getSize()-1;
+    cout << "The list is " << list << endl; //use overloaded << operator to print list
+    grid input; //declare object of type grid
+    int p = 0, r = list.getSize()-1; //indices for sorting
     string file = search(2, list,  input, r, p); //1 for insertionSort, 2 for quickSort, 3 for mergeSort
 
     input.readIn(file); //read in the file
 
-
     findMatches(list, input); // run findMatches
 }
 
-string search(int sortMethod, wordList &newList, grid &newGrid, int r, int p) //sort the wordList, then print out words found in matrix
+string search(int sortMethod, wordList &newList, grid &newGrid, int r, int p) //sort the wordList, then reads in the name of the grid to search
 {
     newList.sort(sortMethod, p, r);
     cout << "Enter the name of the grid file you'd like to search: " << endl;

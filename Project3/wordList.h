@@ -14,7 +14,7 @@ class wordList
         void sort(int n, int p, int r);
         void insertionSort();
         void search(string key);
-        friend ostream& operator << (ostream &out, const wordList &list);
+        friend ostream& operator << (ostream &out, wordList &list);
 
     private:
         vector <string> dictionary;
