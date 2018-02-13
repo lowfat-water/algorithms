@@ -7,12 +7,11 @@
 
 using namespace std;
 
-void grid::readIn() //reads in from textfile "wordlist.txt"
+void grid::readIn(string fileName) //reads in from textfile "input.txt", specified by user
 {
     ifstream fin; //creates ifstream objects
     int numRows, numCols;
     vector <char> row;
-    string fileName = "input15.txt";
     char letter;
     fin.open(fileName.c_str()); //opens file
     if(!fin) //error handling

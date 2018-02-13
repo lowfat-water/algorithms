@@ -10,7 +10,7 @@ using namespace std;
 class grid
 {
     public:
-        void readIn();
+        void readIn(string fileName);
         int getRows() const;
         int getCols() const;
         char getChar(int i, int j);

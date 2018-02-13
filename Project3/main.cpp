@@ -6,23 +6,36 @@
 using namespace std;
 
 void findMatches(wordList &newList, grid &newGrid);
+string search(int sortMethod, wordList &newList, grid &newGrid, int r, int p);
 
 int main()
 {
     wordList list;
     list.readIn();
-    int p = 0, r = list.getSize()-1;
-    list.sort(2, p, r);
     grid input;
-    input.readIn();
+    int p = 0, r = list.getSize()-1;
+    string file = search(2, list,  input, r, p);
+    
+    input.readIn(file);
+
 
     findMatches(list, input);
 }
 
+string search(int sortMethod, wordList &newList, grid &newGrid, int r, int p)
+{
+    newList.sort(sortMethod, p, r);
+    cout << "Enter the name of the grid file you'd like to search: " << endl;
+        string fileName;
+    cin >> fileName;
+    return fileName;
+}
+
 void findMatches(wordList &newList, grid &newGrid)
 {   
+    clock_t startTime = clock();
+
     int nRows = newGrid.getRows();
-    cout << "nRows is " << nRows << endl;
     int nCols = newGrid.getCols();
     int m = 4, n = 7;
     vector <char> arr(0);
@@ -209,4 +222,8 @@ void findMatches(wordList &newList, grid &newGrid)
             }
         }
     }
+
+    float diff = clock() - startTime;
+    float seconds = diff / CLOCKS_PER_SEC;
+    cout << "Searching this list took " << seconds << " seconds." << endl;
 }
