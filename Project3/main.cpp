@@ -15,9 +15,6 @@ int main()
     list.sort(2, p, r);
     grid input;
     input.readIn();
-    cout << "the number of rows is " << input.getRows() << endl;
-    cout << "the number of columns is " << input.getCols() << endl;
-    cout << "the value at 2,3 is " << input.getChar(2,3) << endl;
 
     findMatches(list, input);
 }
@@ -29,9 +26,9 @@ void findMatches(wordList &newList, grid &newGrid)
     int nCols = newGrid.getCols();
     int m = 4, n = 7;
     vector <char> arr(0);
-    //for (int m = 0; m < nRows; m++) //choosing starting point
+    for (int m = 0; m < nRows; m++) //choosing starting point
     {
-      //  for(int n = 0; n < nCols; n++) //choosing starting point
+        for(int n = 0; n < nCols; n++) //choosing starting point
         {
             int i = m, j = n;
             while(arr.size() < nRows) //go south
@@ -70,10 +67,8 @@ void findMatches(wordList &newList, grid &newGrid)
             {
                 char letter = newGrid.getChar(m, j);
                 arr.resize(arr.size()+1);
-               // cout << "array size is " << arr.size() << endl;
                 arr.at(arr.size()-1) = letter;
                 string word(arr.begin(), arr.end());
-              //  cout << "word is " << word << endl;
                 newList.search(word);
                 j++;
                 if(j >= nCols)
@@ -98,11 +93,66 @@ void findMatches(wordList &newList, grid &newGrid)
                 }
             }
 
+            arr.resize(0);
+            
+            while(arr.size() < nRows) //go northeast
+            {
+                char letter = newGrid.getChar(i, j);
+                arr.resize(arr.size()+1);
+                arr.at(arr.size()-1) = letter;
+                string word(arr.begin(), arr.end());
+                newList.search(word);
+                i--; j++;
+
+                if(j < 0)
+                {
+                    j = nCols + j;
+                }
+                else if(j >= nCols)
+                {
+                    j = j % nCols;
+                }
+                if(i < 0)
+                {
+                    i = nRows + i;
+                }
+                else if(i >= nRows)
+                {
+                    i = i % nRows;
+                }
+            }
 
             arr.resize(0);
 
-            arr.resize(0);
+            while(arr.size() < nRows) //go northwest
+            {
+                char letter = newGrid.getChar(i, j);
+                arr.resize(arr.size()+1);
+                arr.at(arr.size()-1) = letter;
+                string word(arr.begin(), arr.end());
+                newList.search(word);
+                i--; j--;
 
+                if(j < 0)
+                {
+                    j = nCols + j;
+                }
+                else if(j >= nCols)
+                {
+                    j = j % nCols;
+                }
+                if(i < 0)
+                {
+                    i = nRows + i;
+                }
+                else if(i >= nRows)
+                {
+                    i = i % nRows;
+                }
+            }
+
+            arr.resize(0);
+            
             while(arr.size() < nRows) //go southeast
             {
                 char letter = newGrid.getChar(i, j);
@@ -111,6 +161,7 @@ void findMatches(wordList &newList, grid &newGrid)
                 string word(arr.begin(), arr.end());
                 newList.search(word);
                 i++; j++;
+
                 if(j < 0)
                 {
                     j = nCols + j;
@@ -135,10 +186,8 @@ void findMatches(wordList &newList, grid &newGrid)
             {
                 char letter = newGrid.getChar(i, j);
                 arr.resize(arr.size()+1);
-                cout << "array size is " << arr.size() << endl;
                 arr.at(arr.size()-1) = letter;
                 string word(arr.begin(), arr.end());
-                cout << "word is " << word << endl;
                 newList.search(word);
                 i++; j--;
                 if(j < 0)
@@ -158,7 +207,6 @@ void findMatches(wordList &newList, grid &newGrid)
                     i = i % nRows;
                 }
             }
-
         }
     }
 }
