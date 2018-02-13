@@ -164,7 +164,7 @@ void wordList::search(string key)
 {
     int location = binarySearch(dictionary, key);
     if(location != (-1))
-        cout << "word " << key << " located at " << location;
+        cout << "word " << key << " located at location " << location << " in list." << endl;
 }
 int wordList::binarySearch(vector <string> &A, string key)
 {

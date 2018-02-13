@@ -27,7 +27,7 @@ void findMatches(wordList &newList, grid &newGrid)
     int nRows = newGrid.getRows();
     cout << "nRows is " << nRows << endl;
     int nCols = newGrid.getCols();
-    int m = 0, n = 0;
+    int m = 4, n = 7;
     vector <char> arr(0);
     //for (int m = 0; m < nRows; m++) //choosing starting point
     {
@@ -38,10 +38,8 @@ void findMatches(wordList &newList, grid &newGrid)
             {
                 char letter = newGrid.getChar(i, n);
                 arr.resize(arr.size()+1);
-              //  cout << "array size is " << arr.size() << endl;
                 arr.at(arr.size()-1) = letter;
                 string word(arr.begin(), arr.end());
-             //   cout << "word is " << word << endl;
                 newList.search(word);
                 i++;
                 if(i >= nRows)
@@ -56,10 +54,8 @@ void findMatches(wordList &newList, grid &newGrid)
             {
                 char letter = newGrid.getChar(i, n);
                 arr.resize(arr.size()+1);
-              //  cout << "array size is " << arr.size() << endl;
                 arr.at(arr.size()-1) = letter;
                 string word(arr.begin(), arr.end());
-             //   cout << "word is " << word << endl;
                 newList.search(word);
                 i--;
                 if(i < 0)
@@ -93,9 +89,7 @@ void findMatches(wordList &newList, grid &newGrid)
                 char letter = newGrid.getChar(m, j);
                 arr.resize(arr.size()+1);
                 arr.at(arr.size()-1) = letter;
-                cout << "array size is " << arr.size() << endl;
                 string word(arr.begin(), arr.end());
-                cout << "word is " << word << endl;
                 newList.search(word);
                 j--;
                 if(j < 0)
@@ -104,7 +98,67 @@ void findMatches(wordList &newList, grid &newGrid)
                 }
             }
 
+
+            arr.resize(0);
+
+            arr.resize(0);
+
             while(arr.size() < nRows) //go southeast
+            {
+                char letter = newGrid.getChar(i, j);
+                arr.resize(arr.size()+1);
+                arr.at(arr.size()-1) = letter;
+                string word(arr.begin(), arr.end());
+                newList.search(word);
+                i++; j++;
+                if(j < 0)
+                {
+                    j = nCols + j;
+                }
+                else if(j >= nCols)
+                {
+                    j = j % nCols;
+                }
+                if(i < 0)
+                {
+                    i = nRows + i;
+                }
+                else if(i >= nRows)
+                {
+                    i = i % nRows;
+                }
+            }
+            
+            arr.resize(0);
+
+            while(arr.size() < nRows) //go southwest
+            {
+                char letter = newGrid.getChar(i, j);
+                arr.resize(arr.size()+1);
+                cout << "array size is " << arr.size() << endl;
+                arr.at(arr.size()-1) = letter;
+                string word(arr.begin(), arr.end());
+                cout << "word is " << word << endl;
+                newList.search(word);
+                i++; j--;
+                if(j < 0)
+                {
+                    j = nCols + j;
+                }
+                else if(j >= nCols)
+                {
+                    j = j % nCols;
+                }
+                if(i < 0)
+                {
+                    i = nRows + i;
+                }
+                else if(i >= nRows)
+                {
+                    i = i % nRows;
+                }
+            }
+
         }
     }
 }
