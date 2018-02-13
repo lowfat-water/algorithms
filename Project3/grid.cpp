@@ -27,21 +27,21 @@ void grid::readIn(string fileName) //reads in from textfile "input.txt", specifi
         {
             fin >> charMatrix[i][j];
         }
-    } 
+    }
     fin.close(); //closes file
 }
 
-int grid::getRows() const
+int grid::getRows() const //return the rows of the grid
 {
     return charMatrix.rows();
 }
 
-int grid::getCols() const
+int grid::getCols() const //return columns of the grid
 {
     return charMatrix.rows();
 }
 
-char grid::getChar(int i, int j)
+char grid::getChar(int i, int j) //get the character at the current point in the grid
 {
     return charMatrix[i][j];
 }

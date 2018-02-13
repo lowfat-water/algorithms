@@ -32,7 +32,7 @@ void wordList::readIn() //reads in from textfile "wordlist.txt"
     fin.close(); //closes file
 }
 
-void wordList::exchange(vector <string> &A, int n, int m)
+void wordList::exchange(vector <string> &A, int n, int m) //switch the positions of n and m
 {
         string temp = A.at(n);
         A.at(n) = A.at(m);
@@ -42,7 +42,7 @@ void wordList::exchange(vector <string> &A, int n, int m)
 void wordList::sort(int n, int p, int r)
 {
     clock_t startTime = clock();
-    
+
     if(n == 1) //calls insertionSort
     {
         insertionSort();
@@ -58,7 +58,7 @@ void wordList::sort(int n, int p, int r)
         cout << "Sorting via quickSort took " << seconds << " seconds." << endl;
     }
     else if(n == 3) //calls mergeSort
-    {  
+    {
         mergeSort(dictionary, p, r);
         float diff = clock()-startTime;
         float seconds = diff/CLOCKS_PER_SEC;
@@ -87,13 +87,13 @@ void wordList::quickSort(vector <string> &A, int p, int r)
 {
     if (p < r)
     {
-        int q = partition(A, p, r);
-        quickSort(A, p, q-1);
+        int q = partition(A, p, r); //calls partition
+        quickSort(A, p, q-1); //quickSort recursively
         quickSort(A, q+1, r);
     }
 }
 
-int wordList::partition(vector <string> &A, int p, int r)
+int wordList::partition(vector <string> &A, int p, int r) //partition and split the list
 {
 
     string x = A.at(r);
@@ -105,25 +105,25 @@ int wordList::partition(vector <string> &A, int p, int r)
         if (A.at(j) <= x)
         {
             i = i + 1;
-            exchange(A, i, j);
+            exchange(A, i, j); //exchange based on relation to the pivot
         }
     }
     exchange(A, i+1, r);
     return i+1; //pivot location
 }
 
-void wordList::mergeSort(vector <string> &B, int p, int r)
+void wordList::mergeSort(vector <string> &B, int p, int r) //call mergeSort
 {
     if (p < r)
     {
         int q = floor((p+r)/2);
-        mergeSort(B, p, q);
+        mergeSort(B, p, q); //recursively call mergeSort
         mergeSort(B, q+1, r);
         merge(B, p, q, r);
     }
 }
 
-void wordList::merge(vector <string> &B, int p, int q, int r)
+void wordList::merge(vector <string> &B, int p, int q, int r) //merge the lists back together
 {
     int n1 = q - p + 1;
     int n2 = r - q;
@@ -160,15 +160,15 @@ void wordList::merge(vector <string> &B, int p, int q, int r)
     }
 }
 
-void wordList::search(string key)
+void wordList::search(string key) //search through the dictionary for the word
 {
-    int location = binarySearch(dictionary, key);
+    int location = binarySearch(dictionary, key); //binary search through the dictionary for they key
     if(location != (-1))
         cout << "word " << key << " located at location " << location << " in list." << endl;
 }
 int wordList::binarySearch(vector <string> &A, string key)
 {
-    return binarySearchAux(A, key, 0, A.size()-1);
+    return binarySearchAux(A, key, 0, A.size()-1); //recursively binary search moving through the list
 }
 int wordList::binarySearchAux(vector <string> &A, string key, int left, int right)
 {
@@ -183,7 +183,7 @@ int wordList::binarySearchAux(vector <string> &A, string key, int left, int righ
         return binarySearchAux(A, key, mid+1, right);
 }
 
-ostream& operator << (ostream &out, const wordList &list)
+ostream& operator << (ostream &out, const wordList &list) //overloaded << operator
 {
     cout << "printing . . ." << endl;
     for (int i = 0; i != 3; i++)
