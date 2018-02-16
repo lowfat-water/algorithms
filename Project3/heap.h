@@ -18,4 +18,4 @@ class heap
         void heapSort;
     private:
         vector <T> heapVector;
-}
+};
