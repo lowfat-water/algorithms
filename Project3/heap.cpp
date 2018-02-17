@@ -5,6 +5,18 @@
 using namespace std;
 
 template <typename T>
+heap<T>::heap(int size, const T& initVal)
+{
+    heapVector(size, initVal);
+}
+
+template <typename T>
+const T& heap<T>::operator[] (int i) const
+{
+    return heapVector.at(i);
+}
+
+template <typename T>
 int heap<T>::parent(int i)
 {
     int n = floor(i/2);
@@ -14,7 +26,7 @@ int heap<T>::parent(int i)
 template <typename T>
 int heap<T>::left(int i)
 {
-    int l = 2 * 1 + 1;
+    int l = 2 * i + 1;
     return l;
 }
 
@@ -40,4 +52,17 @@ void heap<T>::assignVector(vector <T> &newVector)
         heapVector.at(i) = newVector.at(i);
     }
 }
+
+template <typename T>
+void heap<T>::print()
+{
+    {
+        for(int j = 0; j < heapVector.size(); j++)
+        {
+            cout << heapVector.at(j) << " ";
+        }    
+        cout << endl;
+    }
+}
+
 

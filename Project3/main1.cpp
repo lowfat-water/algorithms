@@ -6,14 +6,8 @@ using namespace std;
 
 int main()
 {
-    int array[] = {4, 1, 3, 2, 16, 9, 10, 14, 8, 7, 28};
-    int size = sizeof(array)/sizeof(array[0]);
-    cout << "size is " << size << endl;
-    vector <int> A(size);
-    for(int i = 0; i < size; i++)
-    {
-        A.at(i) = array[i];
-    }
-    heap <int> newHeap;
-    newHeap.assignVector(A);
+    int size = 5, value = 2;
+    heap <int> newHeap(size, value);
+    cout << newHeap[1];
+    //int item = newHeap.getItem(1);
 }
