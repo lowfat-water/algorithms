@@ -4,7 +4,7 @@
 using namespace std;
 
 void buildMaxHeap(vector <int> &A);
-void maxHeapify(vector <int> &A, int i);
+void maxHeapify(vector <int> &A, int heapSize, int i);
 void exchange(vector <int> &A, int n, int m);
 int left(int i);
 int right(int i);
@@ -25,36 +25,50 @@ int main()
     print(A);
 }
 
-void buildMaxHeap(vector <int> &A)
-{
-    int heapSize = A.size();
-    for (int i =(floor(heapSize/2)); i >= 0; i--)
-    {
-        maxHeapify(A,i);
-    }
-    //print(A);
-    cout << "max heap created." << endl;
-}
-
-void maxHeapify(vector <int> &A, int i)
+void maxHeapify(vector <int> &A, int heapSize, int i)
 {
     cout << "max heapify for index " << i << endl;
     int l = left(i);
     int r = right(i);
     
     int largest;
-    if (l < A.size() && A.at(l) > A.at(i)) //if parent is smaller than left child
+    if (l < heapSize && A.at(l) > A.at(i)) //if parent is smaller than left child
         largest = l;
     else 
         largest = i;
-    if (r < A.size() && A.at(r) > A.at(largest)) //if right child is smaller than left child
+    if (r < heapSize && A.at(r) > A.at(largest)) //if right child is smaller than left child
         largest = r;
     if (largest != i)
     {
         exchange(A, i, largest);
-        maxHeapify(A, largest);
+        maxHeapify(A, heapSize, largest);
     }
     //print(A);
+}
+
+void buildMaxHeap(vector <int> &A)
+{
+    int heapSize = A.size();
+    for (int i =(floor(heapSize/2)); i >= 0; i--)
+    {
+        maxHeapify(A, heapSize, i);
+    }
+    //print(A);
+    cout << "max heap created." << endl;
+}
+
+void heapSort(vector <int> &A)
+{
+    int heapSize = A.size();
+    buildMaxHeap(A);
+    //vector <int> B;
+
+    for(int i = A.size()-1; i >= 0; i--)
+    {
+        exchange(A, 0, i);
+        heapSize -= 1;
+        maxHeapify(A, heapSize, 0);
+    }
 }
 
 void exchange(vector <int> &A, int n, int m)
@@ -68,12 +82,14 @@ void exchange(vector <int> &A, int n, int m)
 
 int left(int i)
 {
-    return (2*i+1);
+    int l = 2 * i + 1;
+    return l;
 }
 
 int right(int i)
 {
-    return (2*i+2);
+    int r = 2 * i + 2;;
+    return r;
 }
 
 void print(vector <int> &A)
@@ -81,17 +97,4 @@ void print(vector <int> &A)
     for(int j = 0; j < A.size(); j++)
         cout << A.at(j) << " ";
     cout << endl;
-}
-
-void heapSort(vector <int> &A)
-{
-    int heapSize = A.size();
-    buildMaxHeap(A);
-
-    for(int i = A.size()-1; i > 2; i--)
-    {
-        exchange(A, 0, i);
-        heapSize = heapSize - 1;
-        maxHeapify(A, 0);
-    }
 }

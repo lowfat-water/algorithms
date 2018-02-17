@@ -10,6 +10,7 @@ EECE2560
 #include <time.h>
 #include "wordList.h"
 #include "grid.h"
+#include "heap.h"
 using namespace std;
 
 void findMatches(wordList &newList, grid &newGrid); //searches the matrix for matches to the dictionary
@@ -17,6 +18,14 @@ string search(int sortMethod, wordList &newList, grid &newGrid, int r, int p); /
 
 int main()
 {
+    vector <int> A(11);
+    int array[] = {4, 1, 3, 2, 16, 9, 10, 14, 8, 7, 28};
+    for(int i = 0; i < 11; i++)
+    {
+        A.at(i) = array[i];
+    }
+    heap <int> newHeap(A);
+ /*
     wordList list; //declare object of type worldList
     list.readIn();
     cout << "The list is " << list << endl; //use overloaded << operator to print list
@@ -27,6 +36,8 @@ int main()
     input.readIn(file); //read in the file
 
     findMatches(list, input); // run findMatches
+*/
+
 }
 
 string search(int sortMethod, wordList &newList, grid &newGrid, int r, int p) //sort the wordList, then reads in the name of the grid to search
