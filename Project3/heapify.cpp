@@ -59,15 +59,14 @@ void maxHeapify(vector <int> &A, int i)
 
 void heapSort(vector <int> &A)
 {
-    vector <int> *heapSize;
-    heapSize = &A.at(A.size() - 1);;
+    int heapSize = A.size();
     buildMaxHeap(A);
 
     for(int i = A.size()-1; i > 0; i--)
     {
         exchange(A, 0, i);
         heapSize -= 1;
-        maxHeapify(*heapSize, 0);
+        maxHeapify(A, 0);
     }
 }
 
