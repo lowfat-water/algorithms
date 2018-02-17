@@ -43,18 +43,18 @@ void maxHeapify(vector <int> &A, int i)
     int r = right(i);
     
     int largest;
-    if (l < A.size() && A.at(l) > A.at(i))
+    if (l < A.size() && A.at(l) > A.at(i)) //if parent is smaller than left child
         largest = l;
     else 
         largest = i;
-    if (r < A.size() && A.at(r) > A.at(largest))
+    if (r < A.size() && A.at(r) > A.at(largest)) //if right child is smaller than left child
         largest = r;
     if (largest != i)
     {
         exchange(A, i, largest);
         maxHeapify(A, largest);
     }
-    print(A);
+    //print(A);
 }
 
 void heapSort(vector <int> &A)
@@ -76,6 +76,7 @@ void exchange(vector <int> &A, int n, int m)
         A.at(n) = A.at(m);
         A.at(m) = temp;
         cout << "exchanged items " << n << " and " << m << endl;
+        print(A);
 }
 
 int left(int i)

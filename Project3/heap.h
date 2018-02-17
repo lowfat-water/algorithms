@@ -15,6 +15,7 @@ class heap
         void initializeMinHeap(); //initializes heap to 0s?
         void minHeapify(vector <T> &A, int i);
         void buildMinHeap(vector <T> &A);
+        void heapSort;
     private:
         vector <T> heapVector;
 };
