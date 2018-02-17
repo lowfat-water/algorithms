@@ -17,4 +17,4 @@ class heap
         void buildMinHeap(vector <T> &A);
     private:
         vector <T> heapVector;
-}
+};

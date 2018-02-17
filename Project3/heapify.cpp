@@ -57,6 +57,20 @@ void maxHeapify(vector <int> &A, int i)
     print(A);
 }
 
+void heapSort(vector <int> &A)
+{
+    vector <int> *heapSize;
+    heapSize = &A.at(A.size() - 1);;
+    buildMaxHeap(A);
+
+    for(int i = A.size()-1; i > 0; i--)
+    {
+        exchange(A, 0, i);
+        heapSize -= 1;
+        maxHeapify(*heapSize, 0);
+    }
+}
+
 void exchange(vector <int> &A, int n, int m)
 {
         int temp = A.at(n);
@@ -67,12 +81,14 @@ void exchange(vector <int> &A, int n, int m)
 
 int left(int i)
 {
-    return (2*i+1);
+    int l = 2 * i + 1;
+    return l;
 }
 
 int right(int i)
 {
-    return (2*i+2);
+    int r = 2 * i + 2;;
+    return r;
 }
 
 void print(vector <int> &A)
@@ -80,17 +96,4 @@ void print(vector <int> &A)
     for(int j = 0; j < A.size(); j++)
         cout << A.at(j) << " ";
     cout << endl;
-}
-
-void heapSort(vector <int> &A)
-{
-    int heapSize = A.size();
-    buildMaxHeap(A);
-
-    for(int i = A.size()-1; i > 2; i--)
-    {
-        exchange(A, 0, i);
-        heapSize = heapSize - 1;
-        maxHeapify(A, 0);
-    }
 }
