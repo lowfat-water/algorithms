@@ -5,15 +5,30 @@
 using namespace std;
 
 template <typename T>
-heap<T>::heap(int size, const T& initVal)
-{
-    heapVector(size, initVal);
-}
+heap<T>::heap(int size, const T& initVal):heapVector(size, initVal)
+{}
 
 template <typename T>
 const T& heap<T>::operator[] (int i) const
 {
     return heapVector.at(i);
+}
+
+
+template <typename T>
+T& heap<T>::operator[] (int i)
+{
+    return heapVector.at(i);
+}
+
+template <typename T>
+heap<T> &heap<T>::operator=(heap<T> m)
+{
+    for(int i = 0; i < m.heapVector.size(); i++)
+    {    
+        (*this)[i] = m[i];
+    }
+    return *this;
 }
 
 template <typename T>
@@ -38,7 +53,7 @@ int heap<T>::right(int i)
 }
 
 template <typename T>
-T heap<T>::getItem(int n)
+T& heap<T>::getItem(int n)
 {
     return heapVector.at(n);
 }
@@ -46,7 +61,9 @@ T heap<T>::getItem(int n)
 template <typename T>
 void heap<T>::assignVector(vector <T> &newVector)
 {
+    
     int n = newVector.size();
+    heapVector.resize(n);
     for(int i = 0; i < n; i++)
     {
         heapVector.at(i) = newVector.at(i);
