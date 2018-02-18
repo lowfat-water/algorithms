@@ -19,13 +19,13 @@ class heap
         const T& operator[](int i) const;
         T& operator[](int i);
         heap<T> &operator=(heap<T> m); 
-        /*void initializeMaxHeap(); //initializes heap to 0s?
+        void initializeMaxHeap(); //initializes heap to 0s?
         void maxHeapify(vector <T> &A, int i);
         void buildMaxHeap(vector <T> &A);
         void initializeMinHeap(); //initializes heap to 0s?
         void minHeapify(vector <T> &A, int i);
         void buildMinHeap(vector <T> &A);
-        void heapSort;*/
+        void heapSort;
     private:
         vector<T> heapVector;
 };
