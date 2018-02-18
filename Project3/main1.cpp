@@ -10,10 +10,11 @@ int main()
     
     int arraySize = sizeof(array)/sizeof(array[1]);
     vector <int> A(array, array+arraySize);
-    int size = 5, value = 2;
     heap<int> newHeap;
-    newHeap.assignVector(A);
-
+    newHeap.initializeMaxHeap(A);
+    newHeap.print();
+    newHeap.maxHeapify(1, arraySize);
+    newHeap.print();
     //heap newHeap(size, value);
     int n = newHeap.getItem(1);
     //cout << n << endl;

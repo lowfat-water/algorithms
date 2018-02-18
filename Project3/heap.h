@@ -14,18 +14,18 @@ class heap
         int left(int i); //returns index of left child for index i
         int right(int i); //returns index of left child for index i
         T& getItem(int n); //returns nth item in the heap
-        void assignVector(vector <T> &newVector);
         void print();
         const T& operator[](int i) const;
         T& operator[](int i);
         heap<T> &operator=(heap<T> m); 
-        void initializeMaxHeap(); //initializes heap to 0s?
-        void maxHeapify(vector <T> &A, int i);
-        void buildMaxHeap(vector <T> &A);
-        void initializeMinHeap(); //initializes heap to 0s?
-        void minHeapify(vector <T> &A, int i);
-        void buildMinHeap(vector <T> &A);
-        void heapSort;
+        void initializeMaxHeap(vector <T> &newVector); //initializes vector by taking in contents of another
+        void maxHeapify(int i, int heapSize);
+        void exchange(vector <T> &A, int n, int m);
+        //void buildMaxHeap();
+        //void initializeMinHeap(); //initializes heap to 0s?
+        //void minHeapify(vector <T> &A, int i);
+        //void buildMinHeap(vector <T> &A);
+        //void heapSort;
     private:
         vector<T> heapVector;
 };
@@ -39,7 +39,6 @@ const T& heap<T>::operator[] (int i) const
 {
     return heapVector.at(i);
 }
-
 
 template <typename T>
 T& heap<T>::operator[] (int i)
@@ -85,7 +84,19 @@ T& heap<T>::getItem(int n)
 }
 
 template <typename T>
-void heap<T>::assignVector(vector <T> &newVector)
+void heap<T>::print()
+{
+    {
+        for(int j = 0; j < heapVector.size(); j++)
+        {
+            cout << heapVector.at(j) << " ";
+        }    
+        cout << endl;
+    }
+}
+
+template <typename T>
+void heap<T>::initializeMaxHeap(vector <T> &newVector)
 {
     
     int n = newVector.size();
@@ -97,15 +108,33 @@ void heap<T>::assignVector(vector <T> &newVector)
 }
 
 template <typename T>
-void heap<T>::print()
+void heap<T>::maxHeapify(int i, int heapSize)
 {
+    cout << "max heapify for index " << i << endl;
+    int l = left(i);
+    int r = right(i);
+    
+    int largest;
+    if (l < heapSize && heapVector.at(l) > heapVector.at(i)) //if parent is smaller than left child
+        largest = l;
+    else 
+        largest = i;
+    if (r < heapSize && heapVector.at(r) > heapVector.at(largest)) //if right child is smaller than left child
+        largest = r;
+    if (largest != i)
     {
-        for(int j = 0; j < heapVector.size(); j++)
-        {
-            cout << heapVector.at(j) << " ";
-        }    
-        cout << endl;
+        exchange(heapVector, i, largest);
+        maxHeapify(largest, heapSize);
     }
+}
+
+template <typename T>
+void heap<T>::exchange(vector <T> &A, int n, int m)
+{
+        int temp = A.at(n);
+        A.at(n) = A.at(m);
+        A.at(m) = temp;
+        cout << "exchanged items " << n << " and " << m << endl;
 }
 
 #endif
