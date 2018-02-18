@@ -11,8 +11,8 @@ int main()
     int arraySize = sizeof(array)/sizeof(array[1]);
     vector <int> A(array, array+arraySize);
     heap<int> newHeap;
-    newHeap.initializeMaxHeap(A);
+    newHeap.initializeHeap(A);
     newHeap.print();
-    newHeap.heapSort();
+    newHeap.buildMinHeap();
     newHeap.print();
 }

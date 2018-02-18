@@ -18,13 +18,12 @@ class heap
         const T& operator[](int i) const;
         T& operator[](int i);
         heap<T> &operator=(heap<T> m); 
-        void initializeMaxHeap(vector <T> &newVector); //initializes vector by taking in contents of another
+        void initializeHeap(vector <T> &newVector); //initializes vector by taking in contents of another
         void maxHeapify(int i, int heapSize);
         void exchange(vector <T> &A, int n, int m);
         void buildMaxHeap();
-        //void initializeMinHeap(); //initializes heap to 0s?
-        //void minHeapify(vector <T> &A, int i);
-        //void buildMinHeap(vector <T> &A);
+        void minHeapify(int i, int heapSize);
+        void buildMinHeap();
         void heapSort();
     private:
         vector<T> heapVector;
@@ -96,7 +95,7 @@ void heap<T>::print()
 }
 
 template <typename T>
-void heap<T>::initializeMaxHeap(vector <T> &newVector)
+void heap<T>::initializeHeap(vector <T> &newVector)
 {
     
     int n = newVector.size();
@@ -163,5 +162,37 @@ void heap<T>::heapSort()
     }
 }
 
+template <typename T>
+void heap<T>::minHeapify(int i, int heapSize)
+{
+    cout << "min heapify for index " << i << endl;
+    int l = left(i);
+    int r = right(i);
+    
+    int smallest;
+    if (l < heapSize && heapVector.at(l) < heapVector.at(i)) //if parent is smaller than left child
+        smallest = l;
+    else 
+        smallest = i;
+    if (r < heapSize && heapVector.at(r) < heapVector.at(smallest)) //if right child is smaller than left child
+        smallest = r;
+    if (smallest != i)
+    {
+        exchange(heapVector, i, smallest);
+        minHeapify(smallest, heapSize);
+    }
+}
+
+template <typename T>
+void heap<T>::buildMinHeap()
+{
+    int heapSize = heapVector.size();
+    for (int i =(floor(heapSize/2)); i >= 0; i--)
+    {
+        minHeapify(i, heapSize);
+    }
+    //print(A);
+    cout << "min heap created." << endl;
+}
 
 #endif
