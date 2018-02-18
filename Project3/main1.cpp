@@ -12,7 +12,7 @@ int main()
     vector <int> A(array, array+arraySize);
     heap<int> newHeap;
     newHeap.initializeHeap(A);
-    newHeap.print();
+    newHeap.printHeap();
     newHeap.buildMinHeap();
-    newHeap.print();
+    newHeap.printHeap();
 }

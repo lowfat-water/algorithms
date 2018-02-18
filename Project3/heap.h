@@ -9,22 +9,24 @@ template <typename T>
 class heap
 {
     public:
-        heap(int size = 1, const T& initVal = T());
+        heap(int size = 1, const T& initVal = T()); //default constructor
         int parent(int i); //returns index of parent for index i
         int left(int i); //returns index of left child for index i
         int right(int i); //returns index of left child for index i
         T& getItem(int n); //returns nth item in the heap
-        void print();
-        const T& operator[](int i) const;
-        T& operator[](int i);
-        heap<T> &operator=(heap<T> m); 
         void initializeHeap(vector <T> &newVector); //initializes vector by taking in contents of another
         void maxHeapify(int i, int heapSize);
-        void exchange(vector <T> &A, int n, int m);
         void buildMaxHeap();
         void minHeapify(int i, int heapSize);
         void buildMinHeap();
         void heapSort();
+        vector <T> &getVector();
+ //       const T& operator[](int i) const;
+ //       T& operator[](int i);
+//        vector<T> &operator=(heap<T> m); 
+
+        void printHeap();
+        void exchange(vector <T> &A, int n, int m);
     private:
         vector<T> heapVector;
 };
@@ -33,11 +35,13 @@ template <typename T>
 heap<T>::heap(int size, const T& initVal):heapVector(size, initVal)
 {}
 
+/*
 template <typename T>
 const T& heap<T>::operator[] (int i) const
 {
     return heapVector.at(i);
 }
+
 
 template <typename T>
 T& heap<T>::operator[] (int i)
@@ -46,14 +50,15 @@ T& heap<T>::operator[] (int i)
 }
 
 template <typename T>
-heap<T> &heap<T>::operator=(heap<T> m)
+vector <T> &heap<T>::operator=(heap<T> m)
 {
     for(int i = 0; i < m.heapVector.size(); i++)
     {    
         (*this)[i] = m[i];
     }
-    return *this;
+    return this->heapVector;
 }
+*/
 
 template <typename T>
 int heap<T>::parent(int i)
@@ -83,18 +88,6 @@ T& heap<T>::getItem(int n)
 }
 
 template <typename T>
-void heap<T>::print()
-{
-    {
-        for(int j = 0; j < heapVector.size(); j++)
-        {
-            cout << heapVector.at(j) << " ";
-        }    
-        cout << endl;
-    }
-}
-
-template <typename T>
 void heap<T>::initializeHeap(vector <T> &newVector)
 {
     
@@ -109,7 +102,7 @@ void heap<T>::initializeHeap(vector <T> &newVector)
 template <typename T>
 void heap<T>::maxHeapify(int i, int heapSize)
 {
-    cout << "max heapify for index " << i << endl;
+    //cout << "max heapify for index " << i << endl;
     int l = left(i);
     int r = right(i);
     
@@ -128,15 +121,6 @@ void heap<T>::maxHeapify(int i, int heapSize)
 }
 
 template <typename T>
-void heap<T>::exchange(vector <T> &A, int n, int m)
-{
-        int temp = A.at(n);
-        A.at(n) = A.at(m);
-        A.at(m) = temp;
-        cout << "exchanged items " << n << " and " << m << endl;
-}
-
-template <typename T>
 void heap<T>::buildMaxHeap()
 {
     int heapSize = heapVector.size();
@@ -145,27 +129,13 @@ void heap<T>::buildMaxHeap()
         maxHeapify(i, heapSize);
     }
     //print(A);
-    cout << "max heap created." << endl;
-}
-
-template <typename T>
-void heap<T>::heapSort()
-{
-    int heapSize = heapVector.size();
-    buildMaxHeap();
-
-    for(int i = heapSize-1; i >= 0; i--)
-    {
-        exchange(heapVector, 0, i);
-        heapSize -= 1;
-        maxHeapify(0, heapSize);
-    }
+    //cout << "max heap created." << endl;
 }
 
 template <typename T>
 void heap<T>::minHeapify(int i, int heapSize)
 {
-    cout << "min heapify for index " << i << endl;
+    //cout << "min heapify for index " << i << endl;
     int l = left(i);
     int r = right(i);
     
@@ -193,6 +163,46 @@ void heap<T>::buildMinHeap()
     }
     //print(A);
     cout << "min heap created." << endl;
+}
+
+template <typename T>
+void heap<T>::heapSort()
+{
+    cout << "Sorting via heapSort. . ." << endl;
+    int heapSize = heapVector.size();
+    buildMaxHeap();
+
+    for(int i = heapSize-1; i >= 0; i--)
+    {
+        exchange(heapVector, 0, i);
+        heapSize -= 1;
+        maxHeapify(0, heapSize);
+    }
+}
+
+template<typename T>
+vector <T> &heap<T>::getVector()
+{
+    return heapVector;
+}
+
+template <typename T>
+void heap<T>::printHeap()
+{
+    for(int j = 0; j < heapVector.size(); j++)
+    {
+        cout << heapVector.at(j) << " ";
+    }    
+    cout << endl;
+}
+
+template <typename T>
+void heap<T>::exchange(vector <T> &A, int n, int m)
+{
+        T temp = A.at(n);
+        A.at(n) = A.at(m);
+        A.at(m) = temp;
+        //cout << "exchanged items " << n << " and " << m << endl;
 }
 
 #endif

@@ -2,4 +2,5 @@ cat
 mouse
 horse
 lion
+point
 bear

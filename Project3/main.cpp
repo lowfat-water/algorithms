@@ -1,5 +1,5 @@
 /*
-Project 3a
+Project 3b
 Alina Rossi-Conaway and Dan Bartels
 Octavia Camps
 EECE2560
@@ -8,6 +8,7 @@ EECE2560
 #include <iostream>
 #include <string>
 #include <time.h>
+#include <cmath>
 #include "wordList.h"
 #include "grid.h"
 #include "heap.h"
@@ -18,26 +19,18 @@ string search(int sortMethod, wordList &newList, grid &newGrid, int r, int p); /
 
 int main()
 {
-    vector <int> A(11);
-    int array[] = {4, 1, 3, 2, 16, 9, 10, 14, 8, 7, 28};
-    for(int i = 0; i < 11; i++)
-    {
-        A.at(i) = array[i];
-    }
-    heap <int> newHeap(A);
- /*
     wordList list; //declare object of type worldList
     list.readIn();
-    cout << "The list is " << list << endl; //use overloaded << operator to print list
     grid input; //declare object of type grid
     int p = 0, r = list.getSize()-1; //indices for sorting
-    string file = search(2, list,  input, r, p); //1 for insertionSort, 2 for quickSort, 3 for mergeSort
+    //list.sort(4, p, r);
+    
+    string file = search(4, list,  input, r, p); //1 for insertionSort, 2 for quickSort, 3 for mergeSort, 4 for heapSort
+
 
     input.readIn(file); //read in the file
 
     findMatches(list, input); // run findMatches
-*/
-
 }
 
 string search(int sortMethod, wordList &newList, grid &newGrid, int r, int p) //sort the wordList, then reads in the name of the grid to search

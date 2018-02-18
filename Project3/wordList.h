@@ -22,6 +22,7 @@ class wordList
         int partition(vector <string> &A, int p, int r);
         void mergeSort(vector <string> &B, int p, int r);
         void merge(vector <string> &B, int p, int q, int r);
+        void heapSort();
         int binarySearch (vector <string> &A, string key);
         int binarySearchAux (vector <string> &A, string key, int right, int left);
 };

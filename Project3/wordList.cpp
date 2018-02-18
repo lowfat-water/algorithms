@@ -5,6 +5,7 @@
 #include <time.h>
 #include <cmath>
 #include "wordList.h"
+#include "heap.h"
 
 using namespace std;
 
@@ -60,12 +61,20 @@ void wordList::sort(int n, int p, int r)
     else if(n == 3) //calls mergeSort
     {
         mergeSort(dictionary, p, r);
-        float diff = clock()-startTime;
+        float diff = clock() - startTime;
         float seconds = diff/CLOCKS_PER_SEC;
         cout << "Sorting via mergeSort took " << seconds << " seconds." << endl;
     }
+    else if(n == 4) //calls heapSort 
+    {
+        heapSort();
+        float diff = clock() - startTime;
+        float seconds = diff/CLOCKS_PER_SEC;
+        cout << *this << endl; //prints sorted list
+        cout << "Sorting vis heapSort took " << seconds << " seconds." << endl;
+    }
     else
-        cerr << "Invalid input parameter. Please input n=1, 2, or 3." << endl;
+        cerr << "Invalid input parameter. Please input n=1, 2, 3, or 4." << endl;
 }
 
 void wordList::insertionSort() //takes in a reference to seconds as an argument to be printed in main
@@ -81,6 +90,13 @@ void wordList::insertionSort() //takes in a reference to seconds as an argument 
         }
         dictionary.at(i+1) = key; //if the value at i is smaller than the key, inserts key to the right of it
     }
+}
+
+void wordList::search(string key) //public function to call binarySearch
+{
+    int location = binarySearch(dictionary, key); //call to private binary search to search dictionary for key
+    if(location != (-1))
+        cout << "Word " << key << " located at location " << location << " in list." << endl;
 }
 
 void wordList::quickSort(vector <string> &A, int p, int r)
@@ -161,17 +177,20 @@ void wordList::merge(vector <string> &B, int p, int q, int r) //merge the lists 
     }
 }
 
-void wordList::search(string key) //public function to call binarySearch
+void wordList::heapSort()
 {
-    int location = binarySearch(dictionary, key); //call to private binary search to search dictionary for key
-    if(location != (-1))
-        cout << "word " << key << " located at location " << location << " in list." << endl;
+    heap <string> dictionaryHeap;
+    dictionaryHeap.initializeHeap(dictionary);
+    dictionaryHeap.buildMaxHeap();
+    dictionaryHeap.heapSort();
+    dictionary = dictionaryHeap.getVector();
 }
 
 int wordList::binarySearch(vector <string> &A, string key) //recursively binary search moving through the list
 {
     return binarySearchAux(A, key, 0, A.size()-1); 
 }
+
 int wordList::binarySearchAux(vector <string> &A, string key, int left, int right) //searches sorted list by calling itself for smaller lists
 {
     if(right < left)
