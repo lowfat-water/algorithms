@@ -21,11 +21,11 @@ class heap
         void initializeMaxHeap(vector <T> &newVector); //initializes vector by taking in contents of another
         void maxHeapify(int i, int heapSize);
         void exchange(vector <T> &A, int n, int m);
-        //void buildMaxHeap();
+        void buildMaxHeap();
         //void initializeMinHeap(); //initializes heap to 0s?
         //void minHeapify(vector <T> &A, int i);
         //void buildMinHeap(vector <T> &A);
-        //void heapSort;
+        void heapSort();
     private:
         vector<T> heapVector;
 };
@@ -136,5 +136,32 @@ void heap<T>::exchange(vector <T> &A, int n, int m)
         A.at(m) = temp;
         cout << "exchanged items " << n << " and " << m << endl;
 }
+
+template <typename T>
+void heap<T>::buildMaxHeap()
+{
+    int heapSize = heapVector.size();
+    for (int i =(floor(heapSize/2)); i >= 0; i--)
+    {
+        maxHeapify(i, heapSize);
+    }
+    //print(A);
+    cout << "max heap created." << endl;
+}
+
+template <typename T>
+void heap<T>::heapSort()
+{
+    int heapSize = heapVector.size();
+    buildMaxHeap();
+
+    for(int i = heapSize-1; i >= 0; i--)
+    {
+        exchange(heapVector, 0, i);
+        heapSize -= 1;
+        maxHeapify(0, heapSize);
+    }
+}
+
 
 #endif

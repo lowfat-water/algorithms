@@ -13,11 +13,6 @@ int main()
     heap<int> newHeap;
     newHeap.initializeMaxHeap(A);
     newHeap.print();
-    newHeap.maxHeapify(1, arraySize);
+    newHeap.heapSort();
     newHeap.print();
-    //heap newHeap(size, value);
-    int n = newHeap.getItem(1);
-    //cout << n << endl;
-    cout << newHeap[7] << endl;
-    //int item = newHeap.getItem(1);
 }
