@@ -19,6 +19,10 @@ string search(int sortMethod, wordList &newList, grid &newGrid, int r, int p); /
 
 int main()
 {
+    wordList list;
+    list.readIn();
+    cout << "the size of the list is " << list.getSize() << " words." << endl;
+    /*
     wordList list; //declare object of type worldList
     list.readIn();
     grid input; //declare object of type grid
@@ -31,6 +35,7 @@ int main()
     input.readIn(file); //read in the file
 
     findMatches(list, input); // run findMatches
+    */
 }
 
 string search(int sortMethod, wordList &newList, grid &newGrid, int r, int p) //sort the wordList, then reads in the name of the grid to search
