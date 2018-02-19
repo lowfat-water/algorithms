@@ -34,7 +34,6 @@ hashTable<T>::hashTable(vector <T> newVector)
     {
         int index = hash(newVector.at(i));
         addItem(newVector.at(i));
-        cout << "added item  " << newVector.at(i) << " to table at index " << index << endl;
     }
 }
 
@@ -46,6 +45,17 @@ void hashTable<T>::addItem(T &item)
     {
         table[hashKey].push_back(item);
     }
+}
+
+template <typename T>
+void hashTable<T>::deleteItem(T &item)
+{
+    int hashKey = hash(item);
+    int location = 0;
+    while(table[hashKey].at(location) != item)
+        location++;
+    table[hashKey].erase(table[hashKey].begin() + location);
+    cout << "erased item " << item <<  " from hashKey " << hashKey << " in index " << location << endl;
 }
 
 template <typename T>

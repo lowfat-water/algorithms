@@ -99,6 +99,11 @@ void wordList::search(string key) //public function to call binarySearch
         cout << "Word " << key << " located at location " << location << " in list." << endl;
 }
 
+vector <string> &wordList::getVector()
+{
+    return dictionary;
+}
+
 void wordList::quickSort(vector <string> &A, int p, int r)
 {
     if (p < r)
