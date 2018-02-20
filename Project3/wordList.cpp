@@ -92,7 +92,7 @@ void wordList::insertionSort() //takes in a reference to seconds as an argument 
     }
 }
 
-void wordList::search(string key) //public function to call binarySearch
+void wordList::inList(string key) //public function to call binarySearch
 {
     int location = binarySearch(dictionary, key); //call to private binary search to search dictionary for key
     if(location != (-1))

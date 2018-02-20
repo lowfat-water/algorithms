@@ -12,30 +12,42 @@ EECE2560
 #include "wordList.h"
 #include "grid.h"
 #include "heap.h"
+#include "hashTable.h"
 using namespace std;
 
-void findMatches(wordList &newList, grid &newGrid); //searches the matrix for matches to the dictionary
+template <typename T>
+void findMatches(T &newList, grid &newGrid); //searches the matrix for matches to the dictionary
 string search(int sortMethod, wordList &newList, grid &newGrid, int r, int p); //takes in the grid file to search
 
 int main()
 {
     wordList list;
     list.readIn();
-    cout << "the size of the list is " << list.getSize() << " words." << endl;
-    /*
-    wordList list; //declare object of type worldList
-    list.readIn();
+
     grid input; //declare object of type grid
-    int p = 0, r = list.getSize()-1; //indices for sorting
-    //list.sort(4, p, r);
-    
-    string file = search(4, list,  input, r, p); //1 for insertionSort, 2 for quickSort, 3 for mergeSort, 4 for heapSort
 
 
-    input.readIn(file); //read in the file
+    //Part 1: using heapSort
+    //uncomment the following section of code to run the program using heapSort
 
-    findMatches(list, input); // run findMatches
+    /*
+        int p = 0, r = list.getSize()-1; //indices for sorting
+        string file = search(4, list,  input, r, p); //1 for insertionSort, 2 for quickSort, 3 for mergeSort, 4 for heapSort
+        input.readIn(file);
+        findMatches(list, input);
     */
+
+    //Part 2: using hashTables
+    //uncomment the following section of code to run the program using hashTables
+    
+    /*
+        hashTable <string> table(list.getVector());
+        string file;
+        cout << "Enter the name of the grid file you'd like to search: " << endl;
+            cin >> file;
+        input.readIn(file); //read in the file
+        findMatches(table, input); // run findMatches 
+    */   
 }
 
 string search(int sortMethod, wordList &newList, grid &newGrid, int r, int p) //sort the wordList, then reads in the name of the grid to search
@@ -47,7 +59,8 @@ string search(int sortMethod, wordList &newList, grid &newGrid, int r, int p) //
     return fileName;
 }
 
-void findMatches(wordList &newList, grid &newGrid) //find wordList words in the grid
+template <typename T>
+void findMatches(T &newList, grid &newGrid) //find wordList words in the grid
 {
     clock_t startTime = clock(); //start counting
 
@@ -66,7 +79,7 @@ void findMatches(wordList &newList, grid &newGrid) //find wordList words in the 
                 arr.resize(arr.size()+1); //move forward in the grid
                 arr.at(arr.size()-1) = letter;
                 string word(arr.begin(), arr.end()); //print out the word
-                newList.search(word);
+                newList.inList(word);
                 i++;
                 if(i >= nRows)
                 {
@@ -82,7 +95,7 @@ void findMatches(wordList &newList, grid &newGrid) //find wordList words in the 
                 arr.resize(arr.size()+1);
                 arr.at(arr.size()-1) = letter;
                 string word(arr.begin(), arr.end());
-                newList.search(word);
+                newList.inList(word);
                 i--;
                 if(i < 0)
                 {
@@ -98,7 +111,7 @@ void findMatches(wordList &newList, grid &newGrid) //find wordList words in the 
                 arr.resize(arr.size()+1);
                 arr.at(arr.size()-1) = letter;
                 string word(arr.begin(), arr.end());
-                newList.search(word);
+                newList.inList(word);
                 j++;
                 if(j >= nCols)
                 {
@@ -114,7 +127,7 @@ void findMatches(wordList &newList, grid &newGrid) //find wordList words in the 
                 arr.resize(arr.size()+1);
                 arr.at(arr.size()-1) = letter;
                 string word(arr.begin(), arr.end());
-                newList.search(word);
+                newList.inList(word);
                 j--;
                 if(j < 0)
                 {
@@ -130,7 +143,7 @@ void findMatches(wordList &newList, grid &newGrid) //find wordList words in the 
                 arr.resize(arr.size()+1);
                 arr.at(arr.size()-1) = letter;
                 string word(arr.begin(), arr.end());
-                newList.search(word);
+                newList.inList(word);
                 i--; j++;
 
                 if(j < 0)
@@ -159,7 +172,7 @@ void findMatches(wordList &newList, grid &newGrid) //find wordList words in the 
                 arr.resize(arr.size()+1);
                 arr.at(arr.size()-1) = letter;
                 string word(arr.begin(), arr.end());
-                newList.search(word);
+                newList.inList(word);
                 i--; j--;
 
                 if(j < 0)
@@ -188,7 +201,8 @@ void findMatches(wordList &newList, grid &newGrid) //find wordList words in the 
                 arr.resize(arr.size()+1);
                 arr.at(arr.size()-1) = letter;
                 string word(arr.begin(), arr.end());
-                newList.search(word);
+            
+                newList.inList(word);
                 i++; j++;
 
                 if(j < 0)
@@ -217,7 +231,7 @@ void findMatches(wordList &newList, grid &newGrid) //find wordList words in the 
                 arr.resize(arr.size()+1);
                 arr.at(arr.size()-1) = letter;
                 string word(arr.begin(), arr.end());
-                newList.search(word);
+                newList.inList(word);
                 i++; j--;
                 if(j < 0)
                 {
