@@ -13,7 +13,7 @@ class wordList
         void exchange(vector <string> &A, int n, int m);
         void sort(int n, int p, int r);
         void insertionSort();
-        void search(string key);
+        void inList(string key);
         friend ostream& operator << (ostream &out, wordList &list);
         vector <string>& getVector();
 
