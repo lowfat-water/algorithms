@@ -47,7 +47,7 @@ int main()
             cin >> file;
         input.readIn(file); //read in the file
         findMatches(table, input); // run findMatches 
-    */   
+    */
 }
 
 string search(int sortMethod, wordList &newList, grid &newGrid, int r, int p) //sort the wordList, then reads in the name of the grid to search
