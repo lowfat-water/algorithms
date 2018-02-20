@@ -23,6 +23,9 @@ int main()
         for(int i = 0; i < size/3; i++)
         table.printVector(i);
     }
+    string item1 = "undifferentiated";
+    table.inList(item);
+    table.inList(item1);
     /*
     int arr[] = {26, 37, 32, 12, 15, 28, 45, 6, 7};
     int arrSize = sizeof(arr)/sizeof(arr[1]);
