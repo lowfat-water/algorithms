@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include "d_except.h"
 using namespace std;
 
 int main()
