@@ -9,6 +9,8 @@ class board
 {
     public:
         board(int squareSize);
+        //const int squareSize;
+        int boardSize;
         void clear();
         void initialize(ifstream &fin);
         void print();
