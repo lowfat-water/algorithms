@@ -17,10 +17,14 @@ class board
         bool isBlank(int, int);
         int getCell(int, int);
         void setCell(int i,int j, int val);
+        void printConflicts();
     private:
     // The following matrices go from 1 to boardSize in each
     // dimension. I.e. they are each (boardSize+1) X (boardSize+1)
-    matrix<int> value;
+        matrix<int> value;
+        matrix <bool> rowConflicts;
+        matrix <bool> colConflicts;
+        matrix <bool> sqConflicts;
 };
 
 #endif

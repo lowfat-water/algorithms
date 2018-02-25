@@ -8,6 +8,19 @@ board::board(int squareSize)
 {
     boardSize = squareSize * squareSize;
     value.resize(boardSize, boardSize);
+    rowConflicts.resize(boardSize, boardSize);
+    colConflicts.resize(boardSize, boardSize);
+    sqConflicts.resize(boardSize, boardSize);
+
+    for (int i = 0; i < boardSize; i++)
+    {
+        for (int j = 0; j < boardSize; j++)
+        {
+            rowConflicts[i][j] = false;
+            colConflicts[i][j] = false;
+            sqConflicts[i][j] = false;
+        }
+    }
 }
 
 void board::initialize(ifstream &fin)
@@ -31,8 +44,17 @@ void board::initialize(ifstream &fin)
 
 void board::setCell(int i, int j, int val)
 {
-    cout << "val is " << val << endl;
-    value[i][j] = val;
+    if(val == 0)
+    {
+        value[i][j] = val;
+    }
+    //cout << "val is " << val << endl;
+    else if( !rowConflicts[i][val-1] && !colConflicts[val-1][j] )
+    {    
+        value[i][j] = val;
+        rowConflicts[i][val-1] = true;
+        colConflicts[val-1][j] = true;
+    }
 }
 
 void board::print()
@@ -46,4 +68,47 @@ void board::print()
         }
         cout << endl;
     }
+    cout << endl;
+}
+
+void board::printConflicts()
+{
+    cout << "Row Conflicts: " << endl;
+    for(int i = 0; i < boardSize; i++)
+    {
+        for(int j = 0; j < boardSize; j++)
+        {
+            if(!rowConflicts[i][j])
+                cout << 'F' << " ";
+            else cout << 'T' << " ";
+        }
+        cout << endl;
+    }
+    cout << endl;
+
+    cout << "Column Conflicts: " << endl;
+    for(int i = 0; i < boardSize; i++)
+    {
+        for(int j = 0; j < boardSize; j++)
+        {
+            if(!colConflicts[i][j])
+                cout << 'F' << " ";
+            else cout << 'T' << " ";
+        }
+        cout << endl;
+    }
+    cout << endl;
+
+    cout << "Square Conflicts: " << endl;
+    for(int i = 0; i < boardSize; i++)
+    {
+        for(int j = 0; j < boardSize; j++)
+        {
+            if(!sqConflicts[i][j])
+                cout << 'F' << " ";
+            else cout << 'T' << " ";
+        }
+        cout << endl;
+    }
+    cout << endl;
 }
