@@ -127,3 +127,28 @@ void board::clearCell(int i, int j)
     colConflicts[temp - 1][j] = false;
     sqConflicts[getSquare(i, j)][temp - 1] = false;
 }
+
+bool board::isBlank(int i, int j)
+{
+    if (i < 0 || j < 0 || i >= boardSize || j >= boardSize)
+        throw rangeError("Index out of range");
+    if (value[i][j] == 0)
+        return true;
+    else return false;
+}
+
+bool board::isSolved()
+{
+    bool solved;
+
+    for (int i = 0; i < boardSize; i++)
+    {
+        for (int j = 0; j < boardSize; j++)
+        {
+            if (isBlank(i, j))
+                return false;
+        }
+    }
+
+    return true;
+}

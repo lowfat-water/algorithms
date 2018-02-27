@@ -38,4 +38,8 @@ int main()
     b1.clearCell(4,5);
     b1.print();
     b1.printConflicts();
+
+    if (b1.isSolved())
+        cout << "Board has been solved." << endl;
+    else cout << "Board has not been solved." << endl;
 }
