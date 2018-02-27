@@ -42,6 +42,25 @@ void board::initialize(ifstream &fin)
     }
 }
 
+bool board::square(int i, int j)
+{
+  int vsquare = i/3;
+	int hsquare = j/3;
+  for (int row = vsquare * 3; row < (vsquare*3 + 3); row++)
+  {
+    for (int col = hsquare * 3; col < (hsquare*3 + 3); col++)
+    {
+			if (!(row == vsquare && col == hsquare))
+      {
+				if (value[ i ][ j ] == sqConflicts[row][col])
+        {
+				return true;
+      }
+    }
+  }
+}
+}
+
 void board::setCell(int i, int j, int val)
 {
     if(val == 0)
@@ -49,11 +68,12 @@ void board::setCell(int i, int j, int val)
         value[i][j] = val;
     }
     //cout << "val is " << val << endl;
-    else if( !rowConflicts[i][val-1] && !colConflicts[val-1][j] )
-    {    
+    else if( !rowConflicts[i][val] && !colConflicts[val][j])
+    {
         value[i][j] = val;
-        rowConflicts[i][val-1] = true;
-        colConflicts[val-1][j] = true;
+        rowConflicts[i][val] = true;
+        colConflicts[val][j] = true;
+        square(i,j);
     }
 }
 
