@@ -4,8 +4,9 @@
 #include  "d_matrix.h"
 #include "board.h"
 
-board::board(int squareSize)
+board::board(int squaresize)
 {
+    squareSize = squaresize;
     boardSize = squareSize * squareSize;
     value.resize(boardSize, boardSize);
     rowConflicts.resize(boardSize, boardSize);
@@ -42,23 +43,9 @@ void board::initialize(ifstream &fin)
     }
 }
 
-bool board::square(int i, int j)
+int board::getSquare(int i, int j)
 {
-  int vsquare = i/3;
-	int hsquare = j/3;
-  for (int row = vsquare * 3; row < (vsquare*3 + 3); row++)
-  {
-    for (int col = hsquare * 3; col < (hsquare*3 + 3); col++)
-    {
-			if (!(row == vsquare && col == hsquare))
-      {
-				if (value[ i ][ j ] == sqConflicts[row][col])
-        {
-				return true;
-      }
-    }
-  }
-}
+    return squareSize * ( i / squareSize) + (j / squareSize);  
 }
 
 void board::setCell(int i, int j, int val)
@@ -68,12 +55,15 @@ void board::setCell(int i, int j, int val)
         value[i][j] = val;
     }
     //cout << "val is " << val << endl;
-    else if( !rowConflicts[i][val] && !colConflicts[val][j])
+    else if( !rowConflicts[i][val - 1] && !colConflicts[val - 1][j] && !sqConflicts[getSquare(i,j)][val-1])
     {
+        cout << "i is " << i << endl;
+        cout << "j is " << j << endl;
+        cout << " square is " << getSquare(i,j) << endl;
         value[i][j] = val;
-        rowConflicts[i][val] = true;
-        colConflicts[val][j] = true;
-        square(i,j);
+        rowConflicts[i][val - 1] = true;
+        colConflicts[val - 1][j] = true;
+        sqConflicts[getSquare(i, j)][val - 1] = true;
     }
 }
 

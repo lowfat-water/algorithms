@@ -8,11 +8,10 @@ using namespace std;
 int main()
 {
     ifstream fin;
-
+    int squaresize = 3;
     // Read the sample grid from the file.
     string fileName = "sudoku1.txt";
     fin.open(fileName.c_str());
-    int squareSize = 3;
     if (!fin)
     {
         cerr << "Cannot open " << fileName << endl;
@@ -20,7 +19,7 @@ int main()
     }
     try
     {
-        board b1(squareSize); // squareSize=3 for a 9x9 board
+        board b1(squaresize); // squareSize=3 for a 9x9 board
         while (fin && fin.peek() != 'Z')
         {
             b1.initialize(fin);
