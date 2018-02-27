@@ -1,3 +1,10 @@
+/*
+Project 4a
+Alina Rossi-Conaway and Dan Bartels
+Octavia Camps
+EECE2560
+*/
+
 #include <iostream>
 #include <vector>
 #include "board.h"
