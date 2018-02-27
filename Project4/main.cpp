@@ -9,6 +9,7 @@ int main()
 {
     ifstream fin;
     int squaresize = 3;
+    board b1(squaresize); // squareSize=3 for a 9x9 board
     // Read the sample grid from the file.
     string fileName = "sudoku1.txt";
     fin.open(fileName.c_str());
@@ -19,7 +20,6 @@ int main()
     }
     try
     {
-        board b1(squaresize); // squareSize=3 for a 9x9 board
         while (fin && fin.peek() != 'Z')
         {
             b1.initialize(fin);
@@ -27,10 +27,15 @@ int main()
             b1.printConflicts();
         }
     }
+
     catch (indexRangeError &ex)
     {
         cout << ex.what() << endl;
         exit(1);
     }
     fin.close();
+
+    b1.clearCell(4,5);
+    b1.print();
+    b1.printConflicts();
 }

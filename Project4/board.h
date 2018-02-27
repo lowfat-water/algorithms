@@ -19,6 +19,8 @@ class board
         void setCell(int i,int j, int val);
         void printConflicts();
         int getSquare(int i, int j);
+        void clearCell(int i, int j);
+        bool isSolved();
     private:
     // The following matrices go from 1 to boardSize in each
     // dimension. I.e. they are each (boardSize+1) X (boardSize+1)

@@ -54,12 +54,8 @@ void board::setCell(int i, int j, int val)
     {
         value[i][j] = val;
     }
-    //cout << "val is " << val << endl;
     else if( !rowConflicts[i][val - 1] && !colConflicts[val - 1][j] && !sqConflicts[getSquare(i,j)][val-1])
     {
-        cout << "i is " << i << endl;
-        cout << "j is " << j << endl;
-        cout << " square is " << getSquare(i,j) << endl;
         value[i][j] = val;
         rowConflicts[i][val - 1] = true;
         colConflicts[val - 1][j] = true;
@@ -121,4 +117,13 @@ void board::printConflicts()
         cout << endl;
     }
     cout << endl;
+}
+
+void board::clearCell(int i, int j)
+{
+    int temp = value[i][j];
+    value[i][j] = 0;
+    rowConflicts[i][temp - 1] = false;
+    colConflicts[temp - 1][j] = false;
+    sqConflicts[getSquare(i, j)][temp - 1] = false;
 }
