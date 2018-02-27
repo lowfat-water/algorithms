@@ -6,14 +6,14 @@
 
 board::board(int squaresize)
 {
-    squareSize = squaresize;
+    squareSize = squaresize; //initializing member variables
     boardSize = squareSize * squareSize;
-    value.resize(boardSize, boardSize);
-    rowConflicts.resize(boardSize, boardSize);
+    value.resize(boardSize, boardSize); //resizes board matrix
+    rowConflicts.resize(boardSize, boardSize); //resizes conflict matrices
     colConflicts.resize(boardSize, boardSize);
     sqConflicts.resize(boardSize, boardSize);
 
-    for (int i = 0; i < boardSize; i++)
+    for (int i = 0; i < boardSize; i++) //initializes conflict matrices to false
     {
         for (int j = 0; j < boardSize; j++)
         {
@@ -31,21 +31,21 @@ void board::initialize(ifstream &fin)
     {
         for (int j = 0; j < boardSize; j++)
         {
-            fin >> ch;
+            fin >> ch; //reads in from file
 
-            if(ch != '.')
+            if(ch != '.') //if there is a number
             {
-                setCell(i, j, ch - '0');
+                setCell(i, j, ch - '0'); //sets cell to the integer that ch represents
             }
 
-            else setCell(i, j, 0);
+            else setCell(i, j, 0); //sets cell to 0 if ch is a .
         }
     }
 }
 
 int board::getSquare(int i, int j)
 {
-    return squareSize * ( i / squareSize) + (j / squareSize);  
+    return squareSize * ( i / squareSize) + (j / squareSize); //returns square number based on cell indices
 }
 
 void board::setCell(int i, int j, int val)
@@ -54,10 +54,10 @@ void board::setCell(int i, int j, int val)
     {
         value[i][j] = val;
     }
-    else if( !rowConflicts[i][val - 1] && !colConflicts[val - 1][j] && !sqConflicts[getSquare(i,j)][val-1])
+    else if( !rowConflicts[i][val - 1] && !colConflicts[val - 1][j] && !sqConflicts[getSquare(i,j)][val-1]) //checks conflicts
     {
-        value[i][j] = val;
-        rowConflicts[i][val - 1] = true;
+        value[i][j] = val; // sets cell 
+        rowConflicts[i][val - 1] = true; //updates conflicts
         colConflicts[val - 1][j] = true;
         sqConflicts[getSquare(i, j)][val - 1] = true;
     }
@@ -121,9 +121,9 @@ void board::printConflicts()
 
 void board::clearCell(int i, int j)
 {
-    int temp = value[i][j];
-    value[i][j] = 0;
-    rowConflicts[i][temp - 1] = false;
+    int temp = value[i][j]; //stores value
+    value[i][j] = 0; //clears cell 
+    rowConflicts[i][temp - 1] = false; //updates conflicts
     colConflicts[temp - 1][j] = false;
     sqConflicts[getSquare(i, j)][temp - 1] = false;
 }
@@ -137,7 +137,7 @@ bool board::isBlank(int i, int j)
     else return false;
 }
 
-bool board::isSolved()
+bool board::isSolved() //checks if board is solved
 {
     bool solved;
 
