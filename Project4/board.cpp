@@ -24,6 +24,17 @@ board::board(int squaresize)
     }
 }
 
+void board::clear()
+{
+    for (int i = 0; i < boardSize; i++)
+    {
+        for (int j = 0; j < boardSize; j++)
+        {
+            value[i][j] = 0;
+        }
+    }
+}
+
 void board::initialize(ifstream &fin)
 {
     char ch;
@@ -38,7 +49,7 @@ void board::initialize(ifstream &fin)
                 setCell(i, j, ch - '0'); //sets cell to the integer that ch represents
             }
 
-            else setCell(i, j, 0); //sets cell to 0 if ch is a .
+        //      else setCell(i, j, 0); //sets cell to 0 if ch is a .
         }
     }
 }
@@ -54,13 +65,20 @@ void board::setCell(int i, int j, int val)
     {
         value[i][j] = val;
     }
-    else if( !rowConflicts[i][val - 1] && !colConflicts[val - 1][j] && !sqConflicts[getSquare(i,j)][val-1]) //checks conflicts
+    else if(checkCell(i, j, val)) // checks conflicts for value
     {
         value[i][j] = val; // sets cell 
         rowConflicts[i][val - 1] = true; //updates conflicts
         colConflicts[val - 1][j] = true;
         sqConflicts[getSquare(i, j)][val - 1] = true;
     }
+}
+
+bool board::checkCell(int i, int j, int val)
+{
+    if( !rowConflicts[i][val - 1] && !colConflicts[val - 1][j] && !sqConflicts[getSquare(i,j)][val-1])
+        return true;
+    else return false;
 }
 
 void board::print()
