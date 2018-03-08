@@ -65,8 +65,9 @@ void board::setCell(int i, int j, int val)
     {
         value[i][j] = val;
     }
-    else if(checkCell(i, j, val)) // checks conflicts for value
+    else //if(checkCell(i, j, val)) // checks conflicts for value
     {
+        cout << "assigning value " << val << " to cell " << i << ", " << j << endl;
         value[i][j] = val; // sets cell 
         rowConflicts[i][val - 1] = true; //updates conflicts
         colConflicts[val - 1][j] = true;
@@ -76,9 +77,17 @@ void board::setCell(int i, int j, int val)
 
 bool board::checkCell(int i, int j, int val)
 {
+    cout << "checking cell " << i << ", " << j << " for value " << val << endl;
     if( !rowConflicts[i][val - 1] && !colConflicts[val - 1][j] && !sqConflicts[getSquare(i,j)][val-1])
+    {    
+        cout << "valid." << endl;
         return true;
-    else return false;
+    }
+    else 
+    {
+        cout << "invalid." << endl;
+        return false;
+    }
 }
 
 void board::print()
@@ -169,4 +178,38 @@ bool board::isSolved() //checks if board is solved
     }
 
     return true;
+}
+
+bool board::solve()
+{
+    int row, col;
+
+    if (!findEmpty(row, col))
+        return true; //done!
+    cout << "row is " << row << endl;
+    cout << "col is " << col << endl;
+    for (int digit = 1; digit <= boardSize; digit++)
+    {
+        if(checkCell(row, col, digit))
+        {
+            setCell(row, col, digit);
+        }
+        if (solve())
+            return true;
+        value[row][col] = 0;
+    }
+    return false;
+}
+
+bool board::findEmpty(int &row, int &col)
+{
+    for (row = 0; row < boardSize; row++)
+    {   
+        for (col = 0; col < boardSize; col++)
+        {
+            if (value[row][col] == 0)
+                return true;
+        }
+    }
+    return false;
 }

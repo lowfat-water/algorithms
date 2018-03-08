@@ -18,7 +18,7 @@ int main()
     int squaresize = 3;
     board b1(squaresize); // squareSize=3 for a 9x9 board
     // Read the sample grid from the file.
-    string fileName = "sudoku.txt";
+    string fileName = "sudoku1.txt";
     fin.open(fileName.c_str());
     if (!fin) // error handling
     {
@@ -29,6 +29,7 @@ int main()
     {
         while (fin && fin.peek() != 'Z') //while we're not at the end of the file
         {
+            b1.clear();
             b1.initialize(fin); //initializes board with input file
             b1.print(); //prints board
             //b1.printConflicts(); //prints conflicts
@@ -45,6 +46,9 @@ int main()
     //b1.clearCell(4,5); //clears cell (4,5)
     //b1.print(); //prints updated board
     //b1.printConflicts(); //prints updated conflicts
+
+    if (b1.solve())
+        b1.print();
 
     if (b1.isSolved()) //if board has been solved
         cout << "Board has been solved." << endl;
