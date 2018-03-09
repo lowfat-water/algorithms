@@ -61,13 +61,13 @@ int board::getSquare(int i, int j)
 
 void board::setCell(int i, int j, int val)
 {
+    cout << "assigning value " << val << " to cell " << i << ", " << j << endl;
     if(val == 0)
     {
         value[i][j] = val;
     }
-    else //if(checkCell(i, j, val)) // checks conflicts for value
+    else if (val != 0)//if(checkCell(i, j, val)) // checks conflicts for value
     {
-        cout << "assigning value " << val << " to cell " << i << ", " << j << endl;
         value[i][j] = val; // sets cell 
         rowConflicts[i][val - 1] = true; //updates conflicts
         colConflicts[val - 1][j] = true;
@@ -185,20 +185,28 @@ bool board::solve()
     int row, col;
 
     if (!findEmpty(row, col))
-        return true; //done!
-    cout << "row is " << row << endl;
-    cout << "col is " << col << endl;
+    {
+        return true; //done!   
+    }        
+//    cout << "row is " << row << endl;
+//    cout << "col is " << col << endl;
+
     for (int digit = 1; digit <= boardSize; digit++)
     {
-        if(checkCell(row, col, digit))
+        if(checkCell(row, col, digit) == true)
         {
             setCell(row, col, digit);
-        }
-        if (solve())
-            return true;
-        value[row][col] = 0;
+
+            if (solve() == true)
+            {    
+                return true;
+            }
+            cout << "backtracking for cell " << row << ", " << col << endl;
+            clearCell(row, col);
+        }   
     }
-    return false;
+   return false;
+
 }
 
 bool board::findEmpty(int &row, int &col)
@@ -207,9 +215,14 @@ bool board::findEmpty(int &row, int &col)
     {   
         for (col = 0; col < boardSize; col++)
         {
-            if (value[row][col] == 0)
+            if (getCell(row, col) == 0)
                 return true;
         }
     }
     return false;
+}
+
+int board::getCell(int row, int col)
+{
+    return value[row][col];
 }
