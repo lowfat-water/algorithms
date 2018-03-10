@@ -31,6 +31,9 @@ void board::clear()
         for (int j = 0; j < boardSize; j++)
         {
             value[i][j] = 0;
+            rowConflicts[i][j] = false;
+            colConflicts[i][j] = false;
+            sqConflicts[i][j] = false;
         }
     }
 }
@@ -61,7 +64,7 @@ int board::getSquare(int i, int j)
 
 void board::setCell(int i, int j, int val)
 {
-    cout << "assigning value " << val << " to cell " << i << ", " << j << endl;
+    //cout << "assigning value " << val << " to cell " << i << ", " << j << endl;
     if(val == 0)
     {
         value[i][j] = val;
