@@ -51,8 +51,6 @@ void board::initialize(ifstream &fin)
             {
                 setCell(i, j, ch - '0'); //sets cell to the integer that ch represents
             }
-
-        //      else setCell(i, j, 0); //sets cell to 0 if ch is a .
         }
     }
 }
@@ -64,7 +62,7 @@ int board::getSquare(int i, int j)
 
 void board::setCell(int i, int j, int val)
 {
-    //cout << "assigning value " << val << " to cell " << i << ", " << j << endl;
+    cout << "assigning value " << val << " to cell " << i << ", " << j << endl;
     if(val == 0)
     {
         value[i][j] = val;
@@ -191,8 +189,6 @@ bool board::solve()
     {
         return true; //done!   
     }        
-//    cout << "row is " << row << endl;
-//    cout << "col is " << col << endl;
 
     for (int digit = 1; digit <= boardSize; digit++)
     {
