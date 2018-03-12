@@ -62,7 +62,7 @@ int board::getSquare(int i, int j)
 
 void board::setCell(int i, int j, int val)
 {
-    cout << "assigning value " << val << " to cell " << i << ", " << j << endl;
+    //cout << "assigning value " << val << " to cell " << i << ", " << j << endl;
     if(val == 0)
     {
         value[i][j] = val;
@@ -78,15 +78,15 @@ void board::setCell(int i, int j, int val)
 
 bool board::checkCell(int i, int j, int val)
 {
-    cout << "checking cell " << i << ", " << j << " for value " << val << endl;
+    //cout << "checking cell " << i << ", " << j << " for value " << val << endl;
     if( !rowConflicts[i][val - 1] && !colConflicts[val - 1][j] && !sqConflicts[getSquare(i,j)][val-1])
     {    
-        cout << "valid." << endl;
+        //cout << "valid." << endl;
         return true;
     }
     else 
     {
-        cout << "invalid." << endl;
+        //cout << "invalid." << endl;
         return false;
     }
 }
@@ -181,9 +181,10 @@ bool board::isSolved() //checks if board is solved
     return true;
 }
 
-bool board::solve()
+bool board::solve(int &counter)
 {
     int row, col;
+    counter++;
 
     if (!findEmpty(row, col))
     {
@@ -196,11 +197,11 @@ bool board::solve()
         {
             setCell(row, col, digit);
 
-            if (solve() == true)
+            if (solve(counter) == true)
             {    
                 return true;
             }
-            cout << "backtracking for cell " << row << ", " << col << endl;
+            //cout << "backtracking for cell " << row << ", " << col << endl;
             clearCell(row, col);
         }   
     }

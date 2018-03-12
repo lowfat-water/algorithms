@@ -20,7 +20,7 @@ class board
         void clearCell(int i, int j);
         bool isBlank(int, int);
         bool isSolved();
-        bool solve();
+        bool solve(int &counter);
         bool findEmpty(int &row, int &col);
 
         int getCell(int, int);

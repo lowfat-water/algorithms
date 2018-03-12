@@ -10,15 +10,17 @@ EECE2560
 #include "board.h"
 #include "d_except.h"
 #include <fstream>
+#include <numeric>
 using namespace std;
 
 int main()
 {
     ifstream fin;
-    int squaresize = 3;
+    int squaresize = 3, counter = 0;
+    vector <int> counters;
     board b1(squaresize); // squareSize=3 for a 9x9 board
     // Read the sample grid from the file.
-    string fileName = "sudoku4.txt";
+    string fileName = "sudoku.txt"; // change this input name to read from other input files!
     fin.open(fileName.c_str());
     if (!fin) // error handling
     {
@@ -34,11 +36,16 @@ int main()
             b1.print(); //prints board
         //    b1.printConflicts(); //prints conflicts
 
-            //if (b1.solve())
-            //    b1.print();
+            if (b1.solve(counter))
+                b1.print();
     
         if (b1.isSolved()) //if board has been solved
+        {    
             cout << "Board has been solved." << endl;
+            cout << "Solving board took " << counter << " recursions." << endl << endl;
+            counters.push_back(counter);
+            counter = 0;
+        }
         else cout << "Board has not been solved." << endl;
         }
     }
@@ -50,6 +57,9 @@ int main()
     }
     fin.close(); //closes file
 
+
+    int avg = (accumulate(counters.begin(), counters.end(), 0)) / counters.size();
+    cout << "The average solving time for this board set is " << avg << " recursions." << endl;
     //b1.clearCell(4,5); //clears cell (4,5)
     //b1.print(); //prints updated board
     //b1.printConflicts(); //prints updated conflicts
