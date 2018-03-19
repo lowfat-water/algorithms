@@ -132,9 +132,11 @@ void maze::mapMazeToGraph(Graph &g)
   {
     pair<adj_iterator, adj_iterator> vItr_adjRange = adjacent_vertices(*vItr, g);
     adj_iterator vItr_adj = vItr_adjRange.first;
+    cout << "adjacent vertices to vertex " << *vItr << " is " << vItr_adjRange->first << endl;
     //for (adj_iterator vItr_adj = vItr_adjRange.first; vItr_adj != vItr_adjRange.second; ++vItr_adj)
     {
-      //pair <Edge, bool>  e1 = add_edge(*vItr, *vItr_adj, g);
+      //cout << " adding edge between vertices " << *vItr << " and "  << *vItr_adj << endl;
+      pair <Edge, bool>  e1 = add_edge(*vItr, *vItr_adj, g);
     }
   }
 
