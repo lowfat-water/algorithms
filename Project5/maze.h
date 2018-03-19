@@ -37,12 +37,16 @@ public:
                         Graph g);
    int numRows(){return rows;};
    int numCols(){return cols;};
+   //matrix<Vertex> nodes;
+   Vertex getNode(int i, int j){return nodes[i][j];};
+   void addEdges(Vertex v, Graph &g);
 
 private:
    int rows; // number of rows in the maze
    int cols; // number of columns in the maze12 a
    
    matrix<bool> value;
+   matrix<Vertex> nodes;
 };
 
 maze::maze(ifstream &fin)
@@ -55,6 +59,7 @@ maze::maze(ifstream &fin)
    char x;
    
    value.resize(rows,cols);
+   nodes.resize(rows, cols);
    for (int i = 0; i <= rows-1; i++)
       for (int j = 0; j <= cols-1; j++)
       {
@@ -112,16 +117,16 @@ bool maze::isLegal(int i, int j)
 void maze::mapMazeToGraph(Graph &g)
 // Create a graph g that represents the legal moves in the maze m.
 {
-  // TODO: finish
-  for (int i = 0; i < rows; i++)
+  //Create a vertex for each free space
+  for (int i = 0; i < rows; i++) 
   {
     for (int j = 0; j < rows; j++)
     {
-      if (value[i][j])
+      if (isLegal(i, j))
       {
-        Vertex v1 = add_vertex(g);
-        g[v1].cell = make_pair(i, j);
-       //c g[v1].cell.second = j;
+        Vertex v1 = add_vertex(g); // adds vertex to graph g
+        g[v1].cell = make_pair(i, j); // stores the cell values for vertex in the 'cell' member of the vertexProperties struct
+        nodes[i][j] = v1; //stores vertex descriptor in data structure nodes, with indices corresponding to the cell
       }
     }
   }
@@ -130,14 +135,10 @@ void maze::mapMazeToGraph(Graph &g)
 
   for (vertex_iterator vItr= vItrRange.first; vItr != vItrRange.second; ++vItr)
   {
-    pair<adj_iterator, adj_iterator> vItr_adjRange = adjacent_vertices(*vItr, g);
-    adj_iterator vItr_adj = vItr_adjRange.first;
-    cout << "adjacent vertices to vertex " << *vItr << " is " << vItr_adjRange->first << endl;
-    //for (adj_iterator vItr_adj = vItr_adjRange.first; vItr_adj != vItr_adjRange.second; ++vItr_adj)
-    {
-      //cout << " adding edge between vertices " << *vItr << " and "  << *vItr_adj << endl;
-      pair <Edge, bool>  e1 = add_edge(*vItr, *vItr_adj, g);
-    }
+
+      cout << "vertex " << *vItr << " at cell [" << g[*vItr].cell.first << ", " << g[*vItr].cell.second << "]" << endl;
+      addEdges(*vItr, g);
+      
   }
 
 }
@@ -148,4 +149,29 @@ void maze::printPath(Graph::vertex_descriptor end,
 {
   // TODO: finish
   int x = 0;
+}
+
+void maze::addEdges(Vertex v, Graph &g)
+{
+  int i = g[v].cell.first;
+  int j = g[v].cell.second;
+  if (i+1 >= 0 && i+1 < numRows())
+  {
+    if (isLegal(i+1, j))
+    {
+      //cout << "legal move from vertex " << *vItr << " to cell [" << i << ", " << j << "]" << endl;
+      pair<Edge, bool> newEdge = add_edge(v, getNode(i+1, j), g);
+      cout << "edge " << newEdge.first << " added between vertices " << v << " and " << getNode(i+1, j) << endl;
+    }
+  }
+
+  if (i-1 >= 0 && i-1 < numRows())
+  {
+    if (isLegal(i-1, j))
+    {
+      //cout << "legal move from vertex " << *vItr << " to cell [" << i << ", " << j << "]" << endl;
+      pair<Edge, bool> newEdge = add_edge(v, getNode(i-1, j), g);
+      cout << "edge " << newEdge.first << " added between vertices " << v << " and " << getNode(i-1, j) << endl;
+    }
+  }
 }

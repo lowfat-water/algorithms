@@ -87,13 +87,18 @@ int main()
        Graph g;
        m.mapMazeToGraph(g);
    
-       cout << " the number of vertices in graph g is " << num_vertices(g) << endl;
+      // cout << " the number of vertices in graph g is " << num_vertices(g) << endl;
        //cout << " the number of edges in graph g is " << num_edges(g) << endl;
-       cout << " the locations of the vertices are: " << endl;
+       //cout << " the locations of the vertices are: " << endl;
        pair<vertex_iterator, vertex_iterator> vItrRange = vertices(g);
        for (vertex_iterator vItr = vItrRange.first; vItr != vItrRange.second; ++vItr)
        {
-         cout << "vertex " << *vItr << " located at cell (" << g[*vItr].cell.first << ", " << g[*vItr].cell.second << "]" << endl; 
+         //cout << "vertex " << *vItr << " located at cell (" << g[*vItr].cell.first << ", " << g[*vItr].cell.second << "]" << endl; 
+         //int i = g[*vItr].cell.first;
+         //int j = g[*vItr].cell.second;
+         //cout << "vertex " << *vItr << " located at cell (" << i << ", " << j << "]" << endl; 
+         
+         //cout << "vertex " << m.getNode(i,j) << " located at cell (" << i << ", " << j << ")" << endl;
        }
 
        // cout << g << endl;
