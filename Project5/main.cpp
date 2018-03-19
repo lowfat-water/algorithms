@@ -19,8 +19,6 @@ typedef Graph::edge_iterator edge_iterator;
 typedef Graph::vertex_iterator vertex_iterator;
 typedef Graph::adjacency_iterator adj_iterator;
 
-#include "maze.h"
-
 struct vertexProperties
 {
    pair<int,int> cell; // maze cell (x,y) value
@@ -38,6 +36,7 @@ struct edgeProperties
    bool marked;
 };
 
+#include "maze.h"
 //typedef adjacency_list<vecS, vecS, bidirectionalS, vertexProperties, edgeProperties> Graph;
 
 // typedef property<edge_weight_t, int> EdgeProperty;
@@ -89,6 +88,14 @@ int main()
        m.mapMazeToGraph(g);
    
        cout << " the number of vertices in graph g is " << num_vertices(g) << endl;
+       //cout << " the number of edges in graph g is " << num_edges(g) << endl;
+       cout << " the locations of the vertices are: " << endl;
+       pair<vertex_iterator, vertex_iterator> vItrRange = vertices(g);
+       for (vertex_iterator vItr = vItrRange.first; vItr != vItrRange.second; ++vItr)
+       {
+         cout << "vertex " << *vItr << " located at cell (" << g[*vItr].cell.first << ", " << g[*vItr].cell.second << "]" << endl; 
+       }
+
        // cout << g << endl;
     }
     catch (const std::exception& e)

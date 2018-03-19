@@ -120,6 +120,8 @@ void maze::mapMazeToGraph(Graph &g)
       if (value[i][j])
       {
         Vertex v1 = add_vertex(g);
+        g[v1].cell = make_pair(i, j);
+       //c g[v1].cell.second = j;
       }
     }
   }
@@ -129,9 +131,10 @@ void maze::mapMazeToGraph(Graph &g)
   for (vertex_iterator vItr= vItrRange.first; vItr != vItrRange.second; ++vItr)
   {
     pair<adj_iterator, adj_iterator> vItr_adjRange = adjacent_vertices(*vItr, g);
-    for (adj_iterator vItr_adj = vItr_adjRange.first; vItr_adj != vItr_adjRange.second; ++vItr_adj)
+    adj_iterator vItr_adj = vItr_adjRange.first;
+    //for (adj_iterator vItr_adj = vItr_adjRange.first; vItr_adj != vItr_adjRange.second; ++vItr_adj)
     {
-      add_edge()
+      //pair <Edge, bool>  e1 = add_edge(*vItr, *vItr_adj, g);
     }
   }
 
