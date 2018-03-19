@@ -8,10 +8,22 @@
 #include <vector>
 #include <stack>
 
+#include <boost/graph/adjacency_list.hpp>
 #include "d_except.h"
 #include "d_matrix.h"
+using namespace std;
+using namespace boost;
 
 #define LargeValue 99999999
+
+
+
+typedef adjacency_list<vecS, vecS, bidirectionalS, vertexProperties, edgeProperties> Graph;
+typedef Graph::vertex_descriptor Vertex;
+typedef Graph::edge_descriptor Edge;
+typedef Graph::edge_iterator edge_iterator;
+typedef Graph::vertex_iterator vertex_iterator;
+typedef Graph::adjacency_iterator adj_iterator;
 
 class maze
 {
@@ -101,7 +113,28 @@ void maze::mapMazeToGraph(Graph &g)
 // Create a graph g that represents the legal moves in the maze m.
 {
   // TODO: finish
-  int x = 0;
+  for (int i = 0; i < rows; i++)
+  {
+    for (int j = 0; j < rows; j++)
+    {
+      if (value[i][j])
+      {
+        Vertex v1 = add_vertex(g);
+      }
+    }
+  }
+
+  pair<vertex_iterator, vertex_iterator> vItrRange = vertices(g);
+
+  for (vertex_iterator vItr= vItrRange.first; vItr != vItrRange.second; ++vItr)
+  {
+    pair<adj_iterator, adj_iterator> vItr_adjRange = adjacent_vertices(*vItr, g);
+    for (adj_iterator vItr_adj = vItr_adjRange.first; vItr_adj != vItr_adjRange.second; ++vItr_adj)
+    {
+      add_edge()
+    }
+  }
+
 }
 
 void maze::printPath(Graph::vertex_descriptor end,

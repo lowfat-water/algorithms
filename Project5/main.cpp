@@ -9,31 +9,36 @@
 using namespace boost;
 using namespace std;
 
-struct VertexProperties;
-struct EdgeProperties;
+struct vertexProperties;
+struct edgeProperties;
 
-typedef adjacency_list<vecS, vecS, bidirectionalS, VertexProperties, EdgeProperties> Graph;
+typedef adjacency_list<vecS, vecS, bidirectionalS, vertexProperties, edgeProperties> Graph;
+typedef Graph::vertex_descriptor Vertex;
+typedef Graph::edge_descriptor Edge;
+typedef Graph::edge_iterator edge_iterator;
+typedef Graph::vertex_iterator vertex_iterator;
+typedef Graph::adjacency_iterator adj_iterator;
 
 #include "maze.h"
 
-struct VertexProperties
+struct vertexProperties
 {
    pair<int,int> cell; // maze cell (x,y) value
-   Graph::vertex_descriptor pred; // predecessor node
+   Vertex pred; // predecessor node
    int weight;
    bool visited;
    bool marked;
 };
 
 // Create a struct to hold properties for each edge
-struct EdgeProperties
+struct edgeProperties
 {
    int weight;
    bool visited;
    bool marked;
 };
 
-typedef adjacency_list<vecS, vecS, bidirectionalS, VertexProperties, EdgeProperties> Graph;
+//typedef adjacency_list<vecS, vecS, bidirectionalS, vertexProperties, edgeProperties> Graph;
 
 // typedef property<edge_weight_t, int> EdgeProperty;
 
@@ -66,7 +71,7 @@ int main()
        ifstream fin;
    
        // Read the maze from the file.
-       string fileName = "maze-files/maze1.txt";
+       string fileName = "maze-files/maze13.txt";
        
        fin.open(fileName.c_str());
        if (!fin)
@@ -83,6 +88,7 @@ int main()
        Graph g;
        m.mapMazeToGraph(g);
    
+       cout << " the number of vertices in graph g is " << num_vertices(g) << endl;
        // cout << g << endl;
     }
     catch (const std::exception& e)
