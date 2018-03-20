@@ -1,4 +1,4 @@
-// Sample solution for project #5
+// Project 5a--Alina Rossi-Conaway
 
 #include <iostream>
 #include <limits.h>

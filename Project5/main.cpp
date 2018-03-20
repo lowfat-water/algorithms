@@ -37,9 +37,6 @@ struct edgeProperties
 };
 
 #include "maze.h"
-//typedef adjacency_list<vecS, vecS, bidirectionalS, vertexProperties, edgeProperties> Graph;
-
-// typedef property<edge_weight_t, int> EdgeProperty;
 
 #define LargeValue 99999999
 
@@ -76,7 +73,7 @@ int main()
        ifstream fin;
    
        // Read the maze from the file.
-       string fileName = "maze-files/maze13.txt";
+       string fileName = "maze-files/maze1.txt";
        
        fin.open(fileName.c_str());
        if (!fin)
