@@ -46,15 +46,21 @@ struct edgeProperties
 void clearVisited(Graph &g)
 // Mark all nodes in g as not visited.
 {
-  // TODO: finish
-  int x = 0;
+  pair <vertex_iterator, vertex_iterator> vItrRange = vertices(g);
+  for (vertex_iterator vItr = vItrRange.first; vItr != vItrRange.second; ++vItr)
+  {
+    g[*vItr].visited = false;
+  }
 }
 
 void setNodeWeights(Graph &g, int w)
 // Set all node weights to w.
 {
-  // TODO: finish
-  int x = 0;
+  pair <vertex_iterator, vertex_iterator> vItrRange = vertices(g);
+  for (vertex_iterator vItr = vItrRange.first; vItr != vItrRange.second; ++vItr)
+  {
+    g[*vItr].weight = w;
+  }
 }
 
 void clearMarked(Graph &g)
@@ -86,22 +92,13 @@ int main()
    
        Graph g;
        m.mapMazeToGraph(g);
+       clearVisited(g);
+       setNodeWeights(g, 5);
+
+       cout << g;
    
       // cout << " the number of vertices in graph g is " << num_vertices(g) << endl;
        //cout << " the number of edges in graph g is " << num_edges(g) << endl;
-       //cout << " the locations of the vertices are: " << endl;
-       pair<vertex_iterator, vertex_iterator> vItrRange = vertices(g);
-       for (vertex_iterator vItr = vItrRange.first; vItr != vItrRange.second; ++vItr)
-       {
-         //cout << "vertex " << *vItr << " located at cell (" << g[*vItr].cell.first << ", " << g[*vItr].cell.second << "]" << endl; 
-         //int i = g[*vItr].cell.first;
-         //int j = g[*vItr].cell.second;
-         //cout << "vertex " << *vItr << " located at cell (" << i << ", " << j << "]" << endl; 
-         
-         //cout << "vertex " << m.getNode(i,j) << " located at cell (" << i << ", " << j << ")" << endl;
-       }
-
-       // cout << g << endl;
     }
     catch (const std::exception& e)
     {

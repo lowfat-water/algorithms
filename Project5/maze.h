@@ -16,8 +16,6 @@ using namespace boost;
 
 #define LargeValue 99999999
 
-
-
 typedef adjacency_list<vecS, vecS, bidirectionalS, vertexProperties, edgeProperties> Graph;
 typedef Graph::vertex_descriptor Vertex;
 typedef Graph::edge_descriptor Edge;
@@ -37,13 +35,14 @@ public:
                         Graph g);
    int numRows(){return rows;};
    int numCols(){return cols;};
-   //matrix<Vertex> nodes;
    Vertex getNode(int i, int j){return nodes[i][j];};
    void addEdges(Vertex v, Graph &g);
+   void verify(int i, int j, Vertex v, Graph &g);
+   friend ostream &operator<<(ostream &ostr, const Graph &g);
 
 private:
    int rows; // number of rows in the maze
-   int cols; // number of columns in the maze12 a
+   int cols; // number of columns in the maze
    
    matrix<bool> value;
    matrix<Vertex> nodes;
@@ -61,6 +60,7 @@ maze::maze(ifstream &fin)
    value.resize(rows,cols);
    nodes.resize(rows, cols);
    for (int i = 0; i <= rows-1; i++)
+   {
       for (int j = 0; j <= cols-1; j++)
       {
          fin >> x;
@@ -69,7 +69,7 @@ maze::maze(ifstream &fin)
          else
             value[i][j] = false;
       }
-   
+    }
 }
 
 void maze::print(int goalI, int goalJ, int currI, int currJ)
@@ -135,10 +135,7 @@ void maze::mapMazeToGraph(Graph &g)
 
   for (vertex_iterator vItr= vItrRange.first; vItr != vItrRange.second; ++vItr)
   {
-
-      cout << "vertex " << *vItr << " at cell [" << g[*vItr].cell.first << ", " << g[*vItr].cell.second << "]" << endl;
       addEdges(*vItr, g);
-      
   }
 
 }
@@ -147,7 +144,6 @@ void maze::printPath(Graph::vertex_descriptor end,
                      stack<Graph::vertex_descriptor> &s,
                      Graph g)
 {
-  // TODO: finish
   int x = 0;
 }
 
@@ -155,23 +151,59 @@ void maze::addEdges(Vertex v, Graph &g)
 {
   int i = g[v].cell.first;
   int j = g[v].cell.second;
-  if (i+1 >= 0 && i+1 < numRows())
-  {
-    if (isLegal(i+1, j))
-    {
-      //cout << "legal move from vertex " << *vItr << " to cell [" << i << ", " << j << "]" << endl;
-      pair<Edge, bool> newEdge = add_edge(v, getNode(i+1, j), g);
-      cout << "edge " << newEdge.first << " added between vertices " << v << " and " << getNode(i+1, j) << endl;
-    }
-  }
+  
+  verify(i+1, j, v, g);
+  verify(i-1, j, v, g);
+  verify(i, j+1, v, g);
+  verify(i, j-1, v, g);
+}
 
-  if (i-1 >= 0 && i-1 < numRows())
+
+void maze::verify(int i, int j, Vertex v, Graph &g)
+{
+  if(i >= 0 && i < numRows() && j >= 0 && j < numCols())
   {
-    if (isLegal(i-1, j))
+    if(isLegal(i, j))
     {
-      //cout << "legal move from vertex " << *vItr << " to cell [" << i << ", " << j << "]" << endl;
-      pair<Edge, bool> newEdge = add_edge(v, getNode(i-1, j), g);
-      cout << "edge " << newEdge.first << " added between vertices " << v << " and " << getNode(i-1, j) << endl;
+      Vertex next = getNode(i, j);
+      pair<Edge, bool> checkEdge = edge(v, next, g);
+      {
+        if (!checkEdge.second) // checks to see if edge exists
+        {
+          pair <Edge, bool> newEdge = add_edge(v, next, g);
+          g[next].pred = v;
+        }
+      } 
     }
   }
 }
+
+ostream &operator<<(ostream &ostr, const Graph &g)
+//Prints vertices and their properties, edges and their properties
+{
+  ostr << "Vertices: " << endl;
+  pair <vertex_iterator, vertex_iterator> vItrRange = vertices(g);
+  for (vertex_iterator vItr = vItrRange.first; vItr != vItrRange.second; ++vItr)
+  {
+    ostr << "Vertex " << *vItr << ":" << endl;
+    ostr << " -Cell: (" << g[*vItr].cell.first << ", " << g[*vItr].cell.second << ")" << endl;
+    ostr << " -Predecessor: Vertex " << g[*vItr].pred << endl;
+    ostr << " -Weight: " << g[*vItr].weight << endl;
+    ostr << " -Visited: " << g[*vItr].visited << endl;
+    ostr << " -Marked: " << g[*vItr].marked << endl;
+  }
+  ostr << endl;
+  ostr << "Edges: " << endl;
+
+  pair <edge_iterator, edge_iterator> eItrRange = edges(g);
+  for (edge_iterator eItr = eItrRange.first; eItr != eItrRange.second; ++eItr)
+  {
+    ostr << "Edge " << *eItr << ":" << endl;
+    ostr << " -Weight: " << g[*eItr].weight << endl;
+    ostr << " -Visited: " << g[*eItr].visited << endl;
+    ostr << " -Marked: " << g[*eItr].marked << endl;
+  }
+  return ostr;
+}
+
+
