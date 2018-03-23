@@ -40,6 +40,7 @@ struct edgeProperties
 
 #define LargeValue 99999999
 
+/*
 void clearVisited(Graph &g)
 // Mark all nodes in g as not visited.
 {
@@ -49,6 +50,7 @@ void clearVisited(Graph &g)
     g[*vItr].visited = false;
   }
 }
+*/
 
 void setNodeWeights(Graph &g, int w)
 // Set all node weights to w.
@@ -73,7 +75,7 @@ int main()
        ifstream fin;
    
        // Read the maze from the file.
-       string fileName = "maze-files/maze1.txt";
+       string fileName = "maze-files/maze13.txt";
        
        fin.open(fileName.c_str());
        if (!fin)
@@ -89,10 +91,35 @@ int main()
    
        Graph g;
        m.mapMazeToGraph(g);
-       clearVisited(g);
-       setNodeWeights(g, 5);
+       m.clearVisited(g);
+       //setNodeWeights(g, 5);
 
-       cout << g;
+       stack <Vertex> moves;
+       Vertex start = m.getNode(0,0);
+       cout << "starting node is " << start << endl;
+       Vertex end = m.getNode(m.numRows()-1, m.numCols()-1);
+       cout << "ending node is " << end << endl;
+       m.findPathDFSRecursive(g, start, end, moves);
+       m.printPath(end, moves, g);
+/*
+       pair <vertex_iterator, vertex_iterator> vItrRange = vertices(g);
+       for (vertex_iterator vItr = vItrRange.second; vItr != vItrRange.first; vItr--)
+       {
+         if (*vItr == 9 ||
+              *vItr == 8 ||
+              *vItr == 6 ||
+              *vItr == 5 ||
+              *vItr == 3 ||
+              *vItr == 2 ||
+              *vItr == 1 ||
+              *vItr == 0)
+              s.push(g[*vItr]);
+       }
+
+       Vertex end = m.getNode(m.numRows()-1, m.numCols()-1);
+       m.printPath(end, s, g);
+*/
+       //cout << g;
    
       // cout << " the number of vertices in graph g is " << num_vertices(g) << endl;
        //cout << " the number of edges in graph g is " << num_edges(g) << endl;

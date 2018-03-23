@@ -39,6 +39,9 @@ public:
    void addEdges(Vertex v, Graph &g);
    void verify(int i, int j, Vertex v, Graph &g);
    friend ostream &operator<<(ostream &ostr, const Graph &g);
+   void clearVisited(Graph &g);
+   bool findPathDFSRecursive(Graph &g, Vertex start, Vertex goal, stack <Vertex> &moves);
+   bool findPathDFSRecursive2(Graph &g, Vertex start, Vertex goal, stack <Vertex> &moves);
 
 private:
    int rows; // number of rows in the maze
@@ -137,14 +140,28 @@ void maze::mapMazeToGraph(Graph &g)
   {
       addEdges(*vItr, g);
   }
-
 }
 
-void maze::printPath(Graph::vertex_descriptor end,
-                     stack<Graph::vertex_descriptor> &s,
+void maze::printPath(Vertex end,
+                     stack<Vertex> &s,
                      Graph g)
 {
-  int x = 0;
+  if(s.empty())
+  {
+    cout << "No path exists." << endl;
+  }
+
+  int goalI = g[end].cell.first;
+  int goalJ = g[end].cell.second;
+
+  while (!s.empty())
+  {
+    Vertex u = s.top();
+    s.pop();
+    int currI = g[u].cell.first;
+    int currJ = g[u].cell.second;
+    print(goalI, goalJ, currI, currJ);
+  }
 }
 
 void maze::addEdges(Vertex v, Graph &g)
@@ -158,7 +175,6 @@ void maze::addEdges(Vertex v, Graph &g)
   verify(i, j-1, v, g);
 }
 
-
 void maze::verify(int i, int j, Vertex v, Graph &g)
 {
   if(i >= 0 && i < numRows() && j >= 0 && j < numCols())
@@ -171,7 +187,7 @@ void maze::verify(int i, int j, Vertex v, Graph &g)
         if (!checkEdge.second) // checks to see if edge exists
         {
           pair <Edge, bool> newEdge = add_edge(v, next, g);
-          g[next].pred = v;
+          //g[next].pred = v;
         }
       } 
     }
@@ -204,6 +220,48 @@ ostream &operator<<(ostream &ostr, const Graph &g)
     ostr << " -Marked: " << g[*eItr].marked << endl;
   }
   return ostr;
+}
+
+void maze::clearVisited(Graph &g)
+// Mark all nodes in g as not visited.
+{
+  pair <vertex_iterator, vertex_iterator> vItrRange = vertices(g);
+  for (vertex_iterator vItr = vItrRange.first; vItr != vItrRange.second; ++vItr)
+  {
+    g[*vItr].visited = false;
+  }
+}
+
+bool maze::findPathDFSRecursive(Graph &g, Vertex start, Vertex goal, stack <Vertex> &moves)
+{
+  clearVisited(g);
+  return findPathDFSRecursive2(g, start, goal, moves);
+}
+
+bool maze::findPathDFSRecursive2(Graph &g, Vertex start, Vertex goal, stack <Vertex> &moves)
+{
+  if (start == goal)
+    return true;
+  else
+  {
+    g[start].visited = true;
+    bool found = false;
+    pair<adj_iterator, adj_iterator> vItrRange = adjacent_vertices(start, g);
+    adj_iterator vItr = vItrRange.first;
+    //cout << "first adjacent node is " << *vItr << endl;
+    while (vItr != vItrRange.second && found == false)
+    {
+      //cout << "finding path from node " << *vItr << endl;
+      if (!g[*vItr].visited)
+      {
+        found = findPathDFSRecursive2(g, *vItr, goal, moves);
+      }
+      vItr++;
+    }
+    if (found)
+      moves.push(start);
+    return found;
+  }
 }
 
 

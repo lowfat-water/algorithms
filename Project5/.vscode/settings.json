@@ -19,6 +19,9 @@
         "type_traits": "cpp",
         "vector": "cpp",
         "iosfwd": "cpp",
-        "utility": "cpp"
+        "utility": "cpp",
+        "queue": "cpp",
+        "stack": "cpp",
+        "__locale": "cpp"
     }
 }
