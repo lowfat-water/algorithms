@@ -30,18 +30,26 @@ public:
    void print(int,int,int,int);
    bool isLegal(int i, int j);
    void mapMazeToGraph(Graph &g);
-   void printPath(Graph::vertex_descriptor end,
-                        stack<Graph::vertex_descriptor> &s,
-                        Graph g);
+   void printPath(Vertex end,
+                  stack<Vertex> &s,
+                  Graph g);
    int numRows(){return rows;};
    int numCols(){return cols;};
    Vertex getNode(int i, int j){return nodes[i][j];};
    void addEdges(Vertex v, Graph &g);
-   void verify(int i, int j, Vertex v, Graph &g);
+   void verify(int i, int j, 
+                  Vertex v, 
+                  Graph &g);
    friend ostream &operator<<(ostream &ostr, const Graph &g);
    void clearVisited(Graph &g);
-   bool findPathDFSRecursive(Graph &g, Vertex start, Vertex goal, stack <Vertex> &moves);
+   void clearMarked(Graph &g);
+   bool findPathDFSRecursive(Graph &g, 
+                            Vertex start, 
+                            Vertex goal, 
+                            stack <Vertex> &moves);
    bool findPathDFSRecursive2(Graph &g, Vertex start, Vertex goal, stack <Vertex> &moves);
+   bool findPathDFSStack(Graph &g, Vertex start, Vertex goal, stack <Vertex> &moves);
+
 
 private:
    int rows; // number of rows in the maze
@@ -232,6 +240,17 @@ void maze::clearVisited(Graph &g)
   }
 }
 
+void maze::clearMarked(Graph &g)
+{
+  {
+    pair <vertex_iterator, vertex_iterator> vItrRange = vertices(g);
+    for (vertex_iterator vItr = vItrRange.first; vItr != vItrRange.second; ++vItr)
+    {
+      g[*vItr].marked = false;
+    }
+  }
+}
+
 bool maze::findPathDFSRecursive(Graph &g, Vertex start, Vertex goal, stack <Vertex> &moves)
 {
   clearVisited(g);
@@ -240,7 +259,7 @@ bool maze::findPathDFSRecursive(Graph &g, Vertex start, Vertex goal, stack <Vert
 
 bool maze::findPathDFSRecursive2(Graph &g, Vertex start, Vertex goal, stack <Vertex> &moves)
 {
-  if (start == goal)
+  if (start == goal) //done!
     return true;
   else
   {
@@ -262,6 +281,45 @@ bool maze::findPathDFSRecursive2(Graph &g, Vertex start, Vertex goal, stack <Ver
       moves.push(start);
     return found;
   }
+}
+
+bool maze::findPathDFSStack(Graph &g, Vertex start, Vertex goal, stack <Vertex> &moves)
+{
+  clearMarked(g);
+  clearVisited(g);
+  cout << "goal is " << goal << endl;
+  adj_iterator vItr;
+  if (start == goal)
+    return true;
+
+  moves.push(start);
+  while (!moves.empty())
+  {
+    Vertex u = moves.top();
+    moves.pop();
+    if (!g[u].visited)
+    {
+      g[u].visited = true;
+      pair <adj_iterator, adj_iterator> vItrRange = adjacent_vertices(u, g);
+      for (vItr = vItrRange.first; vItr != vItrRange.second; ++vItr)
+      {
+        if(!g[*vItr].visited)
+        {          
+          moves.push(*vItr); 
+          g[*vItr].pred = u;
+        }
+      }
+    }
+  }
+  
+  Vertex curr = g[goal].pred;
+  while (curr != start)
+  {
+    moves.push(curr);
+    curr = g[curr].pred;
+  }
+  moves.push(start);
+  return true;
 }
 
 

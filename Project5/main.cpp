@@ -37,6 +37,7 @@ struct edgeProperties
 };
 
 #include "maze.h"
+#include "graphFunctions.h"
 
 #define LargeValue 99999999
 
@@ -62,11 +63,16 @@ void setNodeWeights(Graph &g, int w)
   }
 }
 
-void clearMarked(Graph &g)
+/*void clearMarked(Graph &g)
 {
-  // TODO: finish
-  int x = 0;
-}
+  {
+    pair <vertex_iterator, vertex_iterator> vItrRange = vertices(g);
+    for (vertex_iterator vItr = vItrRange.first; vItr != vItrRange.second; ++vItr)
+    {
+      g[*vItr].marked = false;
+    }
+  }
+}*/
    
 int main()
 {
@@ -99,7 +105,8 @@ int main()
        cout << "starting node is " << start << endl;
        Vertex end = m.getNode(m.numRows()-1, m.numCols()-1);
        cout << "ending node is " << end << endl;
-       m.findPathDFSRecursive(g, start, end, moves);
+       //m.findPathDFSRecursive(g, start, end, moves);
+       m.findPathDFSStack(g, start, end, moves);
        m.printPath(end, moves, g);
 /*
        pair <vertex_iterator, vertex_iterator> vItrRange = vertices(g);
