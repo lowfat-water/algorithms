@@ -26,6 +26,7 @@ struct vertexProperties
    int weight;
    bool visited;
    bool marked;
+   //int distance;
 };
 
 // Create a struct to hold properties for each edge
@@ -114,8 +115,8 @@ int main()
        Vertex end = m.getNode(m.numRows()-1, m.numCols()-1);
        cout << "ending node is " << end << endl;
        //m.findPathDFSRecursive(g, start, end, moves);
-       //m.findPathDFSStack(g, start, end, moves);
-       m.findShortestPathBFS(g, start, end, moves);
+       m.findPathDFSStack(g, start, end, moves);
+       //m.findShortestPathBFS(g, start, end, moves);
        m.printPath(end, moves, g);
 /*
        pair <vertex_iterator, vertex_iterator> vItrRange = vertices(g);

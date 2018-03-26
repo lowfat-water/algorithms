@@ -305,6 +305,7 @@ bool maze::findPathDFSStack(Graph &g, Vertex start, Vertex goal, stack <Vertex> 
       {
         if(!g[*vItr].visited)
         {          
+          cout << "adding vertex " << *vItr << " to stack" << endl;
           moves.push(*vItr); 
           g[*vItr].pred = u;
         }
@@ -344,7 +345,6 @@ bool maze::findShortestPathBFS(Graph &g, Vertex start, Vertex goal, stack<Vertex
         cout << "adjacent vertex is " << *vItr << endl;
         if(!g[*vItr].visited)
         {
-          //g[*vItr].visited = true;
           g[*vItr].pred = u;
           q.push(*vItr);
         }
@@ -361,4 +361,26 @@ bool maze::findShortestPathBFS(Graph &g, Vertex start, Vertex goal, stack<Vertex
   return true;
 }
 
+bool maze::findShortestPathDFS(Graph &g, Vertex start, Vertex goal, stack<Vertex> &moves)
+{
+  if(start == goal)
+    return true;
+  moves.push(start);
+  while(!moves.empty())
+  {
+    Vertex u = moves.top();
+    moves.pop();
+    if(!g[u].visited)
+    {
+      g[u].visited = true;
+      pair <adj_iterator, adj_iterator> vItrRange = adjacent_vertices(u);
+      for(adj_iterator vItr = vItrRange.first(); vItr != vItrRange.second(); ++vItr)
+      {
+        
+      }      
+    }
+    
+  }
+
+}
 
