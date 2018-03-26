@@ -1,4 +1,4 @@
-// Project 5a--Alina Rossi-Conaway
+// Project 5b--Alina Rossi-Conaway & Dan Bartels
 
 #include <iostream>
 #include <limits.h>
@@ -37,9 +37,7 @@ public:
    int numCols(){return cols;};
    Vertex getNode(int i, int j){return nodes[i][j];};
    void addEdges(Vertex v, Graph &g);
-   void verify(int i, int j, 
-                  Vertex v, 
-                  Graph &g);
+   void verify(int i, int j, Vertex v, Graph &g);
    friend ostream &operator<<(ostream &ostr, const Graph &g);
    void clearVisited(Graph &g);
    void clearMarked(Graph &g);
@@ -150,9 +148,8 @@ void maze::mapMazeToGraph(Graph &g)
   }
 }
 
-void maze::printPath(Vertex end,
-                     stack<Vertex> &s,
-                     Graph g)
+void maze::printPath(Vertex end, stack<Vertex> &s, Graph g)
+// Print the path represented by the vertices in stack s
 {
   if(s.empty())
   {
@@ -173,6 +170,7 @@ void maze::printPath(Vertex end,
 }
 
 void maze::addEdges(Vertex v, Graph &g)
+// Calls verify function to define edges coming outward from Vertex v
 {
   int i = g[v].cell.first;
   int j = g[v].cell.second;
@@ -184,6 +182,7 @@ void maze::addEdges(Vertex v, Graph &g)
 }
 
 void maze::verify(int i, int j, Vertex v, Graph &g)
+// Helper function to check whether it is legal to add edges from v in all directions
 {
   if(i >= 0 && i < numRows() && j >= 0 && j < numCols())
   {
@@ -195,7 +194,6 @@ void maze::verify(int i, int j, Vertex v, Graph &g)
         if (!checkEdge.second) // checks to see if edge exists
         {
           pair <Edge, bool> newEdge = add_edge(v, next, g);
-          //g[next].pred = v;
         }
       } 
     }
@@ -241,6 +239,7 @@ void maze::clearVisited(Graph &g)
 }
 
 void maze::clearMarked(Graph &g)
+// Mark all nodes in g as not marked
 {
   {
     pair <vertex_iterator, vertex_iterator> vItrRange = vertices(g);
@@ -252,12 +251,14 @@ void maze::clearMarked(Graph &g)
 }
 
 bool maze::findPathDFSRecursive(Graph &g, Vertex start, Vertex goal, stack <Vertex> &moves)
+// Helper function to call the main findPathDFSRecursive2 function
 {
   clearVisited(g);
   return findPathDFSRecursive2(g, start, goal, moves);
 }
 
 bool maze::findPathDFSRecursive2(Graph &g, Vertex start, Vertex goal, stack <Vertex> &moves)
+// Uses recursion to find a path from start to goal
 {
   if (start == goal) //done!
     return true;
@@ -267,10 +268,8 @@ bool maze::findPathDFSRecursive2(Graph &g, Vertex start, Vertex goal, stack <Ver
     bool found = false;
     pair<adj_iterator, adj_iterator> vItrRange = adjacent_vertices(start, g);
     adj_iterator vItr = vItrRange.first;
-    //cout << "first adjacent node is " << *vItr << endl;
-    while (vItr != vItrRange.second && found == false)
+    while (vItr != vItrRange.second && found == false) //triggers recursion
     {
-      //cout << "finding path from node " << *vItr << endl;
       if (!g[*vItr].visited)
       {
         found = findPathDFSRecursive2(g, *vItr, goal, moves);
@@ -284,10 +283,10 @@ bool maze::findPathDFSRecursive2(Graph &g, Vertex start, Vertex goal, stack <Ver
 }
 
 bool maze::findPathDFSStack(Graph &g, Vertex start, Vertex goal, stack <Vertex> &moves)
+// Iteratively finds path from start to goal and stores path in stack
 {
   clearMarked(g);
   clearVisited(g);
-  cout << "goal is " << goal << endl;
   adj_iterator vItr;
   if (start == goal)
     return true;
@@ -324,6 +323,7 @@ bool maze::findPathDFSStack(Graph &g, Vertex start, Vertex goal, stack <Vertex> 
 }
 
 bool maze::findShortestPathBFS(Graph &g, Vertex start, Vertex goal, stack<Vertex> &moves)
+// Finds shortest path using BFS. First path found is the shortest
 {
   clearVisited(g);
   clearMarked(g);
@@ -334,7 +334,6 @@ bool maze::findShortestPathBFS(Graph &g, Vertex start, Vertex goal, stack<Vertex
   while(!q.empty())
   {
     Vertex u = q.front();
-    cout << "u is node " << u << endl;
     q.pop();
     if (!g[u].visited)
     {
@@ -342,7 +341,6 @@ bool maze::findShortestPathBFS(Graph &g, Vertex start, Vertex goal, stack<Vertex
       pair<adj_iterator, adj_iterator> vItrRange = adjacent_vertices(u, g);
       for (adj_iterator vItr = vItrRange.first; vItr != vItrRange.second; ++vItr)
       {
-        cout << "adjacent vertex is " << *vItr << endl;
         if(!g[*vItr].visited)
         {
           g[*vItr].pred = u;
@@ -362,6 +360,7 @@ bool maze::findShortestPathBFS(Graph &g, Vertex start, Vertex goal, stack<Vertex
 }
 
 bool maze::findShortestPathDFS(Graph &g, Vertex start, Vertex goal, stack<Vertex> &moves)
+// Finds shortest path using DFS. Does so by weighting the edges and determining the shortest distance from the source to every node
 {
   if(start == goal)
     return true;
@@ -373,14 +372,29 @@ bool maze::findShortestPathDFS(Graph &g, Vertex start, Vertex goal, stack<Vertex
     if(!g[u].visited)
     {
       g[u].visited = true;
-      pair <adj_iterator, adj_iterator> vItrRange = adjacent_vertices(u);
-      for(adj_iterator vItr = vItrRange.first(); vItr != vItrRange.second(); ++vItr)
+      pair <adj_iterator, adj_iterator> vItrRange = adjacent_vertices(u, g);
+      for(adj_iterator vItr = vItrRange.first; vItr != vItrRange.second; ++vItr)
       {
-        
+        if(!g[*vItr].visited)
+        {
+          moves.push(*vItr);
+          pair<Edge, bool> checkEdge = edge(*vItr, u, g);
+          if(g[*vItr].weight > g[u].weight + g[checkEdge.first].weight)
+          {
+            g[*vItr].weight = g[u].weight + g[checkEdge.first].weight;
+            g[*vItr].pred = u;
+          }
+        }
       }      
-    }
-    
+    } 
   }
-
+  Vertex curr = goal;
+  while (curr != start)
+  {
+    moves.push(curr);
+    curr = g[curr].pred;
+  }
+  moves.push(start);
+  return true;
 }
 
