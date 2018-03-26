@@ -49,7 +49,11 @@ public:
                             stack <Vertex> &moves);
    bool findPathDFSRecursive2(Graph &g, Vertex start, Vertex goal, stack <Vertex> &moves);
    bool findPathDFSStack(Graph &g, Vertex start, Vertex goal, stack <Vertex> &moves);
-
+   bool findShortestPathDFS(Graph &g,
+                            Vertex start,
+                            Vertex goal,
+                            stack<Vertex> &bestMoves);
+                            
 
 private:
    int rows; // number of rows in the maze
