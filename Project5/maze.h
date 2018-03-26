@@ -50,8 +50,7 @@ public:
    bool findPathDFSRecursive2(Graph &g, Vertex start, Vertex goal, stack <Vertex> &moves);
    bool findPathDFSStack(Graph &g, Vertex start, Vertex goal, stack <Vertex> &moves);
    bool findShortestPathDFS(Graph &g, Vertex start, Vertex goal, stack<Vertex> &bestMoves);
-   void initSingleSource(Graph &g, Vertex &source);
-   void relax(Vertex &u, Vertex &v, Edge &w);
+   bool findShortestPathBFS(Graph &g, Vertex start, Vertex goal, stack<Vertex> &moves);
   private:
    int rows; // number of rows in the maze
    int cols; // number of columns in the maze
@@ -315,6 +314,45 @@ bool maze::findPathDFSStack(Graph &g, Vertex start, Vertex goal, stack <Vertex> 
   
   Vertex curr = g[goal].pred;
   while (curr != start)
+  {
+    moves.push(curr);
+    curr = g[curr].pred;
+  }
+  moves.push(start);
+  return true;
+}
+
+bool maze::findShortestPathBFS(Graph &g, Vertex start, Vertex goal, stack<Vertex> &moves)
+{
+  clearVisited(g);
+  clearMarked(g);
+  queue <Vertex> q;
+  if (start == goal)
+    return true;
+  q.push(start);
+  while(!q.empty())
+  {
+    Vertex u = q.front();
+    cout << "u is node " << u << endl;
+    q.pop();
+    if (!g[u].visited)
+    {
+      g[u].visited = true;
+      pair<adj_iterator, adj_iterator> vItrRange = adjacent_vertices(u, g);
+      for (adj_iterator vItr = vItrRange.first; vItr != vItrRange.second; ++vItr)
+      {
+        cout << "adjacent vertex is " << *vItr << endl;
+        if(!g[*vItr].visited)
+        {
+          //g[*vItr].visited = true;
+          g[*vItr].pred = u;
+          q.push(*vItr);
+        }
+      }
+    }
+  }
+  Vertex curr = goal;
+  while(curr != start)
   {
     moves.push(curr);
     curr = g[curr].pred;
