@@ -37,7 +37,6 @@ struct edgeProperties
 };
 
 #include "maze.h"
-#include "graphFunctions.h"
 
 #define LargeValue 99999999
 
@@ -60,6 +59,15 @@ void setNodeWeights(Graph &g, int w)
   for (vertex_iterator vItr = vItrRange.first; vItr != vItrRange.second; ++vItr)
   {
     g[*vItr].weight = w;
+  }
+}
+
+void setEdgeWeights(Graph &g, int w)
+{
+  pair <edge_iterator, edge_iterator> eItrRange = edges(g);
+  for (edge_iterator eItr = eItrRange.first; eItr != eItrRange.second; ++eItr)
+  {
+    g[*eItr].weight = w;
   }
 }
 

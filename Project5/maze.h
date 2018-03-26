@@ -68,7 +68,7 @@ maze::maze(ifstream &fin)
    
    char x;
    
-   value.resize(rows,cols);
+   value.resize(rows, cols);
    nodes.resize(rows, cols);
    for (int i = 0; i <= rows-1; i++)
    {
