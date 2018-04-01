@@ -107,15 +107,33 @@ bool bellmanFord(Graph &g, Vertex s, Vertex goal, stack<Vertex> &moves)
 {
   initSingleSource(g, LargeValue);
   pair <edge_iterator, edge_iterator> eItrRange = edges(g);
-  for (edge_iterator eItr = eItrRange.first; eItr != eItrRange.second; ++eItr)
-  {
-    Vertex u = source(*eItr, g);
-    cout << "vertex u is " << u << endl;
-    Vertex v = target(*eItr, g);
-    cout << "vertex v is " << v << endl << endl;
-    relax(g, u, v);
+
+  int size = num_vertices(g);
+
+  for(int i = 1; i < size; i++)
+  { 
+    cout << "Round " << i << endl << endl;
+    for (edge_iterator eItr = eItrRange.first; eItr != eItrRange.second; ++eItr)
+    {
+        Vertex u = source(*eItr, g);
+        cout << "vertex u is " << u << endl;
+        Vertex v = target(*eItr, g);
+        cout << "vertex v is " << v << endl << endl;
+        relax(g, u, v);
+    }
+
+
   }
 
+  for(edge_iterator eItr = eItrRange.first; eItr != eItrRange.second; ++eItr)
+  {
+      Vertex u = source(*eItr, g);
+      Vertex v = target(*eItr, g);
+      if(g[v].weight > g[u].weight + g[*eItr].weight)
+          return false;
+      //else return true;
+  }
+  
   Vertex curr = goal;
   while(curr != s)
   {
@@ -123,15 +141,6 @@ bool bellmanFord(Graph &g, Vertex s, Vertex goal, stack<Vertex> &moves)
     curr = g[curr].pred;
   }
   moves.push(s);
-
-  for(edge_iterator eItr = eItrRange.first; eItr != eItrRange.second; ++eItr)
-  {
-    Vertex u = source(*eItr, g);
-    Vertex v = target(*eItr, g);
-    if(g[v].weight > g[u].weight + g[*eItr].weight)
-      return false;
-    else return true;
-  }
   return true;
 }
 
@@ -156,7 +165,7 @@ int main()
     {
         ifstream fin;
 
-        string fileName = "graph/graph1.txt";
+        string fileName = "graph/graph2.txt";
 
         fin.open(fileName.c_str());
         if(!fin)
