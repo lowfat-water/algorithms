@@ -84,6 +84,7 @@ void initSingleSource(Graph &g, Vertex start)
   pair <vertex_iterator, vertex_iterator> vItrRange = vertices(g);
   for (vertex_iterator vItr = vItrRange.first; vItr != vItrRange.second; ++vItr)
   {
+    g[*vItr].pred = 0;
     if (*vItr == start)
       g[*vItr].weight = 0; //Init-Single-Source: sets source node's weight to 0
     else g[*vItr].weight = LargeValue;
@@ -97,22 +98,25 @@ void relax(Graph &g, Vertex u, Vertex v)
     if (g[v].weight > g[u].weight + g[e].weight)
     {
         g[v].weight = g[u].weight + g[e].weight;
-            cout << "the weight of vertex " << v << " is now " << g[v].weight << endl;
+            //cout << "the weight of vertex " << v << " is now " << g[v].weight << endl;
         g[v].pred = u;
-            cout << "the predecessor to vertex " << v << " is now " << u << endl << endl;
+            //cout << "the predecessor to vertex " << v << " is now " << u << endl << endl;
     }
 }
 
 bool bellmanFord(Graph &g, Vertex s, Vertex goal, stack<Vertex> &moves)
 {
   initSingleSource(g, s);
+  
+  cout << "Executing Bellman-Ford. . ." << endl << endl;
+
   pair <edge_iterator, edge_iterator> eItrRange = edges(g);
 
   int size = num_vertices(g);
 
   for(int i = 1; i < size; i++)
   { 
-    cout << "Round " << i << endl << endl;
+    //cout << "Round " << i << endl << endl;
     for (edge_iterator eItr = eItrRange.first; eItr != eItrRange.second; ++eItr)
     {
         Vertex u = source(*eItr, g);
@@ -144,6 +148,7 @@ bool bellmanFord(Graph &g, Vertex s, Vertex goal, stack<Vertex> &moves)
 
 bool dijkstra(Graph &g, Vertex start, Vertex goal, stack<Vertex> &moves)
 {
+    cout << "Executing Dijkstra. . ." << endl << endl;
     initSingleSource(g, start);
 
     stack <Vertex> s;
@@ -210,7 +215,7 @@ int main()
     {
         ifstream fin;
 
-        string fileName = "graph/graph1.txt";
+        string fileName = "graph/graph4.txt";
 
         fin.open(fileName.c_str());
         if(!fin)
@@ -225,23 +230,20 @@ int main()
         initializeGraph(g, start, end, fin);
         fin.close();
 
-        cout << "Start vertex is " << start << endl;
-        cout << "End vertex is " << end << endl << endl;
-
-        int num = num_vertices(g);
-        cout << "This graph has " << num << " vertices" << endl;
+        /* cout << "Start vertex is " << start << endl;
+        cout << "End vertex is " << end << endl << endl; */
 
          stack <Vertex> moves;
-/*        if (!bellmanFord(g, start, end, moves))
-            cout << "Negative cycles reachable from source." << endl;
+       if (!bellmanFord(g, start, end, moves))
+            cout << "Negative cycles reachable from source. Use djikstra for this graph, unless this graph has negative weights." << endl << endl;
         else 
         {
             cout << "Shortest path: " << endl;
             printPath(moves, g);
-        } */
-        
+        }  
+
         if (!dijkstra(g, start, end, moves))
-            cout << "Negative edge weights. Use Bellman-Ford for this graph." << endl;
+            cout << "Negative edge weights. Use Bellman-Ford for this graph, unless there are negative cycles reachable from the source." << endl << endl;
         else 
         {
             cout << "Shortest path: " << endl;
