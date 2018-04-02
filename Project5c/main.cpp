@@ -116,9 +116,9 @@ bool bellmanFord(Graph &g, Vertex s, Vertex goal, stack<Vertex> &moves)
     for (edge_iterator eItr = eItrRange.first; eItr != eItrRange.second; ++eItr)
     {
         Vertex u = source(*eItr, g);
-        cout << "vertex u is " << u << endl;
+        //cout << "vertex u is " << u << endl;
         Vertex v = target(*eItr, g);
-        cout << "vertex v is " << v << endl << endl;
+        //cout << "vertex v is " << v << endl << endl;
         relax(g, u, v);
     }
   }
@@ -210,7 +210,7 @@ int main()
     {
         ifstream fin;
 
-        string fileName = "graph/graph7.txt";
+        string fileName = "graph/graph1.txt";
 
         fin.open(fileName.c_str());
         if(!fin)
