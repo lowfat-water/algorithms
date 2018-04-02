@@ -170,7 +170,7 @@ bool dijkstra(Graph &g, Vertex start, Vertex goal, stack<Vertex> &moves)
         {
             pair <Edge, bool> newEdge = edge(u, *vItr, g);
             Edge e = newEdge.first;
-            if(g[e].weight < 0)
+            if(g[e].weight < 0) //returns false if there are negative weights
                 return false;
             else relax(g, u, *vItr);
         }
