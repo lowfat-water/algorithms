@@ -67,13 +67,51 @@ void initializeGraph(Graph &g, ifstream &fin)
     }
 }
 
+void traverseDFS(Graph &g)
+{
+    stack <Vertex> s;
+    pair <vertex_iterator, vertex_iterator> vItrRange = vertices(g);
+    vertex_iterator u = vItrRange.first;
+    s.push(*u);
+
+    while (!s.empty())
+    {
+        Vertex v = s.top();
+        s.pop();
+        if(!g[v].visited)
+        {
+            g[v].visited = true;
+            pair <adj_iterator, adj_iterator> vItrRange = adjacent_vertices(v, g);
+            for(adj_iterator vItr = vItrRange.first; vItr != vItrRange.second; ++vItr)
+            {
+                if(!g[*vItr].visited)
+                {
+                    s.push(*vItr);
+                }
+            }
+        }
+    }
+}
+
+bool isConnected(Graph &g)
+{
+    traverseDFS(g);
+    pair <vertex_iterator, vertex_iterator> vItrRange = vertices(g);
+    for (vertex_iterator vItr = vItrRange.first; vItr != vItrRange.second; ++vItr)
+    {
+        if (!g[*vItr].visited)
+            return false;
+    }
+    return true;
+}
+
 int main()
 {
     try
     {
         ifstream fin;
 
-        string fileName = "graph1.txt";
+        string fileName = "graph4.txt";
 
         fin.open(fileName.c_str());
         if(!fin)
@@ -90,6 +128,10 @@ int main()
         int numV = num_vertices(g);
         int numE = num_edges(g);
         cout << "This graph has " << numV << " vertices and " << numE << " edges" << endl;
+
+        if(!isConnected(g))
+            cout << "This graph is not connected " << endl;
+        else cout << "This graph is connected " << endl;
     }
 
     catch(const std::exception& e)
