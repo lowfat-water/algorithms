@@ -67,7 +67,7 @@ void initializeGraph(Graph &g, ifstream &fin)
     }
 }
 
-void traverseDFS(Graph &g)
+void traverseDFSconnected(Graph &g)
 {
     stack <Vertex> s;
     pair <vertex_iterator, vertex_iterator> vItrRange = vertices(g);
@@ -87,15 +87,55 @@ void traverseDFS(Graph &g)
                 if(!g[*vItr].visited)
                 {
                     s.push(*vItr);
+                    g[*vItr].pred = v;
+
                 }
             }
         }
     }
 }
 
+bool traverseDFScyclic(Graph &g)
+{
+    stack <Vertex> s;
+    pair <vertex_iterator, vertex_iterator> vItrRange = vertices(g);
+    vertex_iterator u = vItrRange.first;
+    s.push(*u);
+
+    while (!s.empty())
+    {
+        Vertex v = s.top();
+        s.pop();
+        if(!g[v].visited)
+        {
+            g[v].visited = true;
+
+            cout << "looking at vertices adjacent to " << v << endl;
+            pair <adj_iterator, adj_iterator> vItrRange = adjacent_vertices(v, g);
+            for(adj_iterator vItr = vItrRange.first; vItr != vItrRange.second; ++vItr)
+            {
+                if(g[*vItr].visited && *vItr != g[v].pred)
+                {
+                    cout << "vertex " << *vItr << " has been visited but is not the predecessor to vertex " << v << endl;
+                    return true;
+                }
+                if(!g[*vItr].visited)
+                {
+                    s.push(*vItr);
+                    g[*vItr].pred = v;
+
+                    cout << "Adding vertex " << *vItr << " to stack" << endl;
+                    cout << "The predecessor to " << *vItr << " is now " << v << endl << endl;
+                }
+            }
+        }
+    }
+    return false;
+}
+
 bool isConnected(Graph &g)
 {
-    traverseDFS(g);
+    traverseDFSconnected(g);
     pair <vertex_iterator, vertex_iterator> vItrRange = vertices(g);
     for (vertex_iterator vItr = vItrRange.first; vItr != vItrRange.second; ++vItr)
     {
@@ -105,13 +145,29 @@ bool isConnected(Graph &g)
     return true;
 }
 
+bool isCyclic(Graph &g)
+{
+    if(traverseDFScyclic(g))
+        return true;
+    else return false;
+}
+
+void clearVisited(Graph &g)
+{
+    pair <vertex_iterator, vertex_iterator> vItrRange = vertices(g);
+    for (vertex_iterator vItr = vItrRange.first; vItr != vItrRange.second; ++vItr)
+    {
+        g[*vItr].visited = false;
+    }
+}
+
 int main()
 {
     try
     {
         ifstream fin;
 
-        string fileName = "graph4.txt";
+        string fileName = "graphtest.txt";
 
         fin.open(fileName.c_str());
         if(!fin)
@@ -129,9 +185,17 @@ int main()
         int numE = num_edges(g);
         cout << "This graph has " << numV << " vertices and " << numE << " edges" << endl;
 
+        clearVisited(g);
+
         if(!isConnected(g))
             cout << "This graph is not connected " << endl;
         else cout << "This graph is connected " << endl;
+
+        clearVisited(g);
+
+        if(isCyclic(g))
+            cout << "This graph contains cycles" << endl;
+        else cout << "This graph does not contain cycles " << endl;
     }
 
     catch(const std::exception& e)
