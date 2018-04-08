@@ -64,6 +64,7 @@ void initializeGraph(Graph &g, ifstream &fin)
     for (int i = 0; i < n; i++)
     {
         v = add_vertex(g);
+        g[v].pred = v;
     }
 
     while (fin.peek() != '.')
@@ -142,7 +143,7 @@ bool traverseDFScyclic(Graph &g)
     return false;
 }
 
-void traverseBFS_SF(Graph &g, Graph &sf)
+void traverseBFS_SF(Graph &g)
 {
     clearVisited(g);
     queue <Vertex> q;
@@ -159,8 +160,8 @@ void traverseBFS_SF(Graph &g, Graph &sf)
 
             if (!g[u].visited)
             {
-                Vertex v1 = add_vertex(sf);
-                cout << "Added vertex " << v1 << " to sf " << endl;
+                //Vertex v1 = add_vertex(sf);
+                //cout << "Added vertex " << v1 << " to sf " << endl;
 
                 g[u].visited = true;
                 pair<adj_iterator, adj_iterator> vItrRange = adjacent_vertices(u, g);
@@ -172,7 +173,7 @@ void traverseBFS_SF(Graph &g, Graph &sf)
                         g[*vItr].pred = u;
                         q.push(*vItr);
 
-                        Vertex v2 = add_vertex(sf);
+/*                         Vertex v2 = add_vertex(sf);
                         cout << "Added vertex " << v2 << " to sf " << endl;
 
                         pair<Edge, bool> checkEdge = edge(u, *vItr, g);
@@ -181,7 +182,7 @@ void traverseBFS_SF(Graph &g, Graph &sf)
                         Edge e1 = newEdge.first;
                         sf[e1].weight = g[e].weight;
 
-                        cout << "Added edge between vertex " << source(e1, sf) << " and " << target(e1, sf) << " with weight " << sf[e1].weight << endl << endl; 
+                        cout << "Added edge between vertex " << source(e1, sf) << " and " << target(e1, sf) << " with weight " << sf[e1].weight << endl << endl; */ 
                         
 
                         /* 
@@ -233,7 +234,22 @@ void printGraph(Graph &g)
 
 void findSpanningForest(Graph &g, Graph &sf)
 {
-
+    traverseBFS_SF(g);
+    int size = num_vertices(g);
+    for(int i = 0; i < size; i++)
+    {
+        Vertex v1 = add_vertex(sf);
+    }
+    pair <vertex_iterator, vertex_iterator> vItrRange = vertices(g);
+    for (vertex_iterator vItr = vItrRange.first; vItr != vItrRange.second; ++vItr)
+    {
+        if(g[*vItr].pred != *vItr)
+        {
+            pair <Edge, bool> refEdge = edge(g[*vItr].pred, *vItr, g);
+            pair <Edge, bool> newEdge = add_edge(g[*vItr].pred, *vItr, sf);
+            sf[newEdge.first].weight = g[refEdge.first].weight;
+        }
+    }
 
 }
 
@@ -276,7 +292,8 @@ int main()
         else cout << "This graph does not contain cycles " << endl;
 
         Graph sf;
-        traverseBFS_SF(g, sf);
+        //traverseBFS_SF(g, sf);
+        findSpanningForest(g, sf);
 
         printGraph(sf);
     }
