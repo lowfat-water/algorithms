@@ -133,6 +133,39 @@ bool traverseDFScyclic(Graph &g)
     return false;
 }
 
+void traverseBFS_SF(Graph &g, Graph &sf)
+{
+    clearVisited(g);
+    queue <Vertex> q;
+    pair <vertex_iterator, vertex_iterator> vItrRange = vertices(g);
+    for (vertex_iterator vItr = vItrRange.first; vItr != vItrRange.second; ++vItr)
+    {
+        q.push(*vItr);
+        while(!q.empty())
+        {
+            Vertex u = q.front();
+            q.pop();
+            if (!g[u].visited)
+            {
+                g[u].visited = true;
+                pair<adj_iterator, adj_iterator> vItrRange = adjacent_vertices(u, g);
+                for (adj_iterator vItr = vItrRange.first; vItr != vItrRange.second; ++vItr)
+                {
+                    if(!g[*vItr].visited)
+                    {
+                        g[*vItr].pred = u;
+                        Vertex v1 = add_vertex(sf);
+                        Vertex v2 = add_vertex(sf);
+                        sf[v2].pred = v1;
+                        
+                        q.push(*vItr);
+                    }
+                }
+            }
+    }
+}
+}
+
 bool isConnected(Graph &g)
 {
     traverseDFSconnected(g);
@@ -159,6 +192,11 @@ void clearVisited(Graph &g)
     {
         g[*vItr].visited = false;
     }
+}
+
+void findSpanningForest(Graph &g, Graph &sf)
+{
+
 }
 
 int main()
