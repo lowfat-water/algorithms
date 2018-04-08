@@ -40,6 +40,15 @@ struct edgeProperties
    bool marked;
 };
 
+void clearVisited(Graph &g)
+{
+    pair <vertex_iterator, vertex_iterator> vItrRange = vertices(g);
+    for (vertex_iterator vItr = vItrRange.first; vItr != vItrRange.second; ++vItr)
+    {
+        g[*vItr].visited = false;
+    }
+}
+
 void initializeGraph(Graph &g, ifstream &fin)
 // Initialize g using data from fin.  Set start and end equal
 // to the start and end nodes.
@@ -110,13 +119,13 @@ bool traverseDFScyclic(Graph &g)
         {
             g[v].visited = true;
 
-            cout << "looking at vertices adjacent to " << v << endl;
+            //cout << "looking at vertices adjacent to " << v << endl;
             pair <adj_iterator, adj_iterator> vItrRange = adjacent_vertices(v, g);
             for(adj_iterator vItr = vItrRange.first; vItr != vItrRange.second; ++vItr)
             {
                 if(g[*vItr].visited && *vItr != g[v].pred)
                 {
-                    cout << "vertex " << *vItr << " has been visited but is not the predecessor to vertex " << v << endl;
+                    //cout << "vertex " << *vItr << " has been visited but is not the predecessor to vertex " << v << endl;
                     return true;
                 }
                 if(!g[*vItr].visited)
@@ -124,8 +133,8 @@ bool traverseDFScyclic(Graph &g)
                     s.push(*vItr);
                     g[*vItr].pred = v;
 
-                    cout << "Adding vertex " << *vItr << " to stack" << endl;
-                    cout << "The predecessor to " << *vItr << " is now " << v << endl << endl;
+                    //cout << "Adding vertex " << *vItr << " to stack" << endl;
+                    //cout << "The predecessor to " << *vItr << " is now " << v << endl << endl;
                 }
             }
         }
@@ -145,20 +154,46 @@ void traverseBFS_SF(Graph &g, Graph &sf)
         {
             Vertex u = q.front();
             q.pop();
+
+
+
             if (!g[u].visited)
             {
+                Vertex v1 = add_vertex(sf);
+                cout << "Added vertex " << v1 << " to sf " << endl;
+
                 g[u].visited = true;
                 pair<adj_iterator, adj_iterator> vItrRange = adjacent_vertices(u, g);
                 for (adj_iterator vItr = vItrRange.first; vItr != vItrRange.second; ++vItr)
                 {
                     if(!g[*vItr].visited)
                     {
+
                         g[*vItr].pred = u;
-                        Vertex v1 = add_vertex(sf);
+                        q.push(*vItr);
+
                         Vertex v2 = add_vertex(sf);
+                        cout << "Added vertex " << v2 << " to sf " << endl;
+
+                        pair<Edge, bool> checkEdge = edge(u, *vItr, g);
+                        Edge e = checkEdge.first;
+                        pair<Edge, bool> newEdge = add_edge(v1, v2, sf);
+                        Edge e1 = newEdge.first;
+                        sf[e1].weight = g[e].weight;
+
+                        cout << "Added edge between vertex " << source(e1, sf) << " and " << target(e1, sf) << " with weight " << sf[e1].weight << endl << endl; 
+                        
+
+                        /* 
+
+
+                        Vertex v1 = add_vertex(sf);
+
+
                         sf[v2].pred = v1;
                         
-                        q.push(*vItr);
+                        cout << "Added edge between vertex " << source(e1, sf) << " and " << target(e1, sf) << " with weight " << sf[e1].weight << endl << endl; */
+
                     }
                 }
             }
@@ -185,17 +220,20 @@ bool isCyclic(Graph &g)
     else return false;
 }
 
-void clearVisited(Graph &g)
+void printGraph(Graph &g)
 {
-    pair <vertex_iterator, vertex_iterator> vItrRange = vertices(g);
-    for (vertex_iterator vItr = vItrRange.first; vItr != vItrRange.second; ++vItr)
+    pair <edge_iterator, edge_iterator> eItrRange = edges(g);
+    for (edge_iterator eItr = eItrRange.first; eItr != eItrRange.second; ++eItr)
     {
-        g[*vItr].visited = false;
+        cout << source(*eItr, g) << " " << target(*eItr, g) << " " << g[*eItr].weight << endl;
     }
+    cout << endl;
 }
+
 
 void findSpanningForest(Graph &g, Graph &sf)
 {
+
 
 }
 
@@ -205,7 +243,7 @@ int main()
     {
         ifstream fin;
 
-        string fileName = "graphtest.txt";
+        string fileName = "graph2.txt";
 
         fin.open(fileName.c_str());
         if(!fin)
@@ -218,6 +256,8 @@ int main()
 
         initializeGraph(g, fin);
         fin.close();
+
+        printGraph(g);
 
         int numV = num_vertices(g);
         int numE = num_edges(g);
@@ -234,6 +274,11 @@ int main()
         if(isCyclic(g))
             cout << "This graph contains cycles" << endl;
         else cout << "This graph does not contain cycles " << endl;
+
+        Graph sf;
+        traverseBFS_SF(g, sf);
+
+        printGraph(sf);
     }
 
     catch(const std::exception& e)
