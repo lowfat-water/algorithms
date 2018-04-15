@@ -26,7 +26,7 @@ typedef Graph::adjacency_iterator adj_iterator;
 struct vertexProperties
 {
    //pair<int,int> cell; // maze cell (x,y) value
-   Vertex pred; // predecessor node
+   vertex_iterator pred; // predecessor node
    int weight;
    bool visited;
    bool marked;
@@ -64,10 +64,9 @@ void initializeGraph(Graph &g, ifstream &fin)
     for (int i = 0; i < n; i++)
     {
         v = add_vertex(g);
-        g[v].pred = v;
+        g[v].pred = NULL;
     }
 
-    // Add edges
     while (fin.peek() != '.')
     {
         fin >> i >> j;
@@ -78,7 +77,6 @@ void initializeGraph(Graph &g, ifstream &fin)
     }
 }
 
-// DFS traverse function to identify whether the graph is connected
 void traverseDFSconnected(Graph &g)
 {
     stack <Vertex> s;
@@ -107,7 +105,6 @@ void traverseDFSconnected(Graph &g)
     }
 }
 
-// DFS traverse function to determine whether the graph has cycles
 bool traverseDFScyclic(Graph &g)
 {
     stack <Vertex> s;
@@ -127,7 +124,6 @@ bool traverseDFScyclic(Graph &g)
             pair <adj_iterator, adj_iterator> vItrRange = adjacent_vertices(v, g);
             for(adj_iterator vItr = vItrRange.first; vItr != vItrRange.second; ++vItr)
             {
-                // Checks if graph is cyclic by checking if we encounter any already visited nodes during traversal (besides the predecessor node)
                 if(g[*vItr].visited && *vItr != g[v].pred)
                 {
                     //cout << "vertex " << *vItr << " has been visited but is not the predecessor to vertex " << v << endl;
@@ -147,7 +143,6 @@ bool traverseDFScyclic(Graph &g)
     return false;
 }
 
-// Breadth-first traversal used to create spanning forest of graph
 void traverseBFS_SF(Graph &g)
 {
     clearVisited(g);
@@ -180,7 +175,6 @@ void traverseBFS_SF(Graph &g)
 }
 }
 
-// Returns true if graph is connected, false otherwise
 bool isConnected(Graph &g)
 {
     traverseDFSconnected(g);
@@ -193,7 +187,6 @@ bool isConnected(Graph &g)
     return true;
 }
 
-// Returns true if the graph contains cycles, false otherwise
 bool isCyclic(Graph &g)
 {
     if(traverseDFScyclic(g))
@@ -201,7 +194,6 @@ bool isCyclic(Graph &g)
     else return false;
 }
 
-// Prints graph
 void printGraph(Graph &g)
 {
     pair <edge_iterator, edge_iterator> eItrRange = edges(g);
@@ -212,7 +204,7 @@ void printGraph(Graph &g)
     cout << endl;
 }
 
-// Creates a new graph, sf, that represents the spanning forest of the graph
+
 void findSpanningForest(Graph &g, Graph &sf)
 {
     traverseBFS_SF(g);
@@ -231,6 +223,7 @@ void findSpanningForest(Graph &g, Graph &sf)
             sf[newEdge.first].weight = g[refEdge.first].weight;
         }
     }
+
 }
 
 int main()
@@ -242,7 +235,7 @@ int main()
         string fileName = "graph2.txt";
 
         fin.open(fileName.c_str());
-        if(!fin) // Error handling
+        if(!fin)
         {
             cerr << "Cannot open " << fileName << endl;
             exit(1);
@@ -272,6 +265,7 @@ int main()
         else cout << "This graph does not contain cycles " << endl;
 
         Graph sf;
+        //traverseBFS_SF(g, sf);
         findSpanningForest(g, sf);
 
         cout << "\nSpanning Tree: " << endl;
