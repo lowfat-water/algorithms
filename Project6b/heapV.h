@@ -50,6 +50,8 @@ public:
    
    void maxHeapInsert(T key, U &g);
    void minHeapInsert(T key, U &g);
+
+   bool isInQueue(T key, U &g);
    
 private:
    vector<T> list;
@@ -279,6 +281,18 @@ template <typename T, typename U>
 }
 
 template <typename T, typename U>
+bool heapV<T,U>::isInQueue(T key, U &g)
+{
+      int size = list.size();
+      for (int i = 0; i < size; i++)
+      {
+            if(list.at(i) == key)
+                  return true;
+      }
+      return false;
+}
+
+template <typename T, typename U>
 ostream &operator<<(ostream &ostr, heapV<T,U> &h)
 // Print all information about the graph.
 {
@@ -291,3 +305,4 @@ ostream &operator<<(ostream &ostr, heapV<T,U> &h)
    return ostr;
 }
 #endif
+

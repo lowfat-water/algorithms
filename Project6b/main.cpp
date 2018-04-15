@@ -40,6 +40,8 @@ struct edgeProperties
    bool marked;
 };
 
+#include "heapV.h"
+
 void clearVisited(Graph &g)
 {
     pair <vertex_iterator, vertex_iterator> vItrRange = vertices(g);
@@ -233,6 +235,50 @@ void findSpanningForest(Graph &g, Graph &sf)
     }
 }
 
+void msfPrim(Graph &g, Vertex &r, Graph &sf)
+{
+    heapV <Vertex, Graph> pq;
+    vector <Vertex> v;
+    pair <vertex_iterator, vertex_iterator> vItrRange = vertices(g);
+    for (vertex_iterator vItr = vItrRange.first; vItr != vItrRange.second; ++vItr)
+    {
+        if(*vItr == r)
+            g[*vItr].weight = 0;
+        else g[*vItr].weight = LargeValue;
+        g[*vItr].pred = *vItr;
+        v.push_back(*vItr);
+
+        Vertex v1 = add_vertex(sf);
+    } 
+    g[r].weight = 0;
+
+    pq.initializeMinHeap(v, g);
+
+    while(pq.size() != 0)
+    {
+        Vertex u = pq.extractMinHeapMinimum(g);
+        Edge e;
+        pair <adj_iterator, adj_iterator> adjVRange = adjacent_vertices(u, g);
+        for (adj_iterator adjV = adjVRange.first; adjV != adjVRange.second; ++adjV)
+        {
+            pair <Edge, bool> checkEdge = edge(u, *adjV, g);
+            if (checkEdge.second)
+            {
+                e = checkEdge.first;
+                if (pq.isInQueue(*adjV, g) && g[e].weight < g[*adjV].weight)
+                {
+                    g[*adjV].pred = u;
+                    g[*adjV].weight = g[e].weight;
+
+                    pair <Edge, bool> newEdge = add_edge(g[*adjV].pred, *adjV, sf);
+                    sf[newEdge.first].weight = g[e].weight;
+                }
+            }
+        }
+    }
+
+}
+
 int main()
 {
     try
@@ -272,7 +318,8 @@ int main()
         else cout << "This graph does not contain cycles " << endl;
 
         Graph sf;
-        findSpanningForest(g, sf);
+        Vertex root = 0;
+        msfPrim(g, root, sf);
 
         cout << "\nSpanning Tree: " << endl;
         printGraph(sf);
