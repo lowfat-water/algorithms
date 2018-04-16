@@ -256,8 +256,17 @@ void msfPrim(Graph &g, Vertex &r, Graph &sf)
 
     while(pq.size() != 0)
     {
+        pq.buildMinHeap(pq.size(), g);
         Vertex u = pq.extractMinHeapMinimum(g);
+
         Edge e;
+        
+        if(g[u].pred != u)
+        {   
+            pair <Edge, bool> newEdge = add_edge(g[u].pred, u, sf);
+            sf[newEdge.first].weight = g[u].weight;
+        }
+
         pair <adj_iterator, adj_iterator> adjVRange = adjacent_vertices(u, g);
         for (adj_iterator adjV = adjVRange.first; adjV != adjVRange.second; ++adjV)
         {
@@ -265,13 +274,10 @@ void msfPrim(Graph &g, Vertex &r, Graph &sf)
             if (checkEdge.second)
             {
                 e = checkEdge.first;
-                if (pq.isInQueue(*adjV, g) && g[e].weight < g[*adjV].weight)
+                if (pq.isInQueue(*adjV) && g[e].weight < g[*adjV].weight)
                 {
                     g[*adjV].pred = u;
                     g[*adjV].weight = g[e].weight;
-
-                    pair <Edge, bool> newEdge = add_edge(g[*adjV].pred, *adjV, sf);
-                    sf[newEdge.first].weight = g[e].weight;
                 }
             }
         }
@@ -285,7 +291,7 @@ int main()
     {
         ifstream fin;
 
-        string fileName = "graph2.txt";
+        string fileName = "graph4.txt";
 
         fin.open(fileName.c_str());
         if(!fin) // Error handling
@@ -323,6 +329,7 @@ int main()
 
         cout << "\nSpanning Tree: " << endl;
         printGraph(sf);
+
     }
 
     catch(const std::exception& e)

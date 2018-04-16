@@ -51,7 +51,7 @@ public:
    void maxHeapInsert(T key, U &g);
    void minHeapInsert(T key, U &g);
 
-   bool isInQueue(T key, U &g);
+   bool isInQueue(T key);
    
 private:
    vector<T> list;
@@ -281,7 +281,7 @@ template <typename T, typename U>
 }
 
 template <typename T, typename U>
-bool heapV<T,U>::isInQueue(T key, U &g)
+bool heapV<T,U>::isInQueue(T key)
 {
       int size = list.size();
       for (int i = 0; i < size; i++)
